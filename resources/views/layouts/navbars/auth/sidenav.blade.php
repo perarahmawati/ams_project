@@ -2,11 +2,11 @@
     <header>
         <div class="image-text">
             <span class="image">
-                <img src="assets/images/logo.png" alt="">
+                <img src="assets/images/el-smart_logo.png" alt="">
             </span>
             <div class="text logo-text">
-                <span class="name">Codinglab</span>
-                <span class="profession">Web developer</span>
+                <span class="name">El-Smart</span>
+                <span class="type">Asset Management</span>
             </div>
         </div>
         <i class='bx bx-chevron-right toggle'></i>
@@ -15,10 +15,14 @@
         <div class="menu">
             <li class="search-box">
                 <i class='bx bx-search icon'></i>
-                <input type="text" placeholder="Search...">
+                <input type="text" placeholder="Search">
                 <!-- <span class="tooltip">Search</span> -->
             </li>
             <ul class="menu-links">
+                <div class="menu_title flex">
+                    <span class="title">Main Menu</span>
+                    <span class="line"></span>
+                </div>
                 <li class="nav-link">
                     <a href="#">
                         <i class='bx bx-home-alt icon' ></i>
@@ -28,7 +32,7 @@
                 </li>
                 <li class="nav-link">
                     <a href="#">
-                        <i class='bx bx-bar-chart-alt-2 icon' ></i>
+                        <i class='bx bx-data icon'></i>
                         <span class="text nav-text">Data Tables</span>
                     </a>
                     <!-- <span class="tooltip">Data Tables</span> -->
@@ -43,13 +47,28 @@
                 <li class="nav-link">
                     <a href="#">
                         <i class='bx bx-history icon' ></i>
-                        <span class="text nav-text">Log Activity</span>
+                        <span class="text nav-text">History Log</span>
                     </a>
-                    <!-- <span class="tooltip">Log Activity</span> -->
+                    <!-- <span class="tooltip">History Log</span> -->
+                </li>
+                <div class="menu_title flex">
+                    <span class="title">Message</span>
+                    <span class="line"></span>
+                </div>
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-message-square-dots icon'></i>
+                        <span class="text nav-text">Message</span>
+                    </a>
+                    <!-- <span class="tooltip">Message</span> -->
                 </li>
             </ul>
         </div>
         <div class="bottom-content">
+            <div class="menu_title flex">
+                <span class="title">Account</span>
+                <span class="line"></span>
+            </div>
             <li class="">
                 <a href="#">
                     <i class='bx bx-log-out icon' ></i>
@@ -66,8 +85,8 @@
                 <div class="toggle-switch">
                     <span class="switch"></span>
                 </div>
+                <!-- <span class="mode-text tooltip">Dark mode</span> -->
             </li>
-            
         </div>
     </div>
 </nav>
