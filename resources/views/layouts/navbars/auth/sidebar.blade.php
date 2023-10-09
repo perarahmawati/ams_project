@@ -11,70 +11,81 @@
         </div>
         <i class='bx bx-chevron-right toggle'></i>
     </header>
+    <div class="text search-box">
+        <i class='bx bx-search icon'></i>
+        <input type="text" placeholder="Search">
+    </div>
     <div class="menu-bar">
         <div class="menu">
-            <li class="search-box">
-                <i class='bx bx-search icon'></i>
-                <input type="text" placeholder="Search">
-                <!-- <span class="tooltip">Search</span> -->
-            </li>
             <ul class="menu-links">
-                <div class="menu_title flex">
+                <!-- <div class="menu_title">
                     <span class="title">Main Menu</span>
                     <span class="line"></span>
-                </div>
-                <li class="nav-link">
-                    <a href="#">
+                </div> -->
+                <li class="nav-link {{ 'dashboard' == request()->path() ? 'active' : '' }}">
+                    <a href="{{ route('pages.dashboard.index') }}">
                         <i class='bx bx-home-alt icon' ></i>
                         <span class="text nav-text">Dashboard</span>
                     </a>
-                    <!-- <span class="tooltip">Dashboard</span> -->
                 </li>
-                <li class="nav-link">
-                    <a href="#">
+                <li class="nav-link {{ 'data-tables' == request()->path() ? 'active' : '' }}">
+                    <a href="{{ route('pages.data-tables.index') }}">
                         <i class='bx bx-data icon'></i>
                         <span class="text nav-text">Data Tables</span>
                     </a>
-                    <!-- <span class="tooltip">Data Tables</span> -->
                 </li>
-                <li class="nav-link">
-                    <a href="#">
+                <li class="nav-link {{ 'user-management' == request()->path() ? 'active' : '' }}">
+                    <a href="{{ route('pages.user-management.index') }}">
                         <i class='bx bx-user icon'></i>
                         <span class="text nav-text">User Management</span>
                     </a>
-                    <!-- <span class="tooltip">User Management</span> -->
                 </li>
-                <li class="nav-link">
+                <!-- Revisi!! -->
+                <!-- <li class="nav-link">
                     <a href="#">
                         <i class='bx bx-history icon' ></i>
-                        <span class="text nav-text">History Log</span>
+                        <span class="text nav-text">History Logs</span>
+                        <i class='bx bx-chevron-down icon arrow' ></i>
                     </a>
-                    <!-- <span class="tooltip">History Log</span> -->
-                </li>
-                <div class="menu_title flex">
+                    <ul class="sub-menu">
+                        <li class="nav-link {{ 'user-logs' == request()->path() ? 'active' : '' }}">
+                            <a href="{{ route('pages.history-logs.user-logs.index') }}">
+                                <i class='bx bx-run icon'></i>
+                                <span class="text">User Logs</span>
+                            </a>
+                        </li>
+                        <li class="nav-link {{ 'activity-logs' == request()->path() ? 'active' : '' }}">
+                            <a href="{{ route('pages.history-logs.activity-logs.index') }}">
+                                <i class='bx bx-bar-chart icon'></i>
+                                <span class="text">Activity Logs</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li> -->
+                <!-- <div class="menu_title">
                     <span class="title">Message</span>
                     <span class="line"></span>
-                </div>
-                <li class="nav-link">
-                    <a href="#">
+                </div> -->
+                <li class="nav-link {{ 'message' == request()->path() ? 'active' : '' }}">
+                    <a href="{{ route('pages.message.index') }}">
                         <i class='bx bx-message-square-dots icon'></i>
                         <span class="text nav-text">Message</span>
                     </a>
-                    <!-- <span class="tooltip">Message</span> -->
                 </li>
             </ul>
         </div>
-        <div class="bottom-content">
-            <div class="menu_title flex">
+    </div>
+    <div class="bottom-content">
+        <ul>
+            <!-- <div class="menu_title">
                 <span class="title">Account</span>
                 <span class="line"></span>
-            </div>
-            <li class="">
+            </div> -->
+            <li>
                 <a href="#">
                     <i class='bx bx-log-out icon' ></i>
                     <span class="text nav-text">Logout</span>
                 </a>
-                <!-- <span class="tooltip">Logout</span> -->
             </li>
             <li class="mode">
                 <div class="sun-moon">
@@ -85,34 +96,7 @@
                 <div class="toggle-switch">
                     <span class="switch"></span>
                 </div>
-                <!-- <span class="mode-text tooltip">Dark mode</span> -->
             </li>
-        </div>
+        </ul>
     </div>
 </nav>
-
-<script>
-    const body = document.querySelector('body'),
-    sidebar = body.querySelector('nav'),
-    toggle = body.querySelector(".toggle"),
-    searchBtn = body.querySelector(".search-box"),
-    modeSwitch = body.querySelector(".toggle-switch"),
-    modeText = body.querySelector(".mode-text");
-
-    toggle.addEventListener("click" , () =>{
-    sidebar.classList.toggle("close");
-    })
-    searchBtn.addEventListener("click" , () =>{
-    sidebar.classList.remove("close");
-    })
-    modeSwitch.addEventListener("click" , () =>{
-    body.classList.toggle("dark");
-
-    if(body.classList.contains("dark")){
-        modeText.innerText = "Light mode";
-    }else{
-        modeText.innerText = "Dark mode";
-        
-    }
-    });
-</script>

@@ -16,13 +16,28 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome/css/all.min.css">
     <!-- Boxicons -->
     <link rel="stylesheet" href="assets/fonts/boxicons/css/boxicons.min.css">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
     <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/ams_dashboard.css">
+    <link rel="stylesheet" href="assets/css/ams-dashboard.css">
 
 </head>
 
 <body class="{{ $class ?? '' }}">
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
 
     @guest
         @yield('content')
@@ -31,8 +46,10 @@
     @auth
         @yield('content')
     @endauth
-    
+
     <!-- JS Files -->
-    
+    <script src="vendor/jquery/jquery.js"></script>
+    <script src="assets/js/ams-dashboard.js"></script>
+    @stack('js')
 </body>
 </html>
