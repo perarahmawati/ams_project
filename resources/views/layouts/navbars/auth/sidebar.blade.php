@@ -34,10 +34,10 @@
                         <span class="text nav-text">Data Tables</span>
                     </a>
                 </li>
-                <li class="nav-link {{ 'user-management' == request()->path() ? 'active' : '' }}">
-                    <a href="{{ route('pages.user-management.index') }}">
+                <li class="nav-link {{ 'user-manage' == request()->path() ? 'active' : '' }}">
+                    <a href="{{ route('pages.user-manage.index') }}">
                         <i class='bx bx-user icon'></i>
-                        <span class="text nav-text">User Management</span>
+                        <span class="text nav-text">User Manage</span>
                     </a>
                 </li>
                 <!-- Revisi!! -->

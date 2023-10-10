@@ -11,13 +11,14 @@
 }
 :root{
     /* ===== Colors ===== */
+    /* ===== Layouts ===== */
     --body-color: #E4E9F7;
     --sidebar-color: #FFF;
     --primary-color: #695CFE;
     --primary-color-light: #F6F5FF;
     --toggle-color: #DDD;
     --text-color: #707070;
-    /* ====== Transition ====== */
+    /* ===== Transition ===== */
     --tran-02: all 0.2s ease;
     --tran-03: all 0.3s ease;
     --tran-04: all 0.4s ease;
@@ -156,7 +157,7 @@ body.dark{
     display: flex;
     flex-direction: column;
 }
-header .image-text .name {
+header .image-text .name{
     margin-top: 2px;
     font-size: 18px;
     font-weight: 600;
@@ -377,15 +378,6 @@ body.dark .mode .sun-moon i.moon{
 }
 body.dark .switch::before{
     left: 20px;
-}
-
-.container{
-    position: absolute;
-    left: 275px;
-    width: calc(100% - 275px);
-    height: 100%;
-    padding: 18px 36px;
-    transition: var(--tran-05);
 }
 
 
