@@ -17,13 +17,13 @@ class ItemController extends Controller
     }
 
     public function store(Request $request){
-        $data = $request->validate([
-            'name' => 'required'
+        $request->validate([
+            'name' => 'required|string|max:255'
         ]);
 
-        $newItem = Item::create($data);
+        Item::create($request->all());
 
-        return redirect(route('pages.management.items.index'));
+        return redirect(route('pages.management.items.index'))->with('success', 'New Item Added Successfully!');
     }
 
     public function edit(Item $item){
@@ -31,17 +31,17 @@ class ItemController extends Controller
     }
 
     public function update(Item $item, Request $request){
-        $data = $request->validate([
-            'name' => 'required'
+        $request->validate([
+            'name' => 'required|string|max:255'
         ]);
 
-        $item->update($data);
+        $item->update($request->all());
 
-        return redirect(route('pages.management.items.index'))->with('success', 'Item Updated Successfully');
+        return redirect(route('pages.management.items.index'))->with('success', 'Item Updated Successfully!');
     }
 
     public function destroy(Item $item){
         $item->delete();
-        return redirect(route('pages.management.items.index'))->with('success', 'Item Deleted Successfully');
+        return redirect(route('pages.management.items.index'))->with('success', 'Item Deleted Successfully!');
     }
 }

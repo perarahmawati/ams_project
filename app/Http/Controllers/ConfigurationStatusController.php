@@ -17,13 +17,13 @@ class ConfigurationStatusController extends Controller
     }
 
     public function store(Request $request){
-        $data = $request->validate([
-            'name' => 'required'
+        $request->validate([
+            'name' => 'required|string|max:255'
         ]);
 
-        $newConfigurationStatus = ConfigurationStatus::create($data);
+        ConfigurationStatus::create($request->all());
 
-        return redirect(route('pages.management.configuration-statuses.index'));
+        return redirect(route('pages.management.configuration-statuses.index'))->with('success', 'New Configuration Status Added Successfully!');
     }
 
     public function edit(ConfigurationStatus $configuration_status){
@@ -31,17 +31,17 @@ class ConfigurationStatusController extends Controller
     }
 
     public function update(ConfigurationStatus $configuration_status, Request $request){
-        $data = $request->validate([
-            'name' => 'required'
+        $request->validate([
+            'name' => 'required|string|max:255'
         ]);
 
-        $configuration_status->update($data);
+        $configuration_status->update($request->all());
 
-        return redirect(route('pages.management.configuration-statuses.index'))->with('success', 'Configuration Status Updated Successfully');
+        return redirect(route('pages.management.configuration-statuses.index'))->with('success', 'Configuration Status Updated Successfully!');
     }
 
     public function destroy(ConfigurationStatus $configuration_status){
         $configuration_status->delete();
-        return redirect(route('pages.management.configuration-statuses.index'))->with('success', 'Configuration Status Deleted Successfully');
+        return redirect(route('pages.management.configuration-statuses.index'))->with('success', 'Configuration Status Deleted Successfully!');
     }
 }

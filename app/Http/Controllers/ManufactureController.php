@@ -17,13 +17,13 @@ class ManufactureController extends Controller
     }
 
     public function store(Request $request){
-        $data = $request->validate([
-            'name' => 'required'
+        $request->validate([
+            'name' => 'required|string|max:255'
         ]);
 
-        $newManufacture = Manufacture::create($data);
+        Manufacture::create($request->all());
 
-        return redirect(route('pages.management.manufactures.index'));
+        return redirect(route('pages.management.manufactures.index'))->with('success', 'New Manufacturer Added Successfully!');
     }
 
     public function edit(Manufacture $manufacture){
@@ -31,17 +31,17 @@ class ManufactureController extends Controller
     }
 
     public function update(Manufacture $manufacture, Request $request){
-        $data = $request->validate([
-            'name' => 'required'
+        $request->validate([
+            'name' => 'required|string|max:255'
         ]);
 
-        $manufacture->update($data);
+        $manufacture->update($request->all());
 
-        return redirect(route('pages.management.manufactures.index'))->with('success', 'Manufacture Updated Successfully');
+        return redirect(route('pages.management.manufactures.index'))->with('success', 'Manufacture Updated Successfully!');
     }
 
     public function destroy(Manufacture $manufacture){
         $manufacture->delete();
-        return redirect(route('pages.management.manufactures.index'))->with('success', 'Manufacture Deleted Successfully');
+        return redirect(route('pages.management.manufactures.index'))->with('success', 'Manufacture Deleted Successfully!');
     }
 }

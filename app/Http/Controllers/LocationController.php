@@ -17,15 +17,15 @@ class LocationController extends Controller
     }
 
     public function store(Request $request){
-        $data = $request->validate([
-            'name' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required'
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'latitude' => 'required|string|max:25',
+            'longitude' => 'required|string|max:25'
         ]);
 
-        $newLocation = Location::create($data);
+        Location::create($request->all());
 
-        return redirect(route('pages.management.locations.index'));
+        return redirect(route('pages.management.locations.index'))->with('success', 'New Location Added Successfully!');
     }
 
     public function edit(Location $location){
@@ -33,19 +33,19 @@ class LocationController extends Controller
     }
 
     public function update(Location $location, Request $request){
-        $data = $request->validate([
-            'name' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required'
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'latitude' => 'required|string|max:25',
+            'longitude' => 'required|string|max:25'
         ]);
 
-        $location->update($data);
+        $location->update($request->all());
 
-        return redirect(route('pages.management.locations.index'))->with('success', 'Location Updated Successfully');
+        return redirect(route('pages.management.locations.index'))->with('success', 'Location Updated Successfully!');
     }
 
     public function destroy(Location $location){
         $location->delete();
-        return redirect(route('pages.management.locations.index'))->with('success', 'Location Deleted Successfully');
+        return redirect(route('pages.management.locations.index'))->with('success', 'Location Deleted Successfully!');
     }
 }
