@@ -23,6 +23,7 @@ use App\Http\Controllers\UserManageController;
 use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\ConfigurationStatusController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ManufactureController;
 use App\Http\Controllers\UserLogsController;
 use App\Http\Controllers\MessageController;
@@ -51,6 +52,12 @@ Route::put('/item/{item}/update', [ItemController::class, 'update'])->name('page
 Route::delete('/item/{item}/destroy', [ItemController::class, 'destroy'])->name('pages.management.items.destroy');
 
 // Location
+Route::get('/location', [LocationController::class, 'index'])->name('pages.management.locations.index');
+Route::get('/location/create', [LocationController::class, 'create'])->name('pages.management.locations.create');
+Route::post('/location', [LocationController::class, 'store'])->name('pages.management.locations.store');
+Route::get('/location/{location}/edit', [LocationController::class, 'edit'])->name('pages.management.locations.edit');
+Route::put('/location/{location}/update', [LocationController::class, 'update'])->name('pages.management.locations.update');
+Route::delete('/location/{location}/destroy', [LocationController::class, 'destroy'])->name('pages.management.locations.destroy');
 
 // Manufacture
 Route::get('/manufacture', [ManufactureController::class, 'index'])->name('pages.management.manufactures.index');
