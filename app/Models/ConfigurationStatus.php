@@ -12,4 +12,8 @@ class ConfigurationStatus extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function dataTable(){
+        return $this->hasMany(DataTable::class);
+    }
 }

@@ -14,4 +14,8 @@ class Location extends Model
         'latitude',
         'longitude'
     ];
+
+    public function dataTable(){
+        return $this->hasMany(DataTable::class);
+    }
 }
