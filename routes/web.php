@@ -18,22 +18,30 @@ Route::get('/', function () {
 });
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DataTablesController;
 use App\Http\Controllers\UserManageController;
 use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\ConfigurationStatusController;
+use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ManufactureController;
 use App\Http\Controllers\UserLogsController;
 use App\Http\Controllers\MessageController;
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('pages.dashboard.index');
-Route::get('/data-tables', [DataTablesController::class, 'index'])->name('pages.data-tables.index');
-Route::get('/user-manage', [UserManageController::class, 'index'])->name('pages.user-manage.index');
-Route::get('/activity-logs', [ActivityLogsController::class, 'index'])->name('pages.history-logs.activity-logs.index');
-Route::get('/user-logs', [UserLogsController::class, 'index'])->name('pages.history-logs.user-logs.index');
-Route::get('/message', [MessageController::class, 'index'])->name('pages.message.index');
+// Route::get('/dashboard', [DashboardController::class, 'index'])->name('pages.dashboard.index');
+// Route::get('/data-tables', [DataTablesController::class, 'index'])->name('pages.data-tables.index');
+// Route::get('/user-manage', [UserManageController::class, 'index'])->name('pages.user-manage.index');
+// Route::get('/activity-logs', [ActivityLogsController::class, 'index'])->name('pages.history-logs.activity-logs.index');
+// Route::get('/user-logs', [UserLogsController::class, 'index'])->name('pages.history-logs.user-logs.index');
+// Route::get('/message', [MessageController::class, 'index'])->name('pages.message.index');
+
+// Data Tables
+Route::get('/data-table', [DataTableController::class, 'index'])->name('pages.data-tables.index');
+Route::get('/data-table/create', [DataTableController::class, 'create'])->name('pages.data-tables.create');
+Route::post('/data-table', [DataTableController::class, 'store'])->name('pages.data-tables.store');
+Route::get('/data-table/{data_table}/edit', [DataTableController::class, 'edit'])->name('pages.data-tables.edit');
+Route::put('/data-table/{data_table}/update', [DataTableController::class, 'update'])->name('pages.data-tables.update');
+Route::delete('/data-table/{data_table}/destroy', [DataTableController::class, 'destroy'])->name('pages.data-tables.destroy');
 
 // Configuration Status
 Route::get('/configuration-status', [ConfigurationStatusController::class, 'index'])->name('pages.management.configuration-statuses.index');
