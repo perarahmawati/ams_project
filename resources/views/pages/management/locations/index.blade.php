@@ -22,6 +22,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Address</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
                 <th>Action</th>
@@ -30,6 +31,7 @@
             <tr>
                 <td>{{$location->id}}</td>
                 <td>{{$location->name}}</td>
+                <td>{{$location->address}}</td>
                 <td>{{$location->latitude}}</td>
                 <td>{{$location->longitude}}</td>
                 <td>

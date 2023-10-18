@@ -7,6 +7,11 @@ use App\Models\Location;
 
 class LocationController extends Controller
 {
+    public function marker(){
+        $locations = Location::all();
+        return response()->json($locations);
+    }
+
     public function index(){
         $locations = Location::all();
         return view('pages.management.locations.index', ['locations' => $locations]);
@@ -19,6 +24,7 @@ class LocationController extends Controller
     public function store(Request $request){
         $request->validate([
             'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
             'latitude' => 'required|string|max:25',
             'longitude' => 'required|string|max:25'
         ]);
@@ -35,6 +41,7 @@ class LocationController extends Controller
     public function update(Location $location, Request $request){
         $request->validate([
             'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
             'latitude' => 'required|string|max:25',
             'longitude' => 'required|string|max:25'
         ]);
