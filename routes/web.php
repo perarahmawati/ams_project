@@ -60,6 +60,7 @@ Route::put('/item/{item}/update', [ItemController::class, 'update'])->name('page
 Route::delete('/item/{item}/destroy', [ItemController::class, 'destroy'])->name('pages.management.items.destroy');
 
 // Location
+Route::get('/location/marker', [LocationController::class, 'marker']);
 Route::get('/location', [LocationController::class, 'index'])->name('pages.management.locations.index');
 Route::get('/location/create', [LocationController::class, 'create'])->name('pages.management.locations.create');
 Route::post('/location', [LocationController::class, 'store'])->name('pages.management.locations.store');
