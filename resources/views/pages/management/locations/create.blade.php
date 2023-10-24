@@ -7,7 +7,6 @@
 
     <!-- Leaflet's CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <link rel="stylesheet" href="https://unpkg.com/@geoapify/leaflet-address-search-plugin@^1/dist/L.Control.GeoapifyAddressSearch.min.css" />
 
     <style>
         #map { height: 400px; }
@@ -25,6 +24,13 @@
         </ul>
         @endif
     </div>
+    <div class="search">
+        <input class="search-location" type="text" placeholder="Search Location" oninput="onTyping(this)" />
+        <ul>
+            <div id="search-result"></div>
+        </ul>
+    </div>
+    <div id="map"></div>
     <form method="post" action="{{ route('pages.management.locations.store') }}">
         @csrf
         @method('post')
@@ -44,7 +50,6 @@
             <label>Longitude</label>
             <input type="text" name="longitude" id="longitude" placeholder="Longitude" />
         </div>
-        <div id="map"></div>
         <div>
             <input type="submit" value="Save" />
         </div>
@@ -52,39 +57,130 @@
 
     <!-- Leaflet's JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="https://unpkg.com/@geoapify/leaflet-address-search-plugin@^1/dist/L.Control.GeoapifyAddressSearch.min.js"></script>
 
     <script>
-        var map = L.map('map').setView([0, 0], 2);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-            maxZoom: 18,
-        }).addTo(map);
+        const DEFAULT_COORD = [-6.1754067410036955, 106.82716950774196];
+        const latitudeInput = document.getElementById('latitude');
+        const longitudeInput = document.getElementById('longitude');
+        const resultsWrapperHTML = document.getElementById("search-result");
+        let marker;
 
-        let apiKey = "672e908ef79f41248a4d346a3915c0d2",
-            marker = null;
+        // Initial Map
+        const Map = L.map("map");
 
-        const addressSearchControl = L.control.addressSearch(apiKey , {
-            resultCallback : (address) => {
-                if(!address){
-                    return;
-                }
+        // Initial OSM Tile URL
+        const osmTileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        const attrib = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors';
+        const osmTile = new L.tileLayer(osmTileUrl, { minZoom: 2, maxZoom: 20, attribution: attrib });
 
-                if(marker !== null){
-                    map.removeLayer(marker);
-                }
-                
-                marker = L.marker([address.lat,address.lon]).addTo(map);
-                map.setView([address.lat,address.lon],17)
+        // Add Layer
+        Map.setView(new L.LatLng(DEFAULT_COORD[0], DEFAULT_COORD[1]), 15);
+        Map.addLayer(osmTile);
 
-                document.getElementById('name').value = address.address_line1;
-                document.getElementById('address').value = address.address_line2;
-                document.getElementById('latitude').value = address.lat;
-                document.getElementById('longitude').value = address.lon;
+        // Add Marker
+        marker = L.marker(DEFAULT_COORD).addTo(Map);
+
+        // Input Value
+        function inputValue() {
+            const latitude = parseFloat(latitudeInput.value);
+            const longitude = parseFloat(longitudeInput.value);
+
+            if (isNaN(latitude) || isNaN(longitude)) {
+                return;
             }
-        });
 
-        map.addControl(addressSearchControl);
+            if (marker) {
+                Map.removeLayer(marker);
+            }
+
+            marker = L.marker([latitude, longitude]).addTo(Map);
+            Map.setView([latitude, longitude], 18);
+        }
+
+        latitudeInput.addEventListener('input', inputValue);
+        longitudeInput.addEventListener('input', inputValue);
+
+        // Click Listener
+        Map.on("click", function(e){
+            const {lat, lng} = e.latlng;
+
+            // Regenerate marker position
+            if (marker) {
+                Map.removeLayer(marker);
+            }
+            marker = L.marker([lat, lng]).addTo(Map);
+
+            // Update latitude and longitude input values
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+        })
+
+        // Search Location Handler
+        let typingInterval;
+
+        // Typing Handler
+        function onTyping(e) {
+            clearInterval(typingInterval);
+            const {value} = e;
+
+            typingInterval = setInterval(() => {
+                clearInterval(typingInterval);
+                searchLocation(value);
+            }, 500);
+        }
+
+        // Search Handler
+        function searchLocation(keyword) {
+            if(keyword) {
+                // Request To Nominatim API
+                fetch(`https://nominatim.openstreetmap.org/search?q=${keyword}&format=json`)
+                .then((response) => {
+                    return response.json();
+                }).then(json => {
+                    // Get Response Data From Nominatim
+                    console.log("json", json);
+                    if(json.length > 0) return renderResults(json);
+                    else return clearResults();
+                });
+            }
+        }
+
+        // Render Results
+        function renderResults(result) {
+            let resultsHTML = "";
+            
+            result.map((n) => {
+                resultsHTML += `<li><a href="#" onclick="setLocation('${n.name}', '${n.display_name}', ${n.lat}, ${n.lon})">${n.display_name}</a></li>`;
+            });
+            
+            resultsWrapperHTML.innerHTML = resultsHTML;
+        }
+
+        // Clear Results
+        function clearResults() {
+            resultsWrapperHTML.innerHTML = "";
+        }
+
+        // Set Location From Search Result
+        function setLocation(name, address, lat, lon) {
+            // Set Map Focus
+            Map.setView(new L.LatLng(lat, lon), 18);
+
+            // Regenerate Marker Position
+            if (marker) {
+                Map.removeLayer(marker);
+            }
+            marker = L.marker([lat, lon]).addTo(Map);
+
+            // Set input values
+            document.getElementById('name').value = name;
+            document.getElementById('address').value = address;
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lon;
+            
+            // Clear Results
+            clearResults();
+        }
     </script>
 </body>
 </html>
