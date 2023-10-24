@@ -16,7 +16,7 @@
         </ul>
         @endif
     </div>
-    <form method="post" action="{{ route('pages.data-tables.store') }}">
+    <form method="post" action="{{ route('pages.data-tables.store') }}" enctype="multipart/form-data">
         @csrf
         @method('post')
         <div>
@@ -62,6 +62,14 @@
         <div>
             <label for="description">Description</label>
             <textarea type="text" name="description" placeholder="Description"></textarea>
+        </div>
+        <div>
+            <label for="image">Upload Images</label>
+            <input type="file" name="images[]" accept="image/*" multiple>
+        </div>
+        <div>
+            <label for="file">Upload Files</label>
+            <input type="file" name="files[]" accept="application/pdf,application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint" multiple>
         </div>
         <div>
             <input type="submit" value="Save" />

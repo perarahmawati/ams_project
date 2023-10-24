@@ -39,6 +39,7 @@
                 <td>{{ $data_table->location->name }}</td>
                 <td>{{ $data_table->description }}</td>
                 <td>
+                    <a href="{{ route('pages.data-tables.show', ['data_table' => $data_table]) }}">Show</a>
                     <a href="{{ route('pages.data-tables.edit', ['data_table' => $data_table]) }}">Edit</a>
                     <form method="post" action="{{ route('pages.data-tables.destroy', ['data_table' => $data_table]) }}">
                         @csrf
