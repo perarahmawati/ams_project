@@ -118,7 +118,7 @@
         // Search Location Handler
         let typingInterval;
 
-        // Typing Handler 1
+        // Typing Handler
         function onTyping(e) {
             clearInterval(typingInterval);
             const {value} = e;
@@ -139,7 +139,9 @@
                 }).then(json => {
                     // Get Response Data From Nominatim
                     if(json.length > 0) return renderResults(json);
-                    else return clearResults();
+                    else {
+                        document.getElementById("search-result").innerHTML = "Location not found";
+                    }
                 });
             }
         }
@@ -147,39 +149,12 @@
         // Render Results
         function renderResults(result) {
             let resultsHTML = "";
-
-            if (result.length > 0) {
-                result.map((n) => {
-                    let parsedDisplayName = n.display_name.replace(/^[^,]+,\s/, '');
-                    parsedDisplayName = parsedDisplayName.trim();
-
-                    if (/^\d/.test(parsedDisplayName.split(",")[0])) {
-                        parsedDisplayName = parsedDisplayName.replace(/^\d+\,\s/, '');
-                    }
-
-                    resultsHTML += `<li><a href="#" onclick="setLocation('${n.name}', '${parsedDisplayName}', ${n.lat}, ${n.lon})">${n.display_name}</a></li>`;
-                });
-            } else {
-                resultsHTML = "<li>Location not found</li>";
-            }
-
-            document.getElementById("search-result").innerHTML = resultsHTML;
-        }
-
-        // Typing Handler 2
-        function onTyping(input) {
-            const keyword = input.value;
-
-            if (keyword) {
-                fetch(`https://nominatim.openstreetmap.org/search?q=${keyword}&format=json`)
-                    .then((response) => response.json())
-                    .then((json) => {
-                        renderResults(json);
-                    })
-                    .catch((error) => console.error('Error:', error));
-            } else {
-                document.getElementById("search-result").innerHTML = "";
-            }
+            
+            result.map((n) => {
+                resultsHTML += `<li><a href="#" onclick="setLocation('${n.name}', '${n.display_name}', ${n.lat}, ${n.lon})">${n.display_name}</a></li>`;
+            });
+            
+            resultsWrapperHTML.innerHTML = resultsHTML;
         }
 
         // Clear Results
