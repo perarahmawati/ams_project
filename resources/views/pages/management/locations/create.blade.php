@@ -140,7 +140,7 @@
                     // Get Response Data From Nominatim
                     if(json.length > 0) return renderResults(json);
                     else {
-                        document.getElementById("search-result").innerHTML = "Location not found";
+                        resultsWrapperHTML.innerHTML = "<li>Location not found</li>";
                     }
                 });
             }
@@ -151,8 +151,16 @@
             let resultsHTML = "";
             
             result.map((n) => {
-                resultsHTML += `<li><a href="#" onclick="setLocation('${n.name}', '${n.display_name}', ${n.lat}, ${n.lon})">${n.display_name}</a></li>`;
-            });
+                let parsedDisplayName = n.display_name.replace(/^[^,]+,\s/, ''); // Menghapus kalimat pertama sebelum koma pertama
+                parsedDisplayName = parsedDisplayName.trim(); // Menghilangkan spasi di awal dan akhir
+
+                // Cek apakah di awal terdapat angka
+                if (/^\d/.test(parsedDisplayName.split(",")[0])) {
+                    parsedDisplayName = parsedDisplayName.replace(/^\d+\,\s/, ''); // Menghapus angka di depan jika ada
+                }
+
+                resultsHTML += `<li><a href="#" onclick="setLocation('${n.name}', '${parsedDisplayName}', ${n.lat}, ${n.lon})">${n.display_name}</a></li>`;
+            })
             
             resultsWrapperHTML.innerHTML = resultsHTML;
         }
