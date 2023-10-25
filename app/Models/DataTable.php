@@ -35,13 +35,4 @@ class DataTable extends Model
     public function location(){
         return $this->belongsTo(Location::class, 'location_name');
     }
-
-    public function images(){
-        return $this->hasMany(Image::class);
-    }
-
-    public function files(){
-        return $this->hasMany(File::class);
-    }
-
 }

@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Dropzone CSS -->
+    <link rel="stylesheet" href="/vendor/dropzone/dropzone.min.css">
 </head>
 <body>
     <h1>Create New Data</h1>
@@ -64,16 +70,14 @@
             <textarea type="text" name="description" placeholder="Description"></textarea>
         </div>
         <div>
-            <label for="image">Upload Images</label>
-            <input type="file" name="images[]" accept="image/*" multiple>
-        </div>
-        <div>
-            <label for="file">Upload Files</label>
-            <input type="file" name="files[]" accept="application/pdf,application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint" multiple>
-        </div>
-        <div>
             <input type="submit" value="Save" />
         </div>
     </form>
+
+    <!-- JQuery -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Dropzone JS -->
+    <script src="/vendor/dropzone/dropzone.min.js"></script>
 </body>
 </html>
