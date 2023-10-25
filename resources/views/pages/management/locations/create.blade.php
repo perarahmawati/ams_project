@@ -118,7 +118,7 @@
         // Search Location Handler
         let typingInterval;
 
-        // Typing Handler
+        // Typing Handler 1
         function onTyping(e) {
             clearInterval(typingInterval);
             const {value} = e;
@@ -147,20 +147,39 @@
         // Render Results
         function renderResults(result) {
             let resultsHTML = "";
-            
-            result.map((n) => {
-                let parsedDisplayName = n.display_name.replace(/^[^,]+,\s/, ''); // Menghapus kalimat pertama sebelum koma pertama
-                parsedDisplayName = parsedDisplayName.trim(); // Menghilangkan spasi di awal dan akhir
 
-                // Cek apakah di awal terdapat angka
-                if (/^\d/.test(parsedDisplayName.split(",")[0])) {
-                    parsedDisplayName = parsedDisplayName.replace(/^\d+\,\s/, ''); // Menghapus angka di depan jika ada
-                }
+            if (result.length > 0) {
+                result.map((n) => {
+                    let parsedDisplayName = n.display_name.replace(/^[^,]+,\s/, '');
+                    parsedDisplayName = parsedDisplayName.trim();
 
-                resultsHTML += `<li><a href="#" onclick="setLocation('${n.name}', '${parsedDisplayName}', ${n.lat}, ${n.lon})">${n.display_name}</a></li>`;
-            });
-            
-            resultsWrapperHTML.innerHTML = resultsHTML;
+                    if (/^\d/.test(parsedDisplayName.split(",")[0])) {
+                        parsedDisplayName = parsedDisplayName.replace(/^\d+\,\s/, '');
+                    }
+
+                    resultsHTML += `<li><a href="#" onclick="setLocation('${n.name}', '${parsedDisplayName}', ${n.lat}, ${n.lon})">${n.display_name}</a></li>`;
+                });
+            } else {
+                resultsHTML = "<li>Location not found</li>";
+            }
+
+            document.getElementById("search-result").innerHTML = resultsHTML;
+        }
+
+        // Typing Handler 2
+        function onTyping(input) {
+            const keyword = input.value;
+
+            if (keyword) {
+                fetch(`https://nominatim.openstreetmap.org/search?q=${keyword}&format=json`)
+                    .then((response) => response.json())
+                    .then((json) => {
+                        renderResults(json);
+                    })
+                    .catch((error) => console.error('Error:', error));
+            } else {
+                document.getElementById("search-result").innerHTML = "";
+            }
         }
 
         // Clear Results
