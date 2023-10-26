@@ -40,7 +40,7 @@
         </div>
         <div>
             <label>Address</label>
-            <input type="text" name="address" id="address" placeholder="Address" value="{{$location->address}}" />
+            <textarea type="text" name="address" id="address" placeholder="Address">{{ $location->address }}</textarea>
         </div>
         <div>
             <label>Latitude</label>

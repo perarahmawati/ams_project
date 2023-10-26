@@ -40,7 +40,7 @@
         </div>
         <div>
             <label>Address</label>
-            <input type="text" name="address" id="address" placeholder="Name" />
+            <textarea type="text" name="address" id="address" placeholder="Address"></textarea>
         </div>
         <div>
             <label>Latitude</label>
