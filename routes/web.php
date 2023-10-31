@@ -22,14 +22,15 @@ use App\Http\Controllers\UserManageController;
 use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\ConfigurationStatusController;
 use App\Http\Controllers\DataTableController;
+use App\Http\Controllers\DataTableImageController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ManufactureController;
 use App\Http\Controllers\UserLogsController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\TempImageController;
 
 // Route::get('/dashboard', [DashboardController::class, 'index'])->name('pages.dashboard.index');
-// Route::get('/data-tables', [DataTablesController::class, 'index'])->name('pages.data-tables.index');
 // Route::get('/user-manage', [UserManageController::class, 'index'])->name('pages.user-manage.index');
 // Route::get('/activity-logs', [ActivityLogsController::class, 'index'])->name('pages.history-logs.activity-logs.index');
 // Route::get('/user-logs', [UserLogsController::class, 'index'])->name('pages.history-logs.user-logs.index');
@@ -40,10 +41,17 @@ Route::get('/data-table', [DataTableController::class, 'index'])->name('pages.da
 Route::get('/data-table/create', [DataTableController::class, 'create'])->name('pages.data-tables.create');
 Route::post('/data-table', [DataTableController::class, 'store'])->name('pages.data-tables.store');
 Route::get('/data-table/{data_table}/edit', [DataTableController::class, 'edit'])->name('pages.data-tables.edit');
-Route::put('/data-table/{data_table}/update', [DataTableController::class, 'update'])->name('pages.data-tables.update');
-Route::delete('/data-table/{data_table}/destroy', [DataTableController::class, 'destroy'])->name('pages.data-tables.destroy');
+Route::post('/data-table/{data_table}/update', [DataTableController::class, 'update'])->name('pages.data-tables.update');
+Route::delete('/data-table/{data_table}', [DataTableController::class, 'destroy'])->name('pages.data-tables.destroy');
 
-// Configuration Status
+// Temp Images
+Route::post('/data-table/temp-images', [TempImageController::class, 'store'])->name('pages.data-tables.temp-images.store');
+
+// Data Table Images
+Route::post('/data-table/data-table-images', [DataTableImageController::class, 'store'])->name('pages.data-tables.data-table-images.store');
+Route::delete('/data-table/data-table-images/{image}', [DataTableImageController::class, 'destroy'])->name('pages.data-tables.data-table-images.destroy');
+
+// Configuration Statuses
 Route::get('/configuration-status', [ConfigurationStatusController::class, 'index'])->name('pages.management.configuration-statuses.index');
 Route::get('/configuration-tatus/create', [ConfigurationStatusController::class, 'create'])->name('pages.management.configuration-statuses.create');
 Route::post('/configuration-status', [ConfigurationStatusController::class, 'store'])->name('pages.management.configuration-statuses.store');
@@ -51,7 +59,7 @@ Route::get('/configuration-status/{configuration_status}/edit', [ConfigurationSt
 Route::put('/configuration-status/{configuration_status}/update', [ConfigurationStatusController::class, 'update'])->name('pages.management.configuration-statuses.update');
 Route::delete('/configuration-status/{configuration_status}/destroy', [ConfigurationStatusController::class, 'destroy'])->name('pages.management.configuration-statuses.destroy');
 
-// Item
+// Items
 Route::get('/item', [ItemController::class, 'index'])->name('pages.management.items.index');
 Route::get('/item/create', [ItemController::class, 'create'])->name('pages.management.items.create');
 Route::post('/item', [ItemController::class, 'store'])->name('pages.management.items.store');
@@ -59,7 +67,7 @@ Route::get('/item/{item}/edit', [ItemController::class, 'edit'])->name('pages.ma
 Route::put('/item/{item}/update', [ItemController::class, 'update'])->name('pages.management.items.update');
 Route::delete('/item/{item}/destroy', [ItemController::class, 'destroy'])->name('pages.management.items.destroy');
 
-// Location
+// Locations
 Route::get('/location/marker', [LocationController::class, 'marker']);
 Route::get('/location', [LocationController::class, 'index'])->name('pages.management.locations.index');
 Route::get('/location/create', [LocationController::class, 'create'])->name('pages.management.locations.create');
@@ -68,7 +76,7 @@ Route::get('/location/{location}/edit', [LocationController::class, 'edit'])->na
 Route::put('/location/{location}/update', [LocationController::class, 'update'])->name('pages.management.locations.update');
 Route::delete('/location/{location}/destroy', [LocationController::class, 'destroy'])->name('pages.management.locations.destroy');
 
-// Manufacture
+// Manufactures
 Route::get('/manufacture', [ManufactureController::class, 'index'])->name('pages.management.manufactures.index');
 Route::get('/manufacture/create', [ManufactureController::class, 'create'])->name('pages.management.manufactures.create');
 Route::post('/manufacture', [ManufactureController::class, 'store'])->name('pages.management.manufactures.store');

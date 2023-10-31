@@ -15,7 +15,7 @@ class DataTable extends Model
         'item_name', 
         'manufacture_name', 
         'serial_number', 
-        'configurationstatus_name',
+        'configuration_status_name',
         'location_name',
         'description'
     ];
@@ -29,7 +29,7 @@ class DataTable extends Model
     }
 
     public function configurationStatus(){
-        return $this->belongsTo(ConfigurationStatus::class, 'configurationstatus_name');
+        return $this->belongsTo(ConfigurationStatus::class, 'configuration_status_name');
     }
 
     public function location(){

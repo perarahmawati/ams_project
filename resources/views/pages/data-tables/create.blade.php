@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_token" content="{{ csrf_token() }}">
     <title>Document</title>
 
     <!-- Bootstrap CSS -->
@@ -10,64 +11,94 @@
 
     <!-- Dropzone CSS -->
     <link rel="stylesheet" href="/vendor/dropzone/dropzone.min.css">
+
+    <!-- Phospor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        .image-card{
+            position: relative;
+        }
+
+        .image-card .btn-danger{
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Create New Data</h1>
-    <div>
-        @if($errors->any())
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{$error}}</li>
-            @endforeach
-        </ul>
-        @endif
-    </div>
-    <form method="post" action="{{ route('pages.data-tables.store') }}" enctype="multipart/form-data">
+    @if(Session::has('success'))
+    <div class="alert alert-success">{{ Session::get('success') }}</div>
+    @endif
+    @if(Session::has('error'))
+    <div class="alert alert-danger">{{ Session::get('error') }}</div>
+    @endif
+    <form method="post" name="dataTableForm" id="dataTableForm" action="">
         @csrf
         @method('post')
         <div>
             <label for="item_name">Item</label>
-            <select name="item_name" id="item_name">
+            <select name="item_name" id="item_name" class="form-control">
                 <option selected disabled>Select Item</option>
                 @foreach ($item_names as $option)
                     <option value="{{ $option->id }}">{{ $option->name }}</option>
                 @endforeach
             </select>
+            <p></p>
         </div>
         <div>
             <label for="manufacture_name">Manufacture</label>
-            <select name="manufacture_name" id="manufacture_name">
+            <select name="manufacture_name" id="manufacture_name" class="form-control">
                 <option selected disabled>Select Manufacture</option>
                 @foreach ($manufacture_names as $option)
                     <option value="{{ $option->id }}">{{ $option->name }}</option>
                 @endforeach
             </select>
+            <p></p>
         </div>
         <div>
             <label for="serial_number">Serial Number</label>
-            <input type="text" name="serial_number" placeholder="Serial Number"></input>
+            <input type="text" name="serial_number" id="serial_number" placeholder="Serial Number" class="form-control"></input>
+            <p></p>
         </div>
         <div>
-            <label for="configurationstatus_name">Configuration Status</label>
-            <select name="configurationstatus_name" id="configurationstatus_name">
+            <label for="configuration_status_name">Configuration Status</label>
+            <select name="configuration_status_name" id="configuration_status_name" class="form-control">
                 <option selected disabled>Select Configuration Status</option>
-                @foreach ($configurationstatus_names as $option)
+                @foreach ($configuration_status_names as $option)
                     <option value="{{ $option->id }}">{{ $option->name }}</option>
                 @endforeach
             </select>
+            <p></p>
         </div>
         <div>
             <label for="location_name">Location</label>
-            <select name="location_name" id="location_name">
+            <select name="location_name" id="location_name" class="form-control">
                 <option selected disabled>Select Location</option>
                 @foreach ($location_names as $option)
                     <option value="{{ $option->id }}">{{ $option->name }}</option>
                 @endforeach
             </select>
+            <p></p>
         </div>
         <div>
             <label for="description">Description</label>
-            <textarea type="text" name="description" placeholder="Description"></textarea>
+            <textarea type="text" name="description" id="description" placeholder="Description" class="form-control"></textarea>
+            <p></p>
+        </div>
+        <div>
+            <h2>Upload Image</h2>
+            <div id="image" class="dropzone dz-clickable">
+                <div class="dz-message needsclick">
+                    <br>Drop files here or click to upload.
+                    <br><br>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="image-wrapper">
+
         </div>
         <div>
             <input type="submit" value="Save" />
@@ -79,5 +110,135 @@
 
     <!-- Dropzone JS -->
     <script src="/vendor/dropzone/dropzone.min.js"></script>
+
+    <script type="text/javascript">
+        Dropzone.autoDiscover = false;
+        const dropzone = $("#image").dropzone({ 
+            uploadprogress: function(file, progress, bytesSent) {
+                $("input[type=submit]").prop('disabled',true);
+            },
+            url:  "{{ route('pages.data-tables.temp-images.store') }}",
+            maxFiles: 10,
+            paramName: 'image',
+            addRemoveLinks: true,
+            acceptedFiles: "image/jpg,image/jpeg,image/png,image/gif",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }, success: function(file, response){
+                    var html = `<div class="col-md-3 mb-4" id="data-table-image-row-${response.image_id}">
+                                    <div class="card image-card">
+                                        <a href="#" onclick="deleteImage(${response.image_id});" class="btn btn-danger"><i class="ph-bold ph-trash"></i></a>
+                                        <img src="${response.imagePath}" alt="" class="w-100 card-img-top">
+                                        <div class="card-body">
+                                            <input type="text" name="caption[]" id="caption" value="" class="form-control" />
+                                            <input type="hidden" name="image_id[]" id="image_id" value="${response.image_id}" />
+                                        </div>
+                                    </div>
+                                </div>`; 
+                    $("#image-wrapper").append(html);
+                    $("input[type=submit]").prop('disabled',false);
+                this.removeFile(file);            
+            }
+        });
+
+        $("#dataTableForm").submit(function(event){
+            event.preventDefault();
+            $("input[type=submit]").prop('disabled',true);
+            $.ajax({
+                url: "{{ route('pages.data-tables.store') }}",
+                data: $(this).serializeArray(),
+                method: 'post',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                },
+                success: function(response){
+                    $("input[type=submit]").prop('disabled',false);
+                    if(response.status == true) {
+                        window.location.href="{{ route('pages.data-tables.index') }}"; 
+                    } else {
+                        var errors = response.errors;
+                        if (errors.item_name) {
+                            $("#item_name").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.item_name)
+                        } else {
+                            $("#item_name").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html("")
+                        }
+
+                        if (errors.manufacture_name) {
+                            $("#manufacture_name").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.manufacture_name)
+                        } else {
+                            $("#manufacture_name").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html("")
+                        }
+
+                        if (errors.serial_number) {
+                            $("#serial_number").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.serial_number)
+                        } else {
+                            $("#serial_number").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html("")
+                        }
+
+                        if (errors.configuration_status_name) {
+                            $("#configuration_status_name").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.configuration_status_name)
+                        } else {
+                            $("#configuration_status_name").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html("")
+                        }
+
+                        if (errors.location_name) {
+                            $("#location_name").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.location_name)
+                        } else {
+                            $("#location_name").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html("")
+                        }
+
+                        if (errors.description) {
+                            $("#description").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.description)
+                        } else {
+                            $("#description").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html("")
+                        }
+                    }
+                }
+            });
+        })
+        
+        function deleteImage(id){
+            if (confirm("Are you sure you want to delete?")) {
+                $("#data-table-image-row-"+id).remove();
+            }
+        }
+    </script>
 </body>
 </html>

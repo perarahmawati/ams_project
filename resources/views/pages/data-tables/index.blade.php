@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_token" content="{{ csrf_token() }}">
     <title>Document</title>
 
     <!-- Leaflet's CSS -->
@@ -13,17 +14,19 @@
         #locationPopup { display: none; }
     </style>
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
+
 </head>
 <body>
     <h1>Data Table</h1>
     <div>
-        @if(session()->has('success'))
-        <div>
-            {{ session('success') }}
-        </div>
+        @if(Session::has('success'))
+        <div class="alert alert-success">{{ Session::get('success') }}</div>
         @endif
-    </div>
-    <div>
+        @if(Session::has('error'))
+        <div class="alert alert-danger">{{ Session::get('error') }}</div>
+        @endif
         <div>
             <a href="{{ route('pages.data-tables.create') }}">Add New</a>
         </div>
@@ -38,6 +41,7 @@
                 <th>Description</th>
                 <th>Action</th>
             </tr>
+            @if($data_tables->isNotEmpty())
             @foreach($data_tables as $data_table)
             <tr>
                 <td>{{ $data_table->id }}</td>
@@ -48,7 +52,7 @@
                 <td onmouseover="showLocationPopup('{{ $data_table->location->latitude }}', '{{ $data_table->location->longitude }}', '{{ $data_table->location->name }}', '{{ $data_table->location->address }}')" onmouseout="hideLocationPopup()">{{ $data_table->location->name }}</td>
                 <td>{{ $data_table->description }}</td>
                 <td>
-                    <a href="{{ route('pages.data-tables.edit', ['data_table' => $data_table]) }}">Edit</a>
+                    <a href="{{ route('pages.data-tables.edit', $data_table->id) }}">Edit</a>
                     <form method="post" action="{{ route('pages.data-tables.destroy', ['data_table' => $data_table]) }}">
                         @csrf
                         @method('delete')
@@ -57,11 +61,15 @@
                 </td>
             </tr>
             @endforeach
+            @endif
         </table>
         <div id="locationPopup">
             <div id="map"></div>
         </div>
     </div>
+
+    <!-- JQuery -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
 
     <!-- Leaflet's JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
