@@ -46,6 +46,7 @@ Route::delete('/data-table/{data_table}', [DataTableController::class, 'destroy'
 
 // Temp Images
 Route::post('/data-table/temp-images', [TempImageController::class, 'store'])->name('pages.data-tables.temp-images.store');
+Route::delete('/data-table/temp-images/{image}', [TempImageController::class, 'destroy'])->name('pages.data-tables.temp-images.destroy');
 
 // Data Table Images
 Route::post('/data-table/data-table-images', [DataTableImageController::class, 'store'])->name('pages.data-tables.data-table-images.store');

@@ -236,7 +236,23 @@
         
         function deleteImage(id){
             if (confirm("Are you sure you want to delete?")) {
+                var URL = "{{ route('pages.data-tables.temp-images.destroy','ID') }}";
+                newURL = URL.replace('ID',id)
+
                 $("#data-table-image-row-"+id).remove();
+
+                $.ajax({
+                    url: newURL,
+                    data: {},
+                    method: 'delete',
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    },
+                    success: function(response){
+                        window.location.href='{{ route("pages.data-tables.create") }}';
+                    }
+                });
             }
         }
     </script>
