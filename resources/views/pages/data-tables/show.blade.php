@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,25 +7,17 @@
 </head>
 <body>
     <h1>Show Details</h1>
-    @foreach ($data_tables as $data_table)
-        <div>
-            <p>{{ $data_table->item->name }}</p>
-            <p>{{ $data_table->manufacture->name }}</p>
-            <p>{{ $data_table->serial_number }}</p>
-            <p>{{ $data_table->configurationStatus->name }}</p>
-            <p>{{ $data_table->location->name }}</p>
-            <p>{{ $data_table->description }}</p>
-        </div>
-    @endforeach
-    @foreach ($images as $image)
-        <div>
-            <img src="/data_images/{{$image->image}}">
-        </div>
-    @endforeach
-    @foreach ($files as $file)
-        <div>
-            <iframe src="/data_files/{{$file->file}}" width="600" height="800"></iframe>
-        </div>
+    <div>
+        <p>{{ $data_table->item->name }}</p>
+        <p>{{ $data_table->manufacture->name }}</p>
+        <p>{{ $data_table->serial_number }}</p>
+        <p>{{ $data_table->configurationStatus->name }}</p>
+        <p>{{ $data_table->location->name }}</p>
+        <p>{{ $data_table->description }}</p>
+    </div>
+    @foreach($data_tableImages as $image)
+        <img src="{{ asset('uploads/data_tables/large/'.$image->name) }}" alt="Image">
+        <p>{{ $image->caption }}</p>
     @endforeach
 </body>
-</html> -->
+</html>

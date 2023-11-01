@@ -104,6 +104,23 @@ class DataTableController extends Controller
         }
     }
 
+    public function show($data_table_id, Request $request)
+    {
+        $data_table = DataTable::find($data_table_id);
+        if ($data_table == null) {
+            return redirect()->route('pages.data-tables.index');
+        }
+
+        $data_tableImages = DataTableImage::where('data_table_id',$data_table->id)->get();
+
+        $item_names = Item::all();
+        $manufacture_names = Manufacture::all();
+        $configuration_status_names = ConfigurationStatus::all();
+        $location_names = Location::all();
+
+        return view('pages.data-tables.show', compact('data_table', 'data_tableImages', 'item_names', 'manufacture_names', 'configuration_status_names', 'location_names'));
+    }
+
     public function edit($data_table_id, Request $request)
     {
         $data_table = DataTable::find($data_table_id);
@@ -118,7 +135,7 @@ class DataTableController extends Controller
         $configuration_status_names = ConfigurationStatus::all();
         $location_names = Location::all();
         
-        return view('pages.data-tables.edit', compact( 'data_table', 'data_tableImages', 'item_names', 'manufacture_names', 'configuration_status_names', 'location_names'));
+        return view('pages.data-tables.edit', compact('data_table', 'data_tableImages', 'item_names', 'manufacture_names', 'configuration_status_names', 'location_names'));
     }
 
     public function update($data_table_id, Request $request)

@@ -40,6 +40,7 @@ use App\Http\Controllers\TempImageController;
 Route::get('/data-table', [DataTableController::class, 'index'])->name('pages.data-tables.index');
 Route::get('/data-table/create', [DataTableController::class, 'create'])->name('pages.data-tables.create');
 Route::post('/data-table', [DataTableController::class, 'store'])->name('pages.data-tables.store');
+Route::get('/data-table/{data_table}/show', [DataTableController::class, 'show'])->name('pages.data-tables.show');
 Route::get('/data-table/{data_table}/edit', [DataTableController::class, 'edit'])->name('pages.data-tables.edit');
 Route::post('/data-table/{data_table}/update', [DataTableController::class, 'update'])->name('pages.data-tables.update');
 Route::delete('/data-table/{data_table}', [DataTableController::class, 'destroy'])->name('pages.data-tables.destroy');
