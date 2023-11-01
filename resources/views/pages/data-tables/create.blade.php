@@ -29,12 +29,7 @@
 </head>
 <body>
     <h1>Create New Data</h1>
-    @if(Session::has('success'))
-    <div class="alert alert-success">{{ Session::get('success') }}</div>
-    @endif
-    @if(Session::has('error'))
-    <div class="alert alert-danger">{{ Session::get('error') }}</div>
-    @endif
+    <div id="successAlert"></div>
     <form method="post" name="dataTableForm" id="dataTableForm" action="">
         @csrf
         @method('post')
@@ -233,26 +228,12 @@
                 }
             });
         })
-        
+
         function deleteImage(id){
             if (confirm("Are you sure you want to delete?")) {
-                var URL = "{{ route('pages.data-tables.temp-images.destroy','ID') }}";
-                newURL = URL.replace('ID',id)
-
                 $("#data-table-image-row-"+id).remove();
-
-                $.ajax({
-                    url: newURL,
-                    data: {},
-                    method: 'delete',
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    },
-                    success: function(response){
-                        window.location.href='{{ route("pages.data-tables.create") }}';
-                    }
-                });
+                var successAlert = '<div class="alert alert-success">Image deleted successfully.</div>';
+                $("#successAlert").html(successAlert);
             }
         }
     </script>

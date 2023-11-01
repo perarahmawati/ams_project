@@ -158,6 +158,7 @@
 
         $("#dataTableForm").submit(function(event){
             event.preventDefault();
+            $("input[type=submit]").prop('disabled',true);
             $.ajax({
                 url: "{{ route('pages.data-tables.update',$data_table->id) }}",
                 data: $(this).serializeArray(),
@@ -167,6 +168,7 @@
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                 },
                 success: function(response){
+                    $("input[type=submit]").prop('disabled',false);
                     if(response.status == true) {
                         window.location.href="{{ route('pages.data-tables.index') }}"; 
                     } else {
