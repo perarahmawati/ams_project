@@ -28,7 +28,36 @@
         <div class="alert alert-danger">{{ Session::get('error') }}</div>
         @endif
         <div>
-            <a href="{{ route('pages.data-tables.create') }}">Add New</a>
+            <a href="{{ route('pages.data-tables.create') }}" class="btn btn-primary">Add New Data</a>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Import New Data
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Import New Data</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('import-excel') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="file" name="file" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+            </div>
         </div>
         <table border="1">
             <tr>
@@ -68,6 +97,9 @@
             <div id="map"></div>
         </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!-- JQuery -->
     <script src="/vendor/jquery/jquery.min.js"></script>

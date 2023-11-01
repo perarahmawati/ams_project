@@ -12,6 +12,8 @@ use App\Models\TempImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\DataTableImport;
 
 class DataTableController extends Controller
 {
@@ -102,6 +104,21 @@ class DataTableController extends Controller
                 'errors' => $validator->errors()
             ]);
         }
+    }
+
+    public function importexcel(Request $request)
+    {
+        $this->validate($request,[
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+        
+        $data = $request->file('file');
+
+        $dataname = $data->getClientOriginalName();
+        $data->move('imports', $dataname);
+
+        Excel::import(new DataTableImport, \public_path('/imports/'.$dataname));
+        return redirect()->back();
     }
 
     public function show($data_table_id, Request $request)

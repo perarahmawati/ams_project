@@ -52,6 +52,9 @@ Route::post('/data-table/temp-images', [TempImageController::class, 'store'])->n
 Route::post('/data-table/data-table-images', [DataTableImageController::class, 'store'])->name('pages.data-tables.data-table-images.store');
 Route::delete('/data-table/data-table-images/{image}', [DataTableImageController::class, 'destroy'])->name('pages.data-tables.data-table-images.destroy');
 
+// Data Table Import Excel
+Route::post('/data-table/import-excel',[DataTableController::class, 'importexcel'])->name('import-excel');
+
 // Configuration Statuses
 Route::get('/configuration-status', [ConfigurationStatusController::class, 'index'])->name('pages.management.configuration-statuses.index');
 Route::get('/configuration-tatus/create', [ConfigurationStatusController::class, 'create'])->name('pages.management.configuration-statuses.create');
