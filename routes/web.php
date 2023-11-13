@@ -17,24 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\UserManageController;
-use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\ConfigurationStatusController;
 use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\DataTableImageController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ManufactureController;
-use App\Http\Controllers\UserLogsController;
-use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TempImageController;
-
-// Route::get('/dashboard', [DashboardController::class, 'index'])->name('pages.dashboard.index');
-// Route::get('/user-manage', [UserManageController::class, 'index'])->name('pages.user-manage.index');
-// Route::get('/activity-logs', [ActivityLogsController::class, 'index'])->name('pages.history-logs.activity-logs.index');
-// Route::get('/user-logs', [UserLogsController::class, 'index'])->name('pages.history-logs.user-logs.index');
-// Route::get('/message', [MessageController::class, 'index'])->name('pages.message.index');
 
 // Data Tables
 Route::get('/data-table', [DataTableController::class, 'index'])->name('pages.data-tables.index');
@@ -87,3 +76,16 @@ Route::post('/manufacture', [ManufactureController::class, 'store'])->name('page
 Route::get('/manufacture/{manufacture}/edit', [ManufactureController::class, 'edit'])->name('pages.management.manufactures.edit');
 Route::put('/manufacture/{manufacture}/update', [ManufactureController::class, 'update'])->name('pages.management.manufactures.update');
 Route::delete('/manufacture/{manufacture}/destroy', [ManufactureController::class, 'destroy'])->name('pages.management.manufactures.destroy');
+
+// Belum digunakan
+// use App\Http\Controllers\DashboardController;
+// use App\Http\Controllers\UserManageController;
+// use App\Http\Controllers\ActivityLogsController;
+// use App\Http\Controllers\UserLogsController;
+// use App\Http\Controllers\MessageController;
+
+// Route::get('/dashboard', [DashboardController::class, 'index'])->name('pages.dashboard.index');
+// Route::get('/user-manage', [UserManageController::class, 'index'])->name('pages.user-manage.index');
+// Route::get('/activity-logs', [ActivityLogsController::class, 'index'])->name('pages.history-logs.activity-logs.index');
+// Route::get('/user-logs', [UserLogsController::class, 'index'])->name('pages.history-logs.user-logs.index');
+// Route::get('/message', [MessageController::class, 'index'])->name('pages.message.index');

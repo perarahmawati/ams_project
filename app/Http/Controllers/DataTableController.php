@@ -106,38 +106,6 @@ class DataTableController extends Controller
         }
     }
 
-    public function importexcel(Request $request)
-    {
-        $this->validate($request,[
-            'file' => 'required|mimes:csv,xls,xlsx'
-        ]);
-        
-        $data = $request->file('file');
-
-        $dataname = $data->getClientOriginalName();
-        $data->move('imports', $dataname);
-
-        Excel::import(new DataTableImport, \public_path('/imports/'.$dataname));
-        return redirect()->back();
-    }
-
-    public function show($data_table_id, Request $request)
-    {
-        $data_table = DataTable::find($data_table_id);
-        if ($data_table == null) {
-            return redirect()->route('pages.data-tables.index');
-        }
-
-        $data_tableImages = DataTableImage::where('data_table_id',$data_table->id)->get();
-
-        $item_names = Item::all();
-        $manufacture_names = Manufacture::all();
-        $configuration_status_names = ConfigurationStatus::all();
-        $location_names = Location::all();
-
-        return view('pages.data-tables.show', compact('data_table', 'data_tableImages', 'item_names', 'manufacture_names', 'configuration_status_names', 'location_names'));
-    }
-
     public function edit($data_table_id, Request $request)
     {
         $data_table = DataTable::find($data_table_id);
@@ -217,5 +185,37 @@ class DataTableController extends Controller
         $data_table->delete();
 
         return redirect()->route('pages.data-tables.index')->with('success', 'Data Deleted Successfully!');
+    }
+
+    public function importexcel(Request $request)
+    {
+        $this->validate($request,[
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+        
+        $data = $request->file('file');
+
+        $dataname = $data->getClientOriginalName();
+        $data->move('imports', $dataname);
+
+        Excel::import(new DataTableImport, \public_path('/imports/' . $dataname));
+        return redirect()->back();
+    }
+
+    public function show($data_table_id, Request $request)
+    {
+        $data_table = DataTable::find($data_table_id);
+        if ($data_table == null) {
+            return redirect()->route('pages.data-tables.index');
+        }
+
+        $data_tableImages = DataTableImage::where('data_table_id',$data_table->id)->get();
+
+        $item_names = Item::all();
+        $manufacture_names = Manufacture::all();
+        $configuration_status_names = ConfigurationStatus::all();
+        $location_names = Location::all();
+
+        return view('pages.data-tables.show', compact('data_table', 'data_tableImages', 'item_names', 'manufacture_names', 'configuration_status_names', 'location_names'));
     }
 }
