@@ -14,6 +14,7 @@
         <p>{{ $data_table->configurationStatus->name }}</p>
         <p>{{ $data_table->location->name }}</p>
         <p>{{ $data_table->description }}</p>
+        <p>{{ $data_table->positionStatus->name }}</p>
     </div>
     @foreach($data_tableImages as $image)
         <img src="{{ asset('uploads/data_tables/large/'.$image->name) }}" alt="Image">

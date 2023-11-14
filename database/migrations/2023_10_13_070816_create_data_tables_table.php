@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('configuration_status_name')->constrained('configuration_status_names');
             $table->unsignedBigInteger('location_name')->constrained('location_names');
             $table->longText('description')->nullable();
+            $table->unsignedBigInteger('position_status_name')->constrained('position_status_names');
             $table->timestamps();
         });
     }

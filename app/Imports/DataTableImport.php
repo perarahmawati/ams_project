@@ -22,6 +22,7 @@ class DataTableImport implements ToModel, WithHeadingRow
             'configuration_status_name' => $row['configuration_status'],
             'location_name' => $row['location'],
             'description' => $row['description'],
+            'position_status_name' => $row['position_status'],
         ]);
     }
 }

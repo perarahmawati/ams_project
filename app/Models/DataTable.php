@@ -17,7 +17,8 @@ class DataTable extends Model
         'serial_number', 
         'configuration_status_name',
         'location_name',
-        'description'
+        'description',
+        'position_status_name'
     ];
 
     public function item(){
@@ -34,5 +35,9 @@ class DataTable extends Model
 
     public function location(){
         return $this->belongsTo(Location::class, 'location_name');
+    }
+
+    public function positionStatus(){
+        return $this->belongsTo(PositionStatus::class, 'position_status_name');
     }
 }

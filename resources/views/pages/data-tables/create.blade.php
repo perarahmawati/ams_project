@@ -84,6 +84,16 @@
             <p></p>
         </div>
         <div>
+            <label for="position_status_name">Position Status</label>
+            <select name="position_status_name" id="position_status_name" class="form-control">
+                <option selected disabled>Select Position Status</option>
+                @foreach ($position_status_names as $option)
+                    <option value="{{ $option->id }}">{{ $option->name }}</option>
+                @endforeach
+            </select>
+            <p></p>
+        </div>
+        <div>
             <h2>Upload Image</h2>
             <div id="image" class="dropzone dz-clickable">
                 <div class="dz-message needsclick">
@@ -220,6 +230,18 @@
                             .html(errors.description)
                         } else {
                             $("#description").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html("")
+                        }
+
+                        if (errors.position_status_name) {
+                            $("#position_status_name").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.position_status_name)
+                        } else {
+                            $("#position_status_name").removeClass('is-invalid')
                             .siblings("p")
                             .removeClass('invalid-feedback')
                             .html("")

@@ -68,6 +68,7 @@
                 <th>Configuration Status</th>
                 <th>Location</th>
                 <th>Description</th>
+                <th>Position Status</th>
                 <th>Created Date</th>
                 <th>Action</th>
             </tr>
@@ -81,6 +82,7 @@
                 <td>{{ $data_table->configurationStatus->name }}</td>
                 <td onmouseover="showLocationPopup('{{ $data_table->location->latitude }}', '{{ $data_table->location->longitude }}', '{{ $data_table->location->name }}', '{{ $data_table->location->address }}')" onmouseout="hideLocationPopup()">{{ $data_table->location->name }}</td>
                 <td>{{ $data_table->description }}</td>
+                <td>{{ $data_table->positionStatus->name }}</td>
                 <td>{{ $data_table->created_at }}</td>
                 <td>
                     <a href="{{ route('pages.data-tables.show', $data_table->id) }}">Show</a>

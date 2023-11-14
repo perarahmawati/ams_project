@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\DataTableImport;
+use App\Models\PositionStatus;
 
 class DataTableController extends Controller
 {
@@ -30,7 +31,8 @@ class DataTableController extends Controller
         $manufacture_names = Manufacture::all();
         $configuration_status_names = ConfigurationStatus::all();
         $location_names = Location::all();
-        return view('pages.data-tables.create', compact('item_names', 'manufacture_names', 'configuration_status_names', 'location_names'));
+        $position_status_names = PositionStatus::all();
+        return view('pages.data-tables.create', compact('item_names', 'manufacture_names', 'configuration_status_names', 'location_names', 'position_status_names'));
     }
 
     public function store(Request $request)
@@ -41,7 +43,8 @@ class DataTableController extends Controller
             'serial_number' => 'max:50',
             'configuration_status_name' => 'required|exists:configuration_statuses,id',
             'location_name' => 'required|exists:locations,id',
-            'description' => 'max:255'
+            'description' => 'max:255',
+            'position_status_name' => 'required|exists:position_statuses,id'
         ]);
 
         if ($validator->passes()) {
@@ -53,6 +56,7 @@ class DataTableController extends Controller
             $data_table->configuration_status_name = $request->configuration_status_name;
             $data_table->location_name = $request->location_name;
             $data_table->description = $request->description;
+            $data_table->position_status_name = $request->position_status_name;
             $data_table->save();
 
             if (!empty($request->image_id)){
@@ -119,8 +123,9 @@ class DataTableController extends Controller
         $manufacture_names = Manufacture::all();
         $configuration_status_names = ConfigurationStatus::all();
         $location_names = Location::all();
+        $position_status_names = PositionStatus::all();
         
-        return view('pages.data-tables.edit', compact('data_table', 'data_tableImages', 'item_names', 'manufacture_names', 'configuration_status_names', 'location_names'));
+        return view('pages.data-tables.edit', compact('data_table', 'data_tableImages', 'item_names', 'manufacture_names', 'configuration_status_names', 'location_names', 'position_status_names'));
     }
 
     public function update($data_table_id, Request $request)
@@ -140,7 +145,8 @@ class DataTableController extends Controller
             'serial_number' => 'max:50',
             'configuration_status_name' => 'required|exists:configuration_statuses,id',
             'location_name' => 'required|exists:locations,id',
-            'description' => 'max:255'
+            'description' => 'max:255',
+            'configuration_status_name' => 'required|exists:configuration_statuses,id'
         ]);
 
         if ($validator->passes()) {
@@ -151,6 +157,7 @@ class DataTableController extends Controller
             $data_table->configuration_status_name = $request->configuration_status_name;
             $data_table->location_name = $request->location_name;
             $data_table->description = $request->description;
+            $data_table->position_status_name = $request->position_status_name;
             $data_table->save();
 
             if (!empty($request->image_id)){
@@ -195,7 +202,7 @@ class DataTableController extends Controller
         
         $data = $request->file('file');
 
-        $dataname = $data->getClientOriginalName();
+        $dataname = time() . '.' . $data->getClientOriginalExtension();
         $data->move('imports', $dataname);
 
         Excel::import(new DataTableImport, \public_path('/imports/' . $dataname));
@@ -215,7 +222,8 @@ class DataTableController extends Controller
         $manufacture_names = Manufacture::all();
         $configuration_status_names = ConfigurationStatus::all();
         $location_names = Location::all();
+        $position_status_names = PositionStatus::all();
 
-        return view('pages.data-tables.show', compact('data_table', 'data_tableImages', 'item_names', 'manufacture_names', 'configuration_status_names', 'location_names'));
+        return view('pages.data-tables.show', compact('data_table', 'data_tableImages', 'item_names', 'manufacture_names', 'configuration_status_names', 'location_names', 'position_status_names'));
     }
 }
