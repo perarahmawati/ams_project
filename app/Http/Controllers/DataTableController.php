@@ -196,19 +196,42 @@ class DataTableController extends Controller
 
     public function importexcel(Request $request)
     {
-        $this->validate($request,[
-            'file' => 'required|mimes:csv,xls,xlsx'
-        ]);
-        
-        $data = $request->file('file');
-
-        $dataname = time() . '.' . $data->getClientOriginalExtension();
-        $data->move('imports', $dataname);
-
-        Excel::import(new DataTableImport, \public_path('/imports/' . $dataname));
-        return redirect()->back();
+        try {
+            $this->validate($request, [
+                'file' => 'required|mimes:csv,xls,xlsx',
+            ]);
+    
+            $data = $request->file('file');
+    
+            $dataname = time() . '.' . $data->getClientOriginalExtension();
+            $data->move('imports', $dataname);
+    
+            Excel::import(new DataTableImport, public_path('/imports/' . $dataname));
+    
+            $successMessage = 'Data Imported Successfully!';
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'status' => true,
+                    'message' => $successMessage,
+                ]);
+            } else {
+                $request->session()->flash('success', $successMessage);
+                return redirect()->back();
+            }
+        } catch (\Exception $e) {
+            $errorMessage = 'Failed To Import Data!';
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => $errorMessage,
+                ]);
+            } else {
+                $request->session()->flash('error', $errorMessage);
+                return redirect()->back();
+            }
+        }
     }
-
+    
     public function show($data_table_id, Request $request)
     {
         $data_table = DataTable::find($data_table_id);

@@ -46,6 +46,9 @@
                 <form action="{{ route('import-excel') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
+                        <div>
+                            <p>Download the import template file <a href="{{ asset('/assets/files/import_new_data_template.xlsx') }}">here</a>.</p>
+                        </div>
                         <div class="form-group">
                             <input type="file" name="file" required accept=".xls,.xlsx,.csv">
                         </div>
