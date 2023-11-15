@@ -11,6 +11,7 @@ use App\Models\Location;
 use App\Models\TempImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\DataTableImport;
@@ -22,7 +23,7 @@ class DataTableController extends Controller
     {
         $data_tables = DataTable::all();
       
-        return view('pages.data-tables.index',compact('data_tables'));
+        return view('pages.data-tables.index', compact('data_tables'));
     }
 
     public function create()
@@ -95,11 +96,11 @@ class DataTableController extends Controller
                 }
             }
 
-            $request->session()->flash('success', 'Data added successfully.');
+            session::flash('success', 'Data added successfully.');
 
             return response()->json([
                 'status' => true,
-                'message' => 'Data updated successfully.'
+                'message' => 'Data added successfully.'
             ]);
 
         } else {
@@ -113,6 +114,7 @@ class DataTableController extends Controller
     public function edit($data_table_id, Request $request)
     {
         $data_table = DataTable::find($data_table_id);
+
         if ($data_table == null) {
             return redirect()->route('pages.data-tables.index');
         }
@@ -172,7 +174,7 @@ class DataTableController extends Controller
                 }
             }
 
-            $request->session()->flash('success', 'Data updated successfully.');
+            session::flash('success', 'Data updated successfully.');
 
             return response()->json([
                 'status' => true,
@@ -187,11 +189,22 @@ class DataTableController extends Controller
         }
     }
     
-    public function destroy(DataTable $data_table)
+    public function destroy($data_table_id, Request $request)
     {
+        $data_table = DataTable::find($data_table_id);
+
+        if ($data_table == null) {
+            return response()->json([
+                'status' => false,
+                'notFound' => true
+            ]);
+        }
+
         $data_table->delete();
 
-        return redirect()->route('pages.data-tables.index')->with('success', 'Data Deleted Successfully!');
+        session::flash('success', 'Data deleted successfully.');
+
+        return redirect()->route('pages.data-tables.index');
     }
 
     public function importexcel(Request $request)
@@ -208,25 +221,25 @@ class DataTableController extends Controller
     
             Excel::import(new DataTableImport, public_path('/imports/' . $dataname));
     
-            $successMessage = 'Data Imported Successfully!';
+            $successMessage = 'Data imported successfully.';
             if ($request->expectsJson()) {
                 return response()->json([
                     'status' => true,
                     'message' => $successMessage,
                 ]);
             } else {
-                $request->session()->flash('success', $successMessage);
+                session::flash('success', $successMessage);
                 return redirect()->back();
             }
         } catch (\Exception $e) {
-            $errorMessage = 'Failed To Import Data!';
+            $errorMessage = 'Failed to import data.';
             if ($request->expectsJson()) {
                 return response()->json([
                     'status' => false,
                     'message' => $errorMessage,
                 ]);
             } else {
-                $request->session()->flash('error', $errorMessage);
+                session::flash('error', $errorMessage);
                 return redirect()->back();
             }
         }

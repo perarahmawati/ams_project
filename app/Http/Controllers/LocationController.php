@@ -4,55 +4,128 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Location;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 
 class LocationController extends Controller
 {
-    public function marker(){
+    public function marker()
+    {
         $locations = Location::all();
         return response()->json($locations);
     }
 
-    public function index(){
+    public function index()
+    {
         $locations = Location::all();
-        return view('pages.management.locations.index', ['locations' => $locations]);
+        return view('pages.management.locations.index', compact('locations'));
     }
 
-    public function create(){
+    public function create()
+    {
         return view('pages.management.locations.create');
     }
 
-    public function store(Request $request){
-        $request->validate([
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'latitude' => 'required|string|max:25',
             'longitude' => 'required|string|max:25'
         ]);
 
-        Location::create($request->all());
+        if ($validator->passes()) {
 
-        return redirect(route('pages.management.locations.index'))->with('success', 'New Location Added Successfully!');
+            $location = new Location();
+            $location->name = $request->name;
+            $location->address = $request->address;
+            $location->latitude = $request->latitude;
+            $location->longitude = $request->longitude;
+            $location->save();
+
+            session::flash('success', 'Location added successfully.');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Location added successfully.'
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
-    public function edit(Location $location){
-        return view('pages.management.locations.edit', ['location' => $location]);
+    public function edit($location_id, Request $request)
+    {
+        $location = Location::find($location_id);
+        
+        if ($location == null) {
+            return redirect()->route('pages.management.locations.index');
+        }
+
+        return view('pages.management.locations.edit',compact('location'));
     }
 
-    public function update(Location $location, Request $request){
-        $request->validate([
+    public function update($location_id, Request $request)
+    {
+        $location = Location::find($location_id);
+
+        if ($location == null) {
+            return response()->json([
+                'status' => false,
+                'notFound' => true
+            ]);
+        }
+
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'latitude' => 'required|string|max:25',
             'longitude' => 'required|string|max:25'
         ]);
 
-        $location->update($request->all());
+        if ($validator->passes()) {
 
-        return redirect(route('pages.management.locations.index'))->with('success', 'Location Updated Successfully!');
+            $location->name = $request->name;
+            $location->address = $request->address;
+            $location->latitude = $request->latitude;
+            $location->longitude = $request->longitude;
+            $location->save();
+
+            session::flash('success', 'Location updated successfully.');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Location updated successfully.'
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
-    public function destroy(Location $location){
+    public function destroy($location_id, Request $request)
+    {
+        $location = Location::find($location_id);
+
+        if ($location == null) {
+            return response()->json([
+                'status' => false,
+                'notFound' => true
+            ]);
+        }
+
         $location->delete();
-        return redirect(route('pages.management.locations.index'))->with('success', 'Location Deleted Successfully!');
+
+        session::flash('success', 'Location deleted successfully.');
+
+        return redirect()->route('pages.management.locations.index');
     }
 }

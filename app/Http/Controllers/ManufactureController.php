@@ -4,44 +4,110 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Manufacture;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 
 class ManufactureController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $manufactures = Manufacture::all();
-        return view('pages.management.manufactures.index', ['manufactures' => $manufactures]);
+        return view('pages.management.manufactures.index', compact('manufactures'));
     }
 
-    public function create(){
+    public function create()
+    {
         return view('pages.management.manufactures.create');
     }
 
-    public function store(Request $request){
-        $request->validate([
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255'
         ]);
 
-        Manufacture::create($request->all());
+        if ($validator->passes()) {
 
-        return redirect(route('pages.management.manufactures.index'))->with('success', 'New Manufacturer Added Successfully!');
+            $manufacture = new Manufacture;
+            $manufacture->name = $request->name;
+            $manufacture->save();
+
+            session::flash('success', 'Manufacture added successfully.');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Manufacture added successfully.'
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
-    public function edit(Manufacture $manufacture){
-        return view('pages.management.manufactures.edit', ['manufacture' => $manufacture]);
+    public function edit($manufacture_id, Request $request)
+    {
+        $manufacture = Manufacture::find($manufacture_id);
+        
+        if ($manufacture == null) {
+            return redirect()->route('pages.management.manufactures.index');
+        }
+
+        return view('pages.management.manufactures.edit', compact('manufacture'));
     }
 
-    public function update(Manufacture $manufacture, Request $request){
-        $request->validate([
+    public function update($manufacture_id, Request $request)
+    {
+        $manufacture = Manufacture::find($manufacture_id);
+
+        if ($manufacture == null) {
+            return response()->json([
+                'status' => false,
+                'notFound' => true
+            ]);
+        }
+
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255'
         ]);
 
-        $manufacture->update($request->all());
+        if ($validator->passes()) {
 
-        return redirect(route('pages.management.manufactures.index'))->with('success', 'Manufacture Updated Successfully!');
+            $manufacture->name = $request->name;
+            $manufacture->save();
+
+            session::flash('success', 'Manufacture updated successfully.');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Manufacture updated successfully.'
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
-    public function destroy(Manufacture $manufacture){
+    public function destroy($manufacture_id, Request $request)
+    {
+        $manufacture = Manufacture::find($manufacture_id);
+
+        if ($manufacture == null) {
+            return response()->json([
+                'status' => false,
+                'notFound' => true
+            ]);
+        }
+
         $manufacture->delete();
-        return redirect(route('pages.management.manufactures.index'))->with('success', 'Manufacture Deleted Successfully!');
+
+        session::flash('success', 'Manufacture deleted successfully.');
+
+        return redirect()->route('pages.management.manufactures.index');
     }
 }

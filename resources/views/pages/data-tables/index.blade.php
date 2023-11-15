@@ -6,6 +6,9 @@
     <meta name="_token" content="{{ csrf_token() }}">
     <title>Document</title>
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
+
     <!-- Leaflet's CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 
@@ -13,10 +16,6 @@
         #map { height: 300px; width: 400px;}
         #locationPopup { display: none; }
     </style>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
-
 </head>
 <body>
     <h1>Data Table</h1>
@@ -28,11 +27,11 @@
         <div class="alert alert-danger">{{ Session::get('error') }}</div>
         @endif
         <div>
-            <a href="{{ route('pages.data-tables.create') }}" class="btn btn-primary">Add New Data</a>
+            <a href="{{ route('pages.data-tables.create') }}" class="btn btn-primary">Add Data</a>
 
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Import New Data
+                Import Data
             </button>
 
             <!-- Modal -->
@@ -90,7 +89,7 @@
                 <td>
                     <a href="{{ route('pages.data-tables.show', $data_table->id) }}">Show</a>
                     <a href="{{ route('pages.data-tables.edit', $data_table->id) }}">Edit</a>
-                    <form method="post" action="{{ route('pages.data-tables.destroy', ['data_table' => $data_table]) }}">
+                    <form method="post" action="{{ route('pages.data-tables.destroy', $data_table->id) }}">
                         @csrf
                         @method('delete')
                         <input type="submit" value="Delete" />

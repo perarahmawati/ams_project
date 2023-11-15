@@ -50,7 +50,7 @@ Route::get('/configuration-status', [ConfigurationStatusController::class, 'inde
 Route::get('/configuration-status/create', [ConfigurationStatusController::class, 'create'])->name('pages.management.configuration-statuses.create');
 Route::post('/configuration-status', [ConfigurationStatusController::class, 'store'])->name('pages.management.configuration-statuses.store');
 Route::get('/configuration-status/{configuration_status}/edit', [ConfigurationStatusController::class, 'edit'])->name('pages.management.configuration-statuses.edit');
-Route::put('/configuration-status/{configuration_status}/update', [ConfigurationStatusController::class, 'update'])->name('pages.management.configuration-statuses.update');
+Route::post('/configuration-status/{configuration_status}/update', [ConfigurationStatusController::class, 'update'])->name('pages.management.configuration-statuses.update');
 Route::delete('/configuration-status/{configuration_status}/destroy', [ConfigurationStatusController::class, 'destroy'])->name('pages.management.configuration-statuses.destroy');
 
 // Items
@@ -58,7 +58,7 @@ Route::get('/item', [ItemController::class, 'index'])->name('pages.management.it
 Route::get('/item/create', [ItemController::class, 'create'])->name('pages.management.items.create');
 Route::post('/item', [ItemController::class, 'store'])->name('pages.management.items.store');
 Route::get('/item/{item}/edit', [ItemController::class, 'edit'])->name('pages.management.items.edit');
-Route::put('/item/{item}/update', [ItemController::class, 'update'])->name('pages.management.items.update');
+Route::post('/item/{item}/update', [ItemController::class, 'update'])->name('pages.management.items.update');
 Route::delete('/item/{item}/destroy', [ItemController::class, 'destroy'])->name('pages.management.items.destroy');
 
 // Locations
@@ -67,7 +67,7 @@ Route::get('/location', [LocationController::class, 'index'])->name('pages.manag
 Route::get('/location/create', [LocationController::class, 'create'])->name('pages.management.locations.create');
 Route::post('/location', [LocationController::class, 'store'])->name('pages.management.locations.store');
 Route::get('/location/{location}/edit', [LocationController::class, 'edit'])->name('pages.management.locations.edit');
-Route::put('/location/{location}/update', [LocationController::class, 'update'])->name('pages.management.locations.update');
+Route::post('/location/{location}/update', [LocationController::class, 'update'])->name('pages.management.locations.update');
 Route::delete('/location/{location}/destroy', [LocationController::class, 'destroy'])->name('pages.management.locations.destroy');
 
 // Manufactures
@@ -75,7 +75,7 @@ Route::get('/manufacture', [ManufactureController::class, 'index'])->name('pages
 Route::get('/manufacture/create', [ManufactureController::class, 'create'])->name('pages.management.manufactures.create');
 Route::post('/manufacture', [ManufactureController::class, 'store'])->name('pages.management.manufactures.store');
 Route::get('/manufacture/{manufacture}/edit', [ManufactureController::class, 'edit'])->name('pages.management.manufactures.edit');
-Route::put('/manufacture/{manufacture}/update', [ManufactureController::class, 'update'])->name('pages.management.manufactures.update');
+Route::post('/manufacture/{manufacture}/update', [ManufactureController::class, 'update'])->name('pages.management.manufactures.update');
 Route::delete('/manufacture/{manufacture}/destroy', [ManufactureController::class, 'destroy'])->name('pages.management.manufactures.destroy');
 
 // Manufactures
@@ -83,7 +83,7 @@ Route::get('/position-status', [PositionStatusController::class, 'index'])->name
 Route::get('/position-status/create', [PositionStatusController::class, 'create'])->name('pages.management.position-statuses.create');
 Route::post('/position-status', [PositionStatusController::class, 'store'])->name('pages.management.position-statuses.store');
 Route::get('/position-status/{position_status}/edit', [PositionStatusController::class, 'edit'])->name('pages.management.position-statuses.edit');
-Route::put('/position-status/{position_status}/update', [PositionStatusController::class, 'update'])->name('pages.management.position-statuses.update');
+Route::post('/position-status/{position_status}/update', [PositionStatusController::class, 'update'])->name('pages.management.position-statuses.update');
 Route::delete('/position-status/{position_status}/destroy', [PositionStatusController::class, 'destroy'])->name('pages.management.position-statuses.destroy');
 
 // Belum digunakan

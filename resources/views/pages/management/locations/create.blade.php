@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_token" content="{{ csrf_token() }}">
     <title>Document</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
 
     <!-- Leaflet's CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -11,49 +15,51 @@
     <style>
         #map { height: 400px; }
     </style>
-
 </head>
 <body>
     <h1>Create New Location</h1>
     <div>
-        @if($errors->any())
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{$error}}</li>
-            @endforeach
-        </ul>
+        @if(Session::has('success'))
+        <div class="alert alert-success">{{ Session::get('success') }}</div>
         @endif
+        @if(Session::has('error'))
+        <div class="alert alert-danger">{{ Session::get('error') }}</div>
+        @endif
+        <div class="search">
+            <input class="search-location" type="text" placeholder="Search Location" oninput="onTyping(this)" />
+            <ul>
+                <div id="search-result"></div>
+            </ul>
+        </div>
+        <div id="map"></div>
+        <form method="post" name="dataTableForm" id="dataTableForm" action="">
+            @csrf
+            @method('post')
+            <div>
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" placeholder="Name" class="form-control" />
+                <p></p>
+            </div>
+            <div>
+                <label for="address">Address</label>
+                <textarea type="text" name="address" id="address" placeholder="Address" class="form-control"></textarea>
+                <p></p>
+            </div>
+            <div>
+                <label for="latitude">Latitude</label>
+                <input type="text" name="latitude" id="latitude" placeholder="Latitude" class="form-control" />
+                <p></p>
+            </div>
+            <div>
+                <label for="longitude">Longitude</label>
+                <input type="text" name="longitude" id="longitude" placeholder="Longitude" class="form-control" />
+                <p></p>
+            </div>
+            <div>
+                <input type="submit" value="Save" />
+            </div>
+        </form>
     </div>
-    <div class="search">
-        <input class="search-location" type="text" placeholder="Search Location" oninput="onTyping(this)" />
-        <ul>
-            <div id="search-result"></div>
-        </ul>
-    </div>
-    <div id="map"></div>
-    <form method="post" action="{{ route('pages.management.locations.store') }}">
-        @csrf
-        @method('post')
-        <div>
-            <label>Name</label>
-            <input type="text" name="name" id="name" placeholder="Name" />
-        </div>
-        <div>
-            <label>Address</label>
-            <textarea type="text" name="address" id="address" placeholder="Address"></textarea>
-        </div>
-        <div>
-            <label>Latitude</label>
-            <input type="text" name="latitude" id="latitude" placeholder="Latitude" />
-        </div>
-        <div>
-            <label>Longitude</label>
-            <input type="text" name="longitude" id="longitude" placeholder="Longitude" />
-        </div>
-        <div>
-            <input type="submit" value="Save" />
-        </div>
-    </form>
 
     <!-- Leaflet's JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -190,6 +196,80 @@
             // Clear Results
             clearResults();
         }
+    </script>
+
+    <!-- JQuery -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $("#dataTableForm").submit(function(event){
+            event.preventDefault();
+            $("input[type=submit]").prop('disabled',true);
+            $.ajax({
+                url: "{{ route('pages.management.locations.store') }}",
+                data: $(this).serializeArray(),
+                method: 'post',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                },
+                success: function(response){
+                    $("input[type=submit]").prop('disabled',false);
+                    if(response.status == true) {
+                        window.location.href="{{ route('pages.management.locations.index') }}"; 
+                    } else {
+                        var errors = response.errors;
+                        if (errors.name) {
+                            $("#name").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.name)
+                        } else {
+                            $("#name").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html("")
+                        }
+
+                        if (errors.address) {
+                            $("#address").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.address)
+                        } else {
+                            $("#address").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html("")
+                        }
+
+                        if (errors.latitude) {
+                            $("#latitude").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.latitude)
+                        } else {
+                            $("#latitude").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html("")
+                        }
+
+                        if (errors.longitude) {
+                            $("#longitude").addClass('is-invalid')
+                            .siblings("p")
+                            .addClass('invalid-feedback')
+                            .html(errors.longitude)
+                        } else {
+                            $("#longitude").removeClass('is-invalid')
+                            .siblings("p")
+                            .removeClass('invalid-feedback')
+                            .html("")
+                        }
+                    }
+                }
+            });
+        })
     </script>
 </body>
 </html>

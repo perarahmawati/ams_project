@@ -29,86 +29,94 @@
 </head>
 <body>
     <h1>Create New Data</h1>
-    <div id="successAlert"></div>
-    <form method="post" name="dataTableForm" id="dataTableForm" action="">
-        @csrf
-        @method('post')
-        <div>
-            <label for="item_name">Item</label>
-            <select name="item_name" id="item_name" class="form-control">
-                <option selected disabled>Select Item</option>
-                @foreach ($item_names as $option)
-                    <option value="{{ $option->id }}">{{ $option->name }}</option>
-                @endforeach
-            </select>
-            <p></p>
-        </div>
-        <div>
-            <label for="manufacture_name">Manufacture</label>
-            <select name="manufacture_name" id="manufacture_name" class="form-control">
-                <option selected disabled>Select Manufacture</option>
-                @foreach ($manufacture_names as $option)
-                    <option value="{{ $option->id }}">{{ $option->name }}</option>
-                @endforeach
-            </select>
-            <p></p>
-        </div>
-        <div>
-            <label for="serial_number">Serial Number</label>
-            <input type="text" name="serial_number" id="serial_number" placeholder="Serial Number" class="form-control"></input>
-            <p></p>
-        </div>
-        <div>
-            <label for="configuration_status_name">Configuration Status</label>
-            <select name="configuration_status_name" id="configuration_status_name" class="form-control">
-                <option selected disabled>Select Configuration Status</option>
-                @foreach ($configuration_status_names as $option)
-                    <option value="{{ $option->id }}">{{ $option->name }}</option>
-                @endforeach
-            </select>
-            <p></p>
-        </div>
-        <div>
-            <label for="location_name">Location</label>
-            <select name="location_name" id="location_name" class="form-control">
-                <option selected disabled>Select Location</option>
-                @foreach ($location_names as $option)
-                    <option value="{{ $option->id }}">{{ $option->name }}</option>
-                @endforeach
-            </select>
-            <p></p>
-        </div>
-        <div>
-            <label for="description">Description</label>
-            <textarea type="text" name="description" id="description" placeholder="Description" class="form-control"></textarea>
-            <p></p>
-        </div>
-        <div>
-            <label for="position_status_name">Position Status</label>
-            <select name="position_status_name" id="position_status_name" class="form-control">
-                <option selected disabled>Select Position Status</option>
-                @foreach ($position_status_names as $option)
-                    <option value="{{ $option->id }}">{{ $option->name }}</option>
-                @endforeach
-            </select>
-            <p></p>
-        </div>
-        <div>
-            <h2>Upload Image</h2>
-            <div id="image" class="dropzone dz-clickable">
-                <div class="dz-message needsclick">
-                    <br>Drop files here or click to upload.
-                    <br><br>
+    <div>
+        @if(Session::has('success'))
+        <div class="alert alert-success">{{ Session::get('success') }}</div>
+        @endif
+        @if(Session::has('error'))
+        <div class="alert alert-danger">{{ Session::get('error') }}</div>
+        @endif
+        <div id="successAlert"></div>
+        <form method="post" name="dataTableForm" id="dataTableForm" action="">
+            @csrf
+            @method('post')
+            <div>
+                <label for="item_name">Item</label>
+                <select name="item_name" id="item_name" class="form-control">
+                    <option selected disabled>Select Item</option>
+                    @foreach ($item_names as $option)
+                        <option value="{{ $option->id }}">{{ $option->name }}</option>
+                    @endforeach
+                </select>
+                <p></p>
+            </div>
+            <div>
+                <label for="manufacture_name">Manufacture</label>
+                <select name="manufacture_name" id="manufacture_name" class="form-control">
+                    <option selected disabled>Select Manufacture</option>
+                    @foreach ($manufacture_names as $option)
+                        <option value="{{ $option->id }}">{{ $option->name }}</option>
+                    @endforeach
+                </select>
+                <p></p>
+            </div>
+            <div>
+                <label for="serial_number">Serial Number</label>
+                <input type="text" name="serial_number" id="serial_number" placeholder="Serial Number" class="form-control"></input>
+                <p></p>
+            </div>
+            <div>
+                <label for="configuration_status_name">Configuration Status</label>
+                <select name="configuration_status_name" id="configuration_status_name" class="form-control">
+                    <option selected disabled>Select Configuration Status</option>
+                    @foreach ($configuration_status_names as $option)
+                        <option value="{{ $option->id }}">{{ $option->name }}</option>
+                    @endforeach
+                </select>
+                <p></p>
+            </div>
+            <div>
+                <label for="location_name">Location</label>
+                <select name="location_name" id="location_name" class="form-control">
+                    <option selected disabled>Select Location</option>
+                    @foreach ($location_names as $option)
+                        <option value="{{ $option->id }}">{{ $option->name }}</option>
+                    @endforeach
+                </select>
+                <p></p>
+            </div>
+            <div>
+                <label for="description">Description</label>
+                <textarea type="text" name="description" id="description" placeholder="Description" class="form-control"></textarea>
+                <p></p>
+            </div>
+            <div>
+                <label for="position_status_name">Position Status</label>
+                <select name="position_status_name" id="position_status_name" class="form-control">
+                    <option selected disabled>Select Position Status</option>
+                    @foreach ($position_status_names as $option)
+                        <option value="{{ $option->id }}">{{ $option->name }}</option>
+                    @endforeach
+                </select>
+                <p></p>
+            </div>
+            <div>
+                <h2>Upload Image</h2>
+                <div id="image" class="dropzone dz-clickable">
+                    <div class="dz-message needsclick">
+                        <br>Drop files here or click to upload.
+                        <br><br>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row" id="image-wrapper">
+            <div class="row" id="image-wrapper">
 
-        </div>
-        <div>
-            <input type="submit" value="Save" />
-        </div>
-    </form>
+            </div>
+            <div>
+                <input type="submit" value="Save" />
+            </div>
+        </form>
+    </div>
 
     <!-- JQuery -->
     <script src="/vendor/jquery/jquery.min.js"></script>

@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_token" content="{{ csrf_token() }}">
     <title>Document</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
 
     <!-- Leaflet's CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -12,50 +16,52 @@
         #map { height: 300px; width: 400px;}
         #locationPopup { display: none; }
     </style>
-
 </head>
 <body>
     <h1>Location</h1>
     <div>
-        @if(session()->has('success'))
-        <div>
-            {{ session('success') }}
-        </div>
+        @if(Session::has('success'))
+        <div class="alert alert-success">{{ Session::get('success') }}</div>
         @endif
-    </div>
-    <div>
+        @if(Session::has('error'))
+        <div class="alert alert-danger">{{ Session::get('error') }}</div>
+        @endif
         <div>
-            <a href="{{ route('pages.management.locations.create') }}">Add New</a>
-        </div>
-        <table border="1">
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Action</th>
-            </tr>
-            @foreach($locations as $location)
-            <tr>
-                <td>{{$location->id}}</td>
-                <td onmouseover="showLocationPopup('{{ $location->latitude }}', '{{ $location->longitude }}', '{{ $location->name }}', '{{ $location->address }}')" onmouseout="hideLocationPopup()">{{$location->name}}</td>
-                <td>{{$location->address}}</td>
-                <td>{{$location->latitude}}</td>
-                <td>{{$location->longitude}}</td>
-                <td>
-                    <a href="{{ route('pages.management.locations.edit', ['location' => $location]) }}">Edit</a>
-                    <form method="post" action="{{ route('pages.management.locations.destroy', ['location' => $location]) }}">
-                        @csrf
-                        @method('delete')
-                        <input type="submit" value="Delete" />
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </table>
-        <div id="locationPopup">
-            <div id="map"></div>
+            <div>
+                <a href="{{ route('pages.management.locations.create') }}" class="btn btn-primary">Add Location</a>
+            </div>
+            <table border="1">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Action</th>
+                </tr>
+                @if($locations->isNotEmpty())
+                @foreach($locations as $location)
+                <tr>
+                    <td>{{$location->id}}</td>
+                    <td onmouseover="showLocationPopup('{{ $location->latitude }}', '{{ $location->longitude }}', '{{ $location->name }}', '{{ $location->address }}')" onmouseout="hideLocationPopup()">{{$location->name}}</td>
+                    <td>{{$location->address}}</td>
+                    <td>{{$location->latitude}}</td>
+                    <td>{{$location->longitude}}</td>
+                    <td>
+                        <a href="{{ route('pages.management.locations.edit', $location->id) }}">Edit</a>
+                        <form method="post" action="{{ route('pages.management.locations.destroy', $location->id) }}">
+                            @csrf
+                            @method('delete')
+                            <input type="submit" value="Delete" />
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+                @endif
+            </table>
+            <div id="locationPopup">
+                <div id="map"></div>
+            </div>
         </div>
     </div>
     <!-- Leaflet's JS -->
@@ -87,5 +93,11 @@
             document.getElementById('locationPopup').style.display = 'none';
         }
     </script>
+
+    <!-- Bootstrap JS -->
+    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- JQuery -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
 </body>
 </html>

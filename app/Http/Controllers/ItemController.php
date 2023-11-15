@@ -4,44 +4,110 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 
 class ItemController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $items = Item::all();
-        return view('pages.management.items.index', ['items' => $items]);
+        return view('pages.management.items.index', compact('items'));
     }
 
-    public function create(){
+    public function create()
+    {
         return view('pages.management.items.create');
     }
 
-    public function store(Request $request){
-        $request->validate([
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255'
         ]);
 
-        Item::create($request->all());
+        if ($validator->passes()) {
 
-        return redirect(route('pages.management.items.index'))->with('success', 'New Item Added Successfully!');
+            $item = new Item;
+            $item->name = $request->name;
+            $item->save();
+
+            session::flash('success', 'Item added successfully.');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Item added successfully.'
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
-    public function edit(Item $item){
-        return view('pages.management.items.edit', ['item' => $item]);
+    public function edit($item_id, Request $request)
+    {
+        $item = Item::find($item_id);
+        
+        if ($item == null) {
+            return redirect()->route('pages.management.items.index');
+        }
+
+        return view('pages.management.items.edit', compact('item'));
     }
 
-    public function update(Item $item, Request $request){
-        $request->validate([
+    public function update($item_id, Request $request)
+    {
+        $item = Item::find($item_id);
+        
+        if ($item == null) {
+            return response()->json([
+                'status' => false,
+                'notFound' => true
+            ]);
+        }
+
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255'
         ]);
 
-        $item->update($request->all());
+        if ($validator->passes()) {
 
-        return redirect(route('pages.management.items.index'))->with('success', 'Item Updated Successfully!');
+            $item->name = $request->name;
+            $item->save();
+
+            session::flash('success', 'Item updated successfully.');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Item updated successfully.'
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
-    public function destroy(Item $item){
+    public function destroy($item_id, Request $request)
+    {
+        $item = Item::find($item_id);
+
+        if ($item == null) {
+            return response()->json([
+                'status' => false,
+                'notFound' => true
+            ]);
+        }
+
         $item->delete();
-        return redirect(route('pages.management.items.index'))->with('success', 'Item Deleted Successfully!');
+
+        session::flash('success', 'Item deleted successfully.');
+
+        return redirect()->route('pages.management.items.index');
     }
 }

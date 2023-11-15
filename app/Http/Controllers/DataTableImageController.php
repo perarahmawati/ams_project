@@ -6,6 +6,7 @@ use App\Models\DataTableImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Session;
 
 class DataTableImageController extends Controller
 {
@@ -52,7 +53,7 @@ class DataTableImageController extends Controller
         $image = DataTableImage::find($image_id);
 
         if (empty($image)) {
-            $request->session()->flash('error','Image not found.');
+            session::flash('error', 'Image not found.');
             return response()->json([
                 'status' => false
             ]);
@@ -63,7 +64,7 @@ class DataTableImageController extends Controller
 
         $image->delete();
 
-        $request->session()->flash('success','Image deleted successfully.');
+        session::flash('success', 'Image deleted successfully.');
 
         return response()->json([
             'status' => true
