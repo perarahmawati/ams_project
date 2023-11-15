@@ -50,11 +50,11 @@
                 <p></p>
             </div>
             <div>
-                <label for="manufacture_name">Manufacture</label>
-                <select name="manufacture_name" id="manufacture_name" class="form-control">
-                    <option selected disabled>Select Manufacture</option>
-                    @foreach ($manufacture_names as $option)
-                        <option value="{{ $option->id }}" {{ $data_table->manufacture_name == $option->id ? 'selected' : '' }}>{{ $option->name }}</option>
+                <label for="manufacturer_name">Manufacturer</label>
+                <select name="manufacturer_name" id="manufacturer_name" class="form-control">
+                    <option selected disabled>Select Manufacturer</option>
+                    @foreach ($manufacturer_names as $option)
+                        <option value="{{ $option->id }}" {{ $data_table->manufacturer_name == $option->id ? 'selected' : '' }}>{{ $option->name }}</option>
                     @endforeach
                 </select>
                 <p></p>
@@ -197,13 +197,13 @@
                             .html("")
                         }
 
-                        if (errors.manufacture_name) {
-                            $("#manufacture_name").addClass('is-invalid')
+                        if (errors.manufacturer_name) {
+                            $("#manufacturer_name").addClass('is-invalid')
                             .siblings("p")
                             .addClass('invalid-feedback')
-                            .html(errors.manufacture_name)
+                            .html(errors.manufacturer_name)
                         } else {
-                            $("#manufacture_name").removeClass('is-invalid')
+                            $("#manufacturer_name").removeClass('is-invalid')
                             .siblings("p")
                             .removeClass('invalid-feedback')
                             .html("")

@@ -65,7 +65,7 @@
             <tr>
                 <th>ID</th>
                 <th>Item</th>
-                <th>Manufacture</th>
+                <th>Manufacturer</th>
                 <th>Serial Number</th>
                 <th>Configuration Status</th>
                 <th>Location</th>
@@ -79,7 +79,7 @@
             <tr>
                 <td>{{ $data_table->id }}</td>
                 <td>{{ $data_table->item->name }}</td>
-                <td>{{ $data_table->manufacture->name }}</td>
+                <td>{{ $data_table->manufacturer->name }}</td>
                 <td>{{ $data_table->serial_number }}</td>
                 <td>{{ $data_table->configurationStatus->name }}</td>
                 <td onmouseover="showLocationPopup('{{ $data_table->location->latitude }}', '{{ $data_table->location->longitude }}', '{{ $data_table->location->name }}', '{{ $data_table->location->address }}')" onmouseout="hideLocationPopup()">{{ $data_table->location->name }}</td>

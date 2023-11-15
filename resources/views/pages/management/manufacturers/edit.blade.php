@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Edit Manufacture</h1>
+    <h1>Edit Manufacturer</h1>
     <div>
         @if(Session::has('success'))
         <div class="alert alert-success">{{ Session::get('success') }}</div>
@@ -23,7 +23,7 @@
             @method('post')
             <div>
                 <label for="name">Name</label>
-                <input type="text" name="name" id="name" placeholder="Name" class="form-control" value="{{$manufacture->name}}" />
+                <input type="text" name="name" id="name" placeholder="Name" class="form-control" value="{{$manufacturer->name}}" />
                 <p></p>
             </div>
             <div>
@@ -40,7 +40,7 @@
             event.preventDefault();
             $("input[type=submit]").prop('disabled',true);
             $.ajax({
-                url: "{{ route('pages.management.manufactures.update', $manufacture->id) }}",
+                url: "{{ route('pages.management.manufacturers.update', $manufacturer->id) }}",
                 data: $(this).serializeArray(),
                 method: 'post',
                 dataType: 'json',
@@ -50,7 +50,7 @@
                 success: function(response){
                     $("input[type=submit]").prop('disabled',false);
                     if(response.status == true) {
-                        window.location.href="{{ route('pages.management.manufactures.index') }}"; 
+                        window.location.href="{{ route('pages.management.manufacturers.index') }}"; 
                     } else {
                         var errors = response.errors;
                         if (errors.name) {

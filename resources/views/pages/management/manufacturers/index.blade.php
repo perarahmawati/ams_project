@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Manufacture</h1>
+    <h1>Manufacturer</h1>
     <div>
         @if(Session::has('success'))
         <div class="alert alert-success">{{ Session::get('success') }}</div>
@@ -20,7 +20,7 @@
         @endif
         <div>
             <div>
-                <a href="{{ route('pages.management.manufactures.create') }}" class="btn btn-primary">Add Manufacture</a>
+                <a href="{{ route('pages.management.manufacturers.create') }}" class="btn btn-primary">Add Manufacturer</a>
             </div>
             <table border="1">
                 <tr>
@@ -28,14 +28,14 @@
                     <th>Name</th>
                     <th>Action</th>
                 </tr>
-                @if($manufactures->isNotEmpty())
-                @foreach($manufactures as $manufacture)
+                @if($manufacturers->isNotEmpty())
+                @foreach($manufacturers as $manufacturer)
                 <tr>
-                    <td>{{$manufacture->id}}</td>
-                    <td>{{$manufacture->name}}</td>
+                    <td>{{$manufacturer->id}}</td>
+                    <td>{{$manufacturer->name}}</td>
                     <td>
-                        <a href="{{ route('pages.management.manufactures.edit', $manufacture->id) }}">Edit</a>
-                        <form method="post" action="{{ route('pages.management.manufactures.destroy', $manufacture->id) }}">
+                        <a href="{{ route('pages.management.manufacturers.edit', $manufacturer->id) }}">Edit</a>
+                        <form method="post" action="{{ route('pages.management.manufacturers.destroy', $manufacturer->id) }}">
                             @csrf
                             @method('delete')
                             <input type="submit" value="Delete" />

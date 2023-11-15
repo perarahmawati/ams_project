@@ -6,7 +6,7 @@ use App\Models\DataTable;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use App\Models\Item;
-use App\Models\Manufacture;
+use App\Models\Manufacturer;
 use App\Models\ConfigurationStatus;
 use App\Models\Location;
 use App\Models\PositionStatus;
@@ -21,14 +21,14 @@ class DataTableImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         $item_id = $this->getIdFromName($row['item'], Item::class);
-        $manufacture_id = $this->getIdFromName($row['manufacture'], Manufacture::class);
+        $manufacturer_id = $this->getIdFromName($row['manufacturer'], Manufacturer::class);
         $configuration_status_id = $this->getIdFromName($row['configuration_status'], ConfigurationStatus::class);
         $location_id = $this->getIdFromName($row['location'], Location::class);
         $position_status_id = $this->getIdFromName($row['position_status'], PositionStatus::class);
 
         return new DataTable([
             'item_name' => $item_id,
-            'manufacture_name' => $manufacture_id,
+            'manufacturer_name' => $manufacturer_id,
             'serial_number' => $row['serial_number'],
             'configuration_status_name' => $configuration_status_id,
             'location_name' => $location_id,

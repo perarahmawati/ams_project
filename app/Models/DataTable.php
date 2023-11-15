@@ -13,7 +13,7 @@ class DataTable extends Model
 
     protected $fillable = [
         'item_name', 
-        'manufacture_name', 
+        'manufacturer_name', 
         'serial_number', 
         'configuration_status_name',
         'location_name',
@@ -25,8 +25,8 @@ class DataTable extends Model
         return $this->belongsTo(Item::class, 'item_name');
     }
 
-    public function manufacture(){
-        return $this->belongsTo(Manufacture::class, 'manufacture_name');
+    public function manufacturer(){
+        return $this->belongsTo(Manufacturer::class, 'manufacturer_name');
     }
 
     public function configurationStatus(){

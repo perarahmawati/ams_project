@@ -22,7 +22,7 @@ use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\DataTableImageController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LocationController;
-use App\Http\Controllers\ManufactureController;
+use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\PositionStatusController;
 use App\Http\Controllers\TempImageController;
 
@@ -70,15 +70,15 @@ Route::get('/location/{location}/edit', [LocationController::class, 'edit'])->na
 Route::post('/location/{location}/update', [LocationController::class, 'update'])->name('pages.management.locations.update');
 Route::delete('/location/{location}/destroy', [LocationController::class, 'destroy'])->name('pages.management.locations.destroy');
 
-// Manufactures
-Route::get('/manufacture', [ManufactureController::class, 'index'])->name('pages.management.manufactures.index');
-Route::get('/manufacture/create', [ManufactureController::class, 'create'])->name('pages.management.manufactures.create');
-Route::post('/manufacture', [ManufactureController::class, 'store'])->name('pages.management.manufactures.store');
-Route::get('/manufacture/{manufacture}/edit', [ManufactureController::class, 'edit'])->name('pages.management.manufactures.edit');
-Route::post('/manufacture/{manufacture}/update', [ManufactureController::class, 'update'])->name('pages.management.manufactures.update');
-Route::delete('/manufacture/{manufacture}/destroy', [ManufactureController::class, 'destroy'])->name('pages.management.manufactures.destroy');
+// Manufacturers
+Route::get('/manufacturer', [ManufacturerController::class, 'index'])->name('pages.management.manufacturers.index');
+Route::get('/manufacturer/create', [ManufacturerController::class, 'create'])->name('pages.management.manufacturers.create');
+Route::post('/manufacturer', [ManufacturerController::class, 'store'])->name('pages.management.manufacturers.store');
+Route::get('/manufacturer/{manufacturer}/edit', [ManufacturerController::class, 'edit'])->name('pages.management.manufacturers.edit');
+Route::post('/manufacturer/{manufacturer}/update', [ManufacturerController::class, 'update'])->name('pages.management.manufacturers.update');
+Route::delete('/manufacturer/{manufacturer}/destroy', [ManufacturerController::class, 'destroy'])->name('pages.management.manufacturers.destroy');
 
-// Manufactures
+// Position Statuses
 Route::get('/position-status', [PositionStatusController::class, 'index'])->name('pages.management.position-statuses.index');
 Route::get('/position-status/create', [PositionStatusController::class, 'create'])->name('pages.management.position-statuses.create');
 Route::post('/position-status', [PositionStatusController::class, 'store'])->name('pages.management.position-statuses.store');

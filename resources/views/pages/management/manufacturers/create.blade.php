@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Create New Manufacture</h1>
+    <h1>Create New Manufacturer</h1>
     <div>
         @if(Session::has('success'))
         <div class="alert alert-success">{{ Session::get('success') }}</div>
@@ -40,7 +40,7 @@
             event.preventDefault();
             $("input[type=submit]").prop('disabled',true);
             $.ajax({
-                url: "{{ route('pages.management.manufactures.store') }}",
+                url: "{{ route('pages.management.manufacturers.store') }}",
                 data: $(this).serializeArray(),
                 method: 'post',
                 dataType: 'json',
@@ -50,7 +50,7 @@
                 success: function(response){
                     $("input[type=submit]").prop('disabled',false);
                     if(response.status == true) {
-                        window.location.href="{{ route('pages.management.manufactures.index') }}"; 
+                        window.location.href="{{ route('pages.management.manufacturers.index') }}"; 
                     } else {
                         var errors = response.errors;
                         if (errors.name) {

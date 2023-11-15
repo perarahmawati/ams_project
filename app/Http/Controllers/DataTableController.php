@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DataTable;
 use App\Models\Item;
-use App\Models\Manufacture;
+use App\Models\Manufacturer;
 use App\Models\ConfigurationStatus;
 use App\Models\DataTableImage;
 use App\Models\Location;
@@ -29,18 +29,18 @@ class DataTableController extends Controller
     public function create()
     {
         $item_names = Item::all();
-        $manufacture_names = Manufacture::all();
+        $manufacturer_names = Manufacturer::all();
         $configuration_status_names = ConfigurationStatus::all();
         $location_names = Location::all();
         $position_status_names = PositionStatus::all();
-        return view('pages.data-tables.create', compact('item_names', 'manufacture_names', 'configuration_status_names', 'location_names', 'position_status_names'));
+        return view('pages.data-tables.create', compact('item_names', 'manufacturer_names', 'configuration_status_names', 'location_names', 'position_status_names'));
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'item_name' => 'required|exists:items,id',
-            'manufacture_name' => 'required|exists:manufactures,id',
+            'manufacturer_name' => 'required|exists:manufacturers,id',
             'serial_number' => 'max:50',
             'configuration_status_name' => 'required|exists:configuration_statuses,id',
             'location_name' => 'required|exists:locations,id',
@@ -52,7 +52,7 @@ class DataTableController extends Controller
 
             $data_table = new DataTable;
             $data_table->item_name = $request->item_name;
-            $data_table->manufacture_name = $request->manufacture_name;
+            $data_table->manufacturer_name = $request->manufacturer_name;
             $data_table->serial_number = $request->serial_number;
             $data_table->configuration_status_name = $request->configuration_status_name;
             $data_table->location_name = $request->location_name;
@@ -122,12 +122,12 @@ class DataTableController extends Controller
         $data_tableImages = DataTableImage::where('data_table_id',$data_table->id)->get();
 
         $item_names = Item::all();
-        $manufacture_names = Manufacture::all();
+        $manufacturer_names = Manufacturer::all();
         $configuration_status_names = ConfigurationStatus::all();
         $location_names = Location::all();
         $position_status_names = PositionStatus::all();
         
-        return view('pages.data-tables.edit', compact('data_table', 'data_tableImages', 'item_names', 'manufacture_names', 'configuration_status_names', 'location_names', 'position_status_names'));
+        return view('pages.data-tables.edit', compact('data_table', 'data_tableImages', 'item_names', 'manufacturer_names', 'configuration_status_names', 'location_names', 'position_status_names'));
     }
 
     public function update($data_table_id, Request $request)
@@ -143,7 +143,7 @@ class DataTableController extends Controller
 
         $validator = Validator::make($request->all(), [
             'item_name' => 'required|exists:items,id',
-            'manufacture_name' => 'required|exists:manufactures,id',
+            'manufacturer_name' => 'required|exists:manufacturers,id',
             'serial_number' => 'max:50',
             'configuration_status_name' => 'required|exists:configuration_statuses,id',
             'location_name' => 'required|exists:locations,id',
@@ -154,7 +154,7 @@ class DataTableController extends Controller
         if ($validator->passes()) {
 
             $data_table->item_name = $request->item_name;
-            $data_table->manufacture_name = $request->manufacture_name;
+            $data_table->manufacturer_name = $request->manufacturer_name;
             $data_table->serial_number = $request->serial_number;
             $data_table->configuration_status_name = $request->configuration_status_name;
             $data_table->location_name = $request->location_name;
@@ -255,11 +255,11 @@ class DataTableController extends Controller
         $data_tableImages = DataTableImage::where('data_table_id',$data_table->id)->get();
 
         $item_names = Item::all();
-        $manufacture_names = Manufacture::all();
+        $manufacturer_names = Manufacturer::all();
         $configuration_status_names = ConfigurationStatus::all();
         $location_names = Location::all();
         $position_status_names = PositionStatus::all();
 
-        return view('pages.data-tables.show', compact('data_table', 'data_tableImages', 'item_names', 'manufacture_names', 'configuration_status_names', 'location_names', 'position_status_names'));
+        return view('pages.data-tables.show', compact('data_table', 'data_tableImages', 'item_names', 'manufacturer_names', 'configuration_status_names', 'location_names', 'position_status_names'));
     }
 }

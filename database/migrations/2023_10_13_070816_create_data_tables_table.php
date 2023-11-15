@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('data_tables', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('item_name')->constrained('item_names');
-            $table->unsignedBigInteger('manufacture_name')->constrained('manufacture_names');
+            $table->unsignedBigInteger('manufacturer_name')->constrained('manufacturer_names');
             $table->string('serial_number', 50)->nullable();
             $table->unsignedBigInteger('configuration_status_name')->constrained('configuration_status_names');
             $table->unsignedBigInteger('location_name')->constrained('location_names');

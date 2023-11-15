@@ -9,7 +9,7 @@
     <h1>Show Details</h1>
     <div>
         <p>{{ $data_table->item->name }}</p>
-        <p>{{ $data_table->manufacture->name }}</p>
+        <p>{{ $data_table->manufacturer->name }}</p>
         <p>{{ $data_table->serial_number }}</p>
         <p>{{ $data_table->configurationStatus->name }}</p>
         <p>{{ $data_table->location->name }}</p>
