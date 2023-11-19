@@ -1,0 +1,13 @@
+#map { height: 300px; width: 400px;}
+
+#locationPopup { display: none; }
+
+.image-card{
+    position: relative;
+}
+
+.image-card .btn-danger{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
