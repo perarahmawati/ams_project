@@ -1,143 +1,192 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="_token" content="{{ csrf_token() }}">
-    <title>Document</title>
+@extends('layouts.app')
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
-
-    <!-- Leaflet's CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-
-    <style>
-        #map { height: 300px; width: 400px;}
-        #locationPopup { display: none; }
-    </style>
-</head>
-<body>
-    <h1>Data Table</h1>
-    <div>
-        @if(Session::has('success'))
-        <div class="alert alert-success">{{ Session::get('success') }}</div>
-        @endif
-        @if(Session::has('error'))
-        <div class="alert alert-danger">{{ Session::get('error') }}</div>
-        @endif
-        <div>
-            <a href="{{ route('pages.data-tables.create') }}" class="btn btn-primary">Add Data</a>
-
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Import Data
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Import New Data</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('import-excel') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
-                        <div>
-                            <p>Download the import template file <a href="{{ asset('/assets/files/import_new_data_template.xlsx') }}">here</a>.</p>
-                        </div>
-                        <div class="form-group">
-                            <input type="file" name="file" required accept=".xls,.xlsx,.csv">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </form>
-                </div>
-            </div>
-            </div>
-        </div>
-        <table border="1">
-            <tr>
-                <th>ID</th>
-                <th>Item</th>
-                <th>Manufacturer</th>
-                <th>Serial Number</th>
-                <th>Configuration Status</th>
-                <th>Location</th>
-                <th>Description</th>
-                <th>Position Status</th>
-                <th>Created Date</th>
-                <th>Action</th>
-            </tr>
-            @if($data_tables->isNotEmpty())
-            @foreach($data_tables as $data_table)
-            <tr>
-                <td>{{ $data_table->id }}</td>
-                <td>{{ $data_table->item->name }}</td>
-                <td>{{ $data_table->manufacturer->name }}</td>
-                <td>{{ $data_table->serial_number }}</td>
-                <td>{{ $data_table->configurationStatus->name }}</td>
-                <td onmouseover="showLocationPopup('{{ $data_table->location->latitude }}', '{{ $data_table->location->longitude }}', '{{ $data_table->location->name }}', '{{ $data_table->location->address }}')" onmouseout="hideLocationPopup()">{{ $data_table->location->name }}</td>
-                <td>{{ $data_table->description }}</td>
-                <td>{{ $data_table->positionStatus->name }}</td>
-                <td>{{ $data_table->created_at }}</td>
-                <td>
-                    <a href="{{ route('pages.data-tables.show', $data_table->id) }}">Show</a>
-                    <a href="{{ route('pages.data-tables.edit', $data_table->id) }}">Edit</a>
-                    <form method="post" action="{{ route('pages.data-tables.destroy', $data_table->id) }}">
-                        @csrf
-                        @method('delete')
-                        <input type="submit" value="Delete" />
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-            @endif
-        </table>
-        <div id="locationPopup">
-            <div id="map"></div>
-        </div>
+@section('title', 'ASSET MANAGEMENT')
+@section('content')
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Asset Management</h1>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
     </div>
+    <!-- /.content-header -->
 
-    <!-- Bootstrap JS -->
-    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Asset List</h4>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            @if(Session::has('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Success! </strong>{{ Session::get('success') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @endif
+                            @if(Session::has('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Failed! </strong>{{ Session::get('error') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @endif
+                            <div class="row mb-4">
+                                <div class="col-sm-6">
+                                    <a href="{{ route('pages.data-tables.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Asset</a>
 
-    <!-- JQuery -->
-    <script src="/vendor/jquery/jquery.min.js"></script>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary mr-1" data-toggle="modal" data-target="#modal">
+                                        <i class="fa-solid fa-file-import mr-2"></i>Import New Asset
+                                    </button>
 
-    <!-- Leaflet's JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title fs-5" id="modalLabel">Import New Asset Data</h1>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form action="{{ route('import-excel') }}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                        <div>
+                                                            <p>Upload an <a href="{{ asset('/assets/files/import_new_data_template.xlsx') }}">Excel</a> file here to import new asset data!</p>
+                                                        </div>
+                                                        <div class="custom-file">
+                                                            <input type="file" name="file" class="custom-file-input" id="customFile" required accept=".xls,.xlsx" onchange="updateFileName()">
+                                                            <label class="custom-file-label" for="customFile" id="fileLabel">Choose file</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn btn-primary">Save</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="btn btn-primary mr-1"><i class="fa-solid fa-recycle mr-2"></i>Recycle Bin</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="float-sm-right">
+                                        <a href="{{ route('pages.management.index') }}" class="btn btn-warning text-white"><i class="fa-solid fa-list-check mr-2"></i>Option Management</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="myTable" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Item</th>
+                                        <th>Manufacturer</th>
+                                        <th>Serial Number</th>
+                                        <th>Configuration Status</th>
+                                        <th>Location</th>
+                                        <th>Description</th>
+                                        <th>Position Status</th>
+                                        <th>Created Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $no = 1;
+                                    @endphp
+                                    @foreach($data_tables as $data_table)
+                                    <tr>
+                                        <td>{{ $no++ }}</td>
+                                        <td>{{ $data_table->item->name }}</td>
+                                        <td>{{ $data_table->manufacturer->name }}</td>
+                                        <td>{{ $data_table->serial_number }}</td>
+                                        <td>{{ $data_table->configurationStatus->name }}</td>
+                                        <td onmouseover="showLocationPopup('{{ $data_table->location->latitude }}', '{{ $data_table->location->longitude }}', '{{ $data_table->location->name }}', '{{ $data_table->location->address }}')" onmouseout="hideLocationPopup()">{{ $data_table->location->name }}</td>
+                                        <td>{{ $data_table->description }}</td>
+                                        <td>{{ $data_table->positionStatus->name }}</td>
+                                        <td>{{ $data_table->created_at }}</td>
+                                        <td>
+                                            <a href="{{ route('pages.data-tables.show', $data_table->id) }}" class="btn btn-primary btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-eye mr-2"></i>Show</a>
+                                            <a href="{{ route('pages.data-tables.edit', $data_table->id) }}" class="btn btn-warning btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
+                                            <form method="post" action="{{ route('pages.data-tables.destroy', $data_table->id) }}">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-danger btn-sm text-white mb-2 mr-1">
+                                                    <i class="fa-solid fa-trash mr-2"></i> Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <div id="locationPopup">
+                                <div id="map"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <script>
-        var map;
-        var marker;
+        <!-- jQuery -->
+        <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
 
-        function showLocationPopup(latitude, longitude, name, address) {
-            document.getElementById('locationPopup').style.display = 'block';
-            if (!map) {
-                map = L.map('map').setView([latitude, longitude], 18);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-                    maxZoom: 18,
-                }).addTo(map);
-                marker = L.marker([latitude, longitude]).addTo(map).bindPopup(`<b>${name}</b><br>${address}`, {
-                    closeButton: false
-                }).openPopup();
-            } else {
-                map.setView([latitude, longitude], 18);
-                marker.setLatLng([latitude, longitude]);
-                marker.getPopup().setContent(`<b>${name}</b><br>${address}`).openPopup();
+        <!-- Leaflet -->
+        <script src="{{ asset('adminlte/plugins/leaflet/leaflet.js') }}"></script>
+
+        <script>
+            var map;
+            var marker;
+
+            function showLocationPopup(latitude, longitude, name, address) {
+                document.getElementById('locationPopup').style.display = 'block';
+                if (!map) {
+                    map = L.map('map').setView([latitude, longitude], 18);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                        maxZoom: 18,
+                    }).addTo(map);
+                    marker = L.marker([latitude, longitude]).addTo(map).bindPopup(`<b>${name}</b><br>${address}`, {
+                        closeButton: false
+                    }).openPopup();
+                } else {
+                    map.setView([latitude, longitude], 18);
+                    marker.setLatLng([latitude, longitude]);
+                    marker.getPopup().setContent(`<b>${name}</b><br>${address}`).openPopup();
+                }
             }
-        }
 
-        function hideLocationPopup() {
-            document.getElementById('locationPopup').style.display = 'none';
-        }
-    </script>
-</body>
-</html>
+            function hideLocationPopup() {
+                document.getElementById('locationPopup').style.display = 'none';
+            }
+        </script>
+
+        <script>
+            function updateFileName() {
+                var fileInput = document.getElementById('customFile');
+                var fileName = fileInput.files[0].name;
+                var fileLabel = document.getElementById('fileLabel');
+                fileLabel.innerHTML = fileName;
+            }
+        </script>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+@endsection

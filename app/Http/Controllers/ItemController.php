@@ -9,10 +9,9 @@ use Illuminate\Support\Facades\Session;
 
 class ItemController extends Controller
 {
-    public function index()
+    public function __construct()
     {
-        $items = Item::all();
-        return view('pages.management.items.index', compact('items'));
+        $this->middleware('auth');
     }
 
     public function create()
@@ -32,7 +31,7 @@ class ItemController extends Controller
             $item->name = $request->name;
             $item->save();
 
-            session::flash('success', 'Item added successfully.');
+            session::flash('success-item', 'Item added successfully.');
 
             return response()->json([
                 'status' => true,
@@ -52,7 +51,7 @@ class ItemController extends Controller
         $item = Item::find($item_id);
         
         if ($item == null) {
-            return redirect()->route('pages.management.items.index');
+            return redirect()->route('pages.management.index');
         }
 
         return view('pages.management.items.edit', compact('item'));
@@ -78,7 +77,7 @@ class ItemController extends Controller
             $item->name = $request->name;
             $item->save();
 
-            session::flash('success', 'Item updated successfully.');
+            session::flash('success-item', 'Item updated successfully.');
 
             return response()->json([
                 'status' => true,
@@ -106,8 +105,8 @@ class ItemController extends Controller
 
         $item->delete();
 
-        session::flash('success', 'Item deleted successfully.');
+        session::flash('success-item', 'Item deleted successfully.');
 
-        return redirect()->route('pages.management.items.index');
+        return redirect()->route('pages.management.index');
     }
 }

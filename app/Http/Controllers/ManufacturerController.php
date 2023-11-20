@@ -9,10 +9,9 @@ use Illuminate\Support\Facades\Session;
 
 class ManufacturerController extends Controller
 {
-    public function index()
+    public function __construct()
     {
-        $manufacturers = Manufacturer::all();
-        return view('pages.management.manufacturers.index', compact('manufacturers'));
+        $this->middleware('auth');
     }
 
     public function create()
@@ -32,7 +31,7 @@ class ManufacturerController extends Controller
             $manufacturer->name = $request->name;
             $manufacturer->save();
 
-            session::flash('success', 'Manufacturer added successfully.');
+            session::flash('success-manufacturer', 'Manufacturer added successfully.');
 
             return response()->json([
                 'status' => true,
@@ -52,7 +51,7 @@ class ManufacturerController extends Controller
         $manufacturer = Manufacturer::find($manufacturer_id);
         
         if ($manufacturer == null) {
-            return redirect()->route('pages.management.manufacturers.index');
+            return redirect()->route('pages.management.index');
         }
 
         return view('pages.management.manufacturers.edit', compact('manufacturer'));
@@ -78,7 +77,7 @@ class ManufacturerController extends Controller
             $manufacturer->name = $request->name;
             $manufacturer->save();
 
-            session::flash('success', 'Manufacturer updated successfully.');
+            session::flash('success-manufacturer', 'Manufacturer updated successfully.');
 
             return response()->json([
                 'status' => true,
@@ -106,8 +105,8 @@ class ManufacturerController extends Controller
 
         $manufacturer->delete();
 
-        session::flash('success', 'Manufacturer deleted successfully.');
+        session::flash('success-manufacturer', 'Manufacturer deleted successfully.');
 
-        return redirect()->route('pages.management.manufacturers.index');
+        return redirect()->route('pages.management.index');
     }
 }

@@ -9,16 +9,15 @@ use Illuminate\Support\Facades\Session;
 
 class LocationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function marker()
     {
         $locations = Location::all();
         return response()->json($locations);
-    }
-
-    public function index()
-    {
-        $locations = Location::all();
-        return view('pages.management.locations.index', compact('locations'));
     }
 
     public function create()
@@ -44,7 +43,7 @@ class LocationController extends Controller
             $location->longitude = $request->longitude;
             $location->save();
 
-            session::flash('success', 'Location added successfully.');
+            session::flash('success-location', 'Location added successfully.');
 
             return response()->json([
                 'status' => true,
@@ -64,7 +63,7 @@ class LocationController extends Controller
         $location = Location::find($location_id);
         
         if ($location == null) {
-            return redirect()->route('pages.management.locations.index');
+            return redirect()->route('pages.management.index');
         }
 
         return view('pages.management.locations.edit',compact('location'));
@@ -96,7 +95,7 @@ class LocationController extends Controller
             $location->longitude = $request->longitude;
             $location->save();
 
-            session::flash('success', 'Location updated successfully.');
+            session::flash('success-location', 'Location updated successfully.');
 
             return response()->json([
                 'status' => true,
@@ -124,8 +123,8 @@ class LocationController extends Controller
 
         $location->delete();
 
-        session::flash('success', 'Location deleted successfully.');
+        session::flash('success-location', 'Location deleted successfully.');
 
-        return redirect()->route('pages.management.locations.index');
+        return redirect()->route('pages.management.index');
     }
 }

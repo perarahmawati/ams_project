@@ -1,0 +1,76 @@
+#map { height: 300px; width: 400px;}
+
+#locationPopup { display: none; }
+
+.image-card{
+    position: relative;
+}
+
+.image-card .btn-danger{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.custom-dl {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.col-sm-2 {
+    flex-basis: 30%; /* Sesuaikan lebar elemen nama */
+    text-align: left; /* Sesuaikan perlu tekstur kiri atau kanan */
+    position: relative;
+}
+
+.col-sm-2::after {
+    content: ":";
+    position: absolute;
+    right: 0;
+}
+
+
+.card-columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.card-columns .card {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+}
+
+.card-columns .card img {
+    width: 100%;
+    height: auto;
+}
+
+#myTable td:last-child,
+#myDataTable1 td:last-child,
+#myDataTable2 td:last-child,
+#myDataTable3 td:last-child,
+#myDataTable4 td:last-child,
+#myDataTable5 td:last-child {
+    white-space: nowrap;
+}
+
+#search-result {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#search-result li {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+#search-result li:hover {
+    background-color: #f8f9fa;
+}

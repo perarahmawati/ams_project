@@ -9,10 +9,9 @@ use Illuminate\Support\Facades\Session;
 
 class PositionStatusController extends Controller
 {
-    public function index()
+    public function __construct()
     {
-        $position_statuses = PositionStatus::all();
-        return view('pages.management.position-statuses.index', compact('position_statuses'));
+        $this->middleware('auth');
     }
 
     public function create()
@@ -32,7 +31,7 @@ class PositionStatusController extends Controller
             $position_status->name = $request->name;
             $position_status->save();
 
-            session::flash('success', 'Position Status added successfully.');
+            session::flash('success-location-status', 'Position Status added successfully.');
 
             return response()->json([
                 'status' => true,
@@ -52,7 +51,7 @@ class PositionStatusController extends Controller
         $position_status = PositionStatus::find($position_status_id);
         
         if ($position_status == null) {
-            return redirect()->route('pages.management.position-statuses.index');
+            return redirect()->route('pages.management.index');
         }
 
         return view('pages.management.position-statuses.edit', compact('position_status'));
@@ -78,7 +77,7 @@ class PositionStatusController extends Controller
             $position_status->name = $request->name;
             $position_status->save();
 
-            session::flash('success', 'Position Status updated successfully.');
+            session::flash('success-location-status', 'Position Status updated successfully.');
 
             return response()->json([
                 'status' => true,
@@ -106,8 +105,8 @@ class PositionStatusController extends Controller
 
         $position_status->delete();
 
-        session::flash('success', 'Position Status deleted successfully.');
+        session::flash('success-location-status', 'Position Status deleted successfully.');
 
-        return redirect()->route('pages.management.position-statuses.index');
+        return redirect()->route('pages.management.index');
     }
 }
