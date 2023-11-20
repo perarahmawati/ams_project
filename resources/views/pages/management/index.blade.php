@@ -41,7 +41,7 @@
                             <a class="nav-link" id="location-tab" data-toggle="pill" href="#location" role="tab" aria-controls="location" aria-selected="false"><b>Location</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="location-status-tab" data-toggle="pill" href="#location-status" role="tab" aria-controls="location-status" aria-selected="false"><b>Location Status</b></a>
+                            <a class="nav-link" id="position-status-tab" data-toggle="pill" href="#position-status" role="tab" aria-controls="position-status" aria-selected="false"><b>Position Status</b></a>
                         </li>
                     </ul>
                     </div>
@@ -284,19 +284,19 @@
                                     </div>
                                 </div>
                             </div>
-                        <div class="tab-pane fade" id="location-status" role="tabpanel" aria-labelledby="location-status-tab">
+                        <div class="tab-pane fade" id="position-status" role="tabpanel" aria-labelledby="position-status-tab">
                             <div>
-                                @if(Session::has('success-location-status'))
+                                @if(Session::has('success-position-status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <strong>Success! </strong>{{ Session::get('success-location-status') }}
+                                    <strong>Success! </strong>{{ Session::get('success-position-status') }}
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 @endif
-                                @if(Session::has('error-location-status'))
+                                @if(Session::has('error-position-status'))
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <strong>Failed! </strong>{{ Session::get('error-location-status') }}
+                                    <strong>Failed! </strong>{{ Session::get('error-position-status') }}
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -304,7 +304,7 @@
                                 @endif
                                 <div class="row mb-4">
                                     <div class="col-sm-12">
-                                        <a href="{{ route('pages.management.position-statuses.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Location Status</a>
+                                        <a href="{{ route('pages.management.position-statuses.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Position Status</a>
                                     </div>
                                 </div>
                                 <table id="myDataTable5" class="table table-bordered table-hover">

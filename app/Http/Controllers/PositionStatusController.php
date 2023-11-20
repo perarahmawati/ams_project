@@ -31,7 +31,7 @@ class PositionStatusController extends Controller
             $position_status->name = $request->name;
             $position_status->save();
 
-            session::flash('success-location-status', 'Position Status added successfully.');
+            session::flash('success-position-status', 'Position Status added successfully.');
 
             return response()->json([
                 'status' => true,
@@ -77,7 +77,7 @@ class PositionStatusController extends Controller
             $position_status->name = $request->name;
             $position_status->save();
 
-            session::flash('success-location-status', 'Position Status updated successfully.');
+            session::flash('success-position-status', 'Position Status updated successfully.');
 
             return response()->json([
                 'status' => true,
@@ -105,7 +105,7 @@ class PositionStatusController extends Controller
 
         $position_status->delete();
 
-        session::flash('success-location-status', 'Position Status deleted successfully.');
+        session::flash('success-position-status', 'Position Status deleted successfully.');
 
         return redirect()->route('pages.management.index');
     }
