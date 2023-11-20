@@ -28,6 +28,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\PositionStatusController;
 use App\Http\Controllers\TempImageController;
+use App\Http\Controllers\CombinedController;
 
 Auth::routes();
 
@@ -43,7 +44,7 @@ Route::get('/asset-management/{data_table}/edit', [DataTableController::class, '
 Route::post('/asset-management/{data_table}/update', [DataTableController::class, 'update'])->name('pages.data-tables.update');
 Route::delete('/asset-management/{data_table}', [DataTableController::class, 'destroy'])->name('pages.data-tables.destroy');
 
-// Temp Images
+// Asset Management Temp Images
 Route::post('/asset-management/temp-images', [TempImageController::class, 'store'])->name('pages.data-tables.temp-images.store');
 
 // Asset Management Images
@@ -53,43 +54,41 @@ Route::delete('/asset-management/asset-management-images/{image}', [DataTableIma
 // Asset Management Import Excel
 Route::post('/asset-management/import-excel',[DataTableController::class, 'importexcel'])->name('import-excel');
 
+// Options Management
+Route::get('/asset-management/option-management', [CombinedController::class, 'index'])->name('pages.management.index');
+
 // Configuration Statuses
-Route::get('/asset-management/configuration-statuses', [ConfigurationStatusController::class, 'index'])->name('pages.management.configuration-statuses.index');
-Route::get('/asset-management/configuration-statuses/create', [ConfigurationStatusController::class, 'create'])->name('pages.management.configuration-statuses.create');
-Route::post('/asset-management/configuration-statuses', [ConfigurationStatusController::class, 'store'])->name('pages.management.configuration-statuses.store');
-Route::get('/asset-management/configuration-statuses/{configuration_status}/edit', [ConfigurationStatusController::class, 'edit'])->name('pages.management.configuration-statuses.edit');
-Route::post('/asset-management/configuration-statuses/{configuration_status}/update', [ConfigurationStatusController::class, 'update'])->name('pages.management.configuration-statuses.update');
-Route::delete('/asset-management/configuration-statuses/{configuration_status}/destroy', [ConfigurationStatusController::class, 'destroy'])->name('pages.management.configuration-statuses.destroy');
+Route::get('/asset-management/option-management/configuration-statuses/create', [ConfigurationStatusController::class, 'create'])->name('pages.management.configuration-statuses.create');
+Route::post('/asset-management/option-management/configuration-statuses', [ConfigurationStatusController::class, 'store'])->name('pages.management.configuration-statuses.store');
+Route::get('/asset-management/option-management/configuration-statuses/{configuration_status}/edit', [ConfigurationStatusController::class, 'edit'])->name('pages.management.configuration-statuses.edit');
+Route::post('/asset-management/option-management/configuration-statuses/{configuration_status}/update', [ConfigurationStatusController::class, 'update'])->name('pages.management.configuration-statuses.update');
+Route::delete('/asset-management/option-management/configuration-statuses/{configuration_status}/destroy', [ConfigurationStatusController::class, 'destroy'])->name('pages.management.configuration-statuses.destroy');
 
 // Items
-Route::get('/asset-management/items', [ItemController::class, 'index'])->name('pages.management.items.index');
-Route::get('/asset-management/items/create', [ItemController::class, 'create'])->name('pages.management.items.create');
-Route::post('/asset-management/items', [ItemController::class, 'store'])->name('pages.management.items.store');
-Route::get('/asset-management/items/{item}/edit', [ItemController::class, 'edit'])->name('pages.management.items.edit');
-Route::post('/asset-management/items/{item}/update', [ItemController::class, 'update'])->name('pages.management.items.update');
-Route::delete('/asset-management/items/{item}/destroy', [ItemController::class, 'destroy'])->name('pages.management.items.destroy');
+Route::get('/asset-management/option-management/items/create', [ItemController::class, 'create'])->name('pages.management.items.create');
+Route::post('/asset-management/option-management/items', [ItemController::class, 'store'])->name('pages.management.items.store');
+Route::get('/asset-management/option-management/items/{item}/edit', [ItemController::class, 'edit'])->name('pages.management.items.edit');
+Route::post('/asset-management/option-management/items/{item}/update', [ItemController::class, 'update'])->name('pages.management.items.update');
+Route::delete('/asset-management/option-management/items/{item}/destroy', [ItemController::class, 'destroy'])->name('pages.management.items.destroy');
 
 // Locations
-Route::get('/asset-management/locations/marker', [LocationController::class, 'marker']);
-Route::get('/asset-management/locations', [LocationController::class, 'index'])->name('pages.management.locations.index');
-Route::get('/asset-management/locations/create', [LocationController::class, 'create'])->name('pages.management.locations.create');
-Route::post('/asset-management/locations', [LocationController::class, 'store'])->name('pages.management.locations.store');
-Route::get('/asset-management/locations/{location}/edit', [LocationController::class, 'edit'])->name('pages.management.locations.edit');
-Route::post('/asset-management/locations/{location}/update', [LocationController::class, 'update'])->name('pages.management.locations.update');
-Route::delete('/asset-management/locations/{location}/destroy', [LocationController::class, 'destroy'])->name('pages.management.locations.destroy');
+Route::get('/asset-management/option-management/locations/marker', [LocationController::class, 'marker']);
+Route::get('/asset-management/option-management/locations/create', [LocationController::class, 'create'])->name('pages.management.locations.create');
+Route::post('/asset-management/option-management/locations', [LocationController::class, 'store'])->name('pages.management.locations.store');
+Route::get('/asset-management/option-management/locations/{location}/edit', [LocationController::class, 'edit'])->name('pages.management.locations.edit');
+Route::post('/asset-management/option-management/locations/{location}/update', [LocationController::class, 'update'])->name('pages.management.locations.update');
+Route::delete('/asset-management/option-management/locations/{location}/destroy', [LocationController::class, 'destroy'])->name('pages.management.locations.destroy');
 
 // Manufacturers
-Route::get('/asset-management/manufacturers', [ManufacturerController::class, 'index'])->name('pages.management.manufacturers.index');
-Route::get('/asset-management/manufacturers/create', [ManufacturerController::class, 'create'])->name('pages.management.manufacturers.create');
-Route::post('/asset-management/manufacturers', [ManufacturerController::class, 'store'])->name('pages.management.manufacturers.store');
-Route::get('/asset-management/manufacturers/{manufacturer}/edit', [ManufacturerController::class, 'edit'])->name('pages.management.manufacturers.edit');
-Route::post('/asset-management/manufacturers/{manufacturer}/update', [ManufacturerController::class, 'update'])->name('pages.management.manufacturers.update');
-Route::delete('/asset-management/manufacturers/{manufacturer}/destroy', [ManufacturerController::class, 'destroy'])->name('pages.management.manufacturers.destroy');
+Route::get('/asset-management/option-management/manufacturers/create', [ManufacturerController::class, 'create'])->name('pages.management.manufacturers.create');
+Route::post('/asset-management/option-management/manufacturers', [ManufacturerController::class, 'store'])->name('pages.management.manufacturers.store');
+Route::get('/asset-management/option-management/manufacturers/{manufacturer}/edit', [ManufacturerController::class, 'edit'])->name('pages.management.manufacturers.edit');
+Route::post('/asset-management/option-management/manufacturers/{manufacturer}/update', [ManufacturerController::class, 'update'])->name('pages.management.manufacturers.update');
+Route::delete('/asset-management/option-management/manufacturers/{manufacturer}/destroy', [ManufacturerController::class, 'destroy'])->name('pages.management.manufacturers.destroy');
 
 // Position Statuses
-Route::get('/asset-management/position-statuses', [PositionStatusController::class, 'index'])->name('pages.management.position-statuses.index');
-Route::get('/asset-management/position-statuses/create', [PositionStatusController::class, 'create'])->name('pages.management.position-statuses.create');
-Route::post('/asset-management/position-statuses', [PositionStatusController::class, 'store'])->name('pages.management.position-statuses.store');
-Route::get('/asset-management/position-statuses/{position_status}/edit', [PositionStatusController::class, 'edit'])->name('pages.management.position-statuses.edit');
-Route::post('/asset-management/position-statuses/{position_status}/update', [PositionStatusController::class, 'update'])->name('pages.management.position-statuses.update');
-Route::delete('/asset-management/position-statuses/{position_status}/destroy', [PositionStatusController::class, 'destroy'])->name('pages.management.position-statuses.destroy');
+Route::get('/asset-management/option-management/position-statuses/create', [PositionStatusController::class, 'create'])->name('pages.management.position-statuses.create');
+Route::post('/asset-management/option-management/position-statuses', [PositionStatusController::class, 'store'])->name('pages.management.position-statuses.store');
+Route::get('/asset-management/option-management/position-statuses/{position_status}/edit', [PositionStatusController::class, 'edit'])->name('pages.management.position-statuses.edit');
+Route::post('/asset-management/option-management/position-statuses/{position_status}/update', [PositionStatusController::class, 'update'])->name('pages.management.position-statuses.update');
+Route::delete('/asset-management/option-management/position-statuses/{position_status}/destroy', [PositionStatusController::class, 'destroy'])->name('pages.management.position-statuses.destroy');

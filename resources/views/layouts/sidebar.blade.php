@@ -46,7 +46,11 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('pages.data-tables.index') }}" class="nav-link {{ request()->is('asset-management') || request()->is('asset-management/*/edit') ? 'active' : '' }}">
+            <a href="{{ route('pages.data-tables.index') }}" class="nav-link {{ request()->is('asset-management') || 
+                                                                                request()->is('asset-management/*/edit') ||
+                                                                                request()->is('asset-management/create') ||
+                                                                                request()->is('asset-management/*/show') ||
+                                                                                request()->is('asset-management/edit-option')? 'active' : '' }}">
               <i class="nav-icon fas fa-server"></i>
               <p>
                 Asset Management

@@ -9,11 +9,9 @@ use Illuminate\Support\Facades\Session;
 
 class ConfigurationStatusController extends Controller
 {
-    public function index()
+    public function __construct()
     {
-        $configuration_statuses = ConfigurationStatus::all();
-
-        return view('pages.management.configuration-statuses.index', compact('configuration_statuses'));
+        $this->middleware('auth');
     }
 
     public function create()
@@ -33,7 +31,7 @@ class ConfigurationStatusController extends Controller
             $configuration_status->name = $request->name;
             $configuration_status->save();
 
-            session::flash('success', 'Configuration Status added successfully.');
+            session::flash('success-configuration-status', 'Configuration Status added successfully.');
 
             return response()->json([
                 'status' => true,
@@ -53,7 +51,7 @@ class ConfigurationStatusController extends Controller
         $configuration_status = ConfigurationStatus::find($configuration_status_id);
 
         if ($configuration_status == null) {
-            return redirect()->route('pages.management.configuration-statuses.index');
+            return redirect()->route('pages.management.index');
         }
 
         return view('pages.management.configuration-statuses.edit', compact('configuration_status'));
@@ -79,7 +77,7 @@ class ConfigurationStatusController extends Controller
             $configuration_status->name = $request->name;
             $configuration_status->save();
 
-            session::flash('success', 'Configuration Status updated successfully.');
+            session::flash('success-configuration-status', 'Configuration Status updated successfully.');
 
             return response()->json([
                 'status' => true,
@@ -107,8 +105,8 @@ class ConfigurationStatusController extends Controller
 
         $configuration_status->delete();
 
-        session::flash('success', 'Configuration Status deleted successfully.');
+        session::flash('success-configuration-status', 'Configuration Status deleted successfully.');
 
-        return redirect()->route('pages.management.configuration-statuses.index');
+        return redirect()->route('pages.management.index');
     }
 }
