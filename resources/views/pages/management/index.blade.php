@@ -88,7 +88,7 @@
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->created_at }}</td>
-                                            <td>
+                                            <td class="d-flex">
                                                 <a href="{{ route('pages.management.items.edit', $item->id) }}" class="btn btn-warning btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
                                                 <form method="post" action="{{ route('pages.management.items.destroy', $item->id) }}">
                                                     @csrf
@@ -145,7 +145,7 @@
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $manufacturer->name }}</td>
                                             <td>{{ $manufacturer->created_at }}</td>
-                                            <td>
+                                            <td class="d-flex">
                                                 <a href="{{ route('pages.management.manufacturers.edit', $manufacturer->id) }}" class="btn btn-warning btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
                                                 <form method="post" action="{{ route('pages.management.manufacturers.destroy', $manufacturer->id) }}">
                                                     @csrf
@@ -202,7 +202,7 @@
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $configuration_status->name }}</td>
                                             <td>{{ $configuration_status->created_at }}</td>
-                                            <td>
+                                            <td class="d-flex">
                                                 <a href="{{ route('pages.management.configuration-statuses.edit', $configuration_status->id) }}" class="btn btn-warning btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
                                                 <form method="post" action="{{ route('pages.management.configuration-statuses.destroy', $configuration_status->id) }}">
                                                     @csrf
@@ -265,7 +265,7 @@
                                                 <td>{{ $location->latitude }}</td>
                                                 <td>{{ $location->longitude }}</td>
                                                 <td>{{ $location->created_at }}</td>
-                                                <td>
+                                                <td class="d-flex">
                                                     <a href="{{ route('pages.management.locations.edit', $location->id) }}" class="btn btn-warning btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
                                                     <form method="post" action="{{ route('pages.management.locations.destroy', $location->id) }}">
                                                         @csrf
@@ -326,7 +326,7 @@
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $position_status->name }}</td>
                                             <td>{{ $position_status->created_at }}</td>
-                                            <td>
+                                            <td class="d-flex">
                                                 <a href="{{ route('pages.management.position-statuses.edit', $position_status->id) }}" class="btn btn-warning btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
                                                 <form method="post" action="{{ route('pages.management.position-statuses.destroy', $position_status->id) }}">
                                                     @csrf

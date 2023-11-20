@@ -193,8 +193,8 @@ class DataTableController extends Controller
             ]);
         }
     }
-    
-    public function destroy($data_table_id, Request $request)
+
+    public function softDelete($data_table_id, Request $request)
     {
         $data_table = DataTable::find($data_table_id);
 
@@ -210,6 +210,49 @@ class DataTableController extends Controller
         session::flash('success', 'Data deleted successfully.');
 
         return redirect()->route('pages.data-tables.index');
+    }
+
+    public function trashed()
+    {
+        $data_tables = DataTable::onlyTrashed()->get();
+      
+        return view('pages.data-tables.recycle-bin', compact('data_tables'));
+    }
+
+    public function restore($data_table_id, Request $request)
+    {
+        $data_table = DataTable::whereId($data_table_id);
+
+        if ($data_table == null) {
+            return response()->json([
+                'status' => false,
+                'notFound' => true
+            ]);
+        }
+
+        $data_table->restore();
+
+        session::flash('success', 'Data restored successfully.');
+
+        return redirect()->route('pages.data-tables.recycle-bin');
+    }
+
+    public function forceDelete($data_table_id, Request $request)
+    {
+        $data_table = DataTable::withTrashed()->find($data_table_id);
+
+        if ($data_table == null) {
+            return response()->json([
+                'status' => false,
+                'notFound' => true
+            ]);
+        }
+
+        $data_table->forceDelete();
+
+        session::flash('success', 'Data deleted permanently successfully.');
+
+        return redirect()->route('pages.data-tables.recycle-bin');
     }
 
     public function importexcel(Request $request)

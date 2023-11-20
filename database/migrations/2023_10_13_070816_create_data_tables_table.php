@@ -23,6 +23,7 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->unsignedBigInteger('position_status_name')->constrained('position_status_names');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -42,7 +42,10 @@ Route::post('/asset-management', [DataTableController::class, 'store'])->name('p
 Route::get('/asset-management/{data_table}/show', [DataTableController::class, 'show'])->name('pages.data-tables.show');
 Route::get('/asset-management/{data_table}/edit', [DataTableController::class, 'edit'])->name('pages.data-tables.edit');
 Route::post('/asset-management/{data_table}/update', [DataTableController::class, 'update'])->name('pages.data-tables.update');
-Route::delete('/asset-management/{data_table}', [DataTableController::class, 'destroy'])->name('pages.data-tables.destroy');
+Route::get('/asset-management/soft-delete/{data_table}', [DataTableController::class, 'softDelete'])->name('pages.data-tables.soft-delete');
+Route::get('/asset-management/recycle-bin', [DataTableController::class, 'trashed'])->name('pages.data-tables.recycle-bin');
+Route::get('/asset-management/restore/{data_table}', [DataTableController::class, 'restore'])->name('pages.data-tables.restore');
+Route::get('/asset-management/force-delete/{data_table}', [DataTableController::class, 'forceDelete'])->name('pages.data-tables.force-delete');
 
 // Asset Management Temp Images
 Route::post('/asset-management/temp-images', [TempImageController::class, 'store'])->name('pages.data-tables.temp-images.store');
