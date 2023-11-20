@@ -60,8 +60,8 @@
                                                                                 request()->is('asset-management/option-management/manufacturers/create') ||
                                                                                 request()->is('asset-management/option-management/manufacturers/*/edit') ||
                                                                                 request()->is('asset-management/option-management/position-statuses/create') ||
-                                                                                request()->is('asset-management/option-management/position-statuses/*/edit')
-                                                                                ? 'active' : '' }}">
+                                                                                request()->is('asset-management/option-management/position-statuses/*/edit') ||
+                                                                                request()->is('asset-management/recycle-bin') ? 'active' : '' }}">
               <i class="nav-icon fas fa-server"></i>
               <p>
                 Asset Management
