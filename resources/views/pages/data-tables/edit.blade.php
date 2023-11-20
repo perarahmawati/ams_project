@@ -44,6 +44,7 @@
                                 </button>
                             </div>
                             @endif
+                            <div id="successAlert"></div>
                             <form method="post" name="dataTableForm" id="dataTableForm" action="">
                                 @csrf
                                 @method('post')

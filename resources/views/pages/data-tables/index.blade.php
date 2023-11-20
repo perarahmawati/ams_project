@@ -43,6 +43,7 @@
                                 </button>
                             </div>
                             @endif
+                            <div id="successAlert"></div>
                             <div class="row mb-4">
                                 <div class="col-sm-6">
                                     <a href="{{ route('pages.data-tables.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Asset</a>
@@ -135,7 +136,7 @@
                                 </tbody>
                             </table>
                             <div id="locationPopup">
-                                <div id="map"></div>
+                                <div id="map" style="height: 50vh; width: 50vh;"></div>
                             </div>
                         </div>
                     </div>

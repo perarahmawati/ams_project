@@ -1,6 +1,6 @@
-#map { height: 300px; width: 400px;}
-
-#locationPopup { display: none; }
+#locationPopup {
+    display: none; 
+}
 
 .image-card{
     position: relative;
@@ -19,8 +19,8 @@
 }
 
 .col-sm-2 {
-    flex-basis: 30%; /* Sesuaikan lebar elemen nama */
-    text-align: left; /* Sesuaikan perlu tekstur kiri atau kanan */
+    flex-basis: 30%;
+    text-align: left;
     position: relative;
 }
 
@@ -57,18 +57,30 @@
     white-space: nowrap;
 }
 
-#search-result {
+.dropdown-list {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    background-color: #fff;
     list-style: none;
     padding: 0;
     margin: 0;
+    width: 100%;
 }
 
 #search-result li {
-    padding: 10px;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    margin-bottom: 5px;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ced4da;
     cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#search-result li:last-child {
+    border-bottom: none;
+}
+
+#search-result li a {
+    color: #000;
+    text-decoration: none;
 }
 
 #search-result li:hover {

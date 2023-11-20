@@ -75,13 +75,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/mailbox/mailbox.html" class="nav-link {{ request()->is('user-logs') ? 'active' : '' }}">
+                <a href="#" class="nav-link {{ request()->is('user-logs') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>User Logs</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/mailbox/compose.html" class="nav-link {{ request()->is('activity-logs') ? 'active' : '' }}">
+                <a href="#" class="nav-link {{ request()->is('activity-logs') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Activity Logs</p>
                 </a>

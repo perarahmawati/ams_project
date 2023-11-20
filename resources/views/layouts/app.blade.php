@@ -33,9 +33,11 @@
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
   <!-- SweetAlert2 -->
-  <link rel="stylesheet" href="../../plugins/sweetalert2/sweetalert2.min.css">
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.min.css') }}">
   <!-- Toastr -->
-  <link rel="stylesheet" href="../../plugins/toastr/toastr.min.css">
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/toastr/toastr.min.css') }}">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
   <!-- Leaflet -->
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/leaflet/leaflet.css') }}">
   <!-- Dropzone -->
@@ -142,6 +144,14 @@
       "autoWidth": false
     });
   });
+</script>
+<!-- Select2 -->
+<script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
+<!-- Page specific script -->
+<script>
+    $(function () {
+      $('.select2').select2()
+    });
 </script>
 <!-- Leaflet -->
 <script src="{{ asset('adminlte/plugins/leaflet/leaflet.js') }}"></script>
