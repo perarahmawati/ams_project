@@ -47,10 +47,21 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('pages.data-tables.index') }}" class="nav-link {{ request()->is('asset-management') || 
-                                                                                request()->is('asset-management/*/edit') ||
                                                                                 request()->is('asset-management/create') ||
                                                                                 request()->is('asset-management/*/show') ||
-                                                                                request()->is('asset-management/edit-option')? 'active' : '' }}">
+                                                                                request()->is('asset-management/*/edit') ||
+                                                                                request()->is('asset-management/option-management') ||
+                                                                                request()->is('asset-management/option-management/configuration-statuses/create') ||
+                                                                                request()->is('asset-management/option-management/configuration-statuses/*/edit') ||
+                                                                                request()->is('asset-management/option-management/items/create') ||
+                                                                                request()->is('asset-management/option-management/items/*/edit') ||
+                                                                                request()->is('asset-management/option-management/locations/create') ||
+                                                                                request()->is('asset-management/option-management/locations/*/edit') ||
+                                                                                request()->is('asset-management/option-management/manufacturers/create') ||
+                                                                                request()->is('asset-management/option-management/manufacturers/*/edit') ||
+                                                                                request()->is('asset-management/option-management/position-statuses/create') ||
+                                                                                request()->is('asset-management/option-management/position-statuses/*/edit')
+                                                                                ? 'active' : '' }}">
               <i class="nav-icon fas fa-server"></i>
               <p>
                 Asset Management
