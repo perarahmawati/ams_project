@@ -21,6 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'telp',
+        'role',
+        'image',
+        'last_seen',
     ];
 
     /**
@@ -42,4 +46,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    protected static $logFillable = true;
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,7 @@ use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\PositionStatusController;
 use App\Http\Controllers\TempImageController;
 use App\Http\Controllers\CombinedController;
+use App\Http\Controllers\UserLogController;
 
 Auth::routes();
 
@@ -92,3 +94,12 @@ Route::post('/asset-management/option-management/position-statuses', [PositionSt
 Route::get('/asset-management/option-management/position-statuses/{position_status}/edit', [PositionStatusController::class, 'edit'])->name('pages.management.position-statuses.edit');
 Route::post('/asset-management/option-management/position-statuses/{position_status}/update', [PositionStatusController::class, 'update'])->name('pages.management.position-statuses.update');
 Route::delete('/asset-management/option-management/position-statuses/{position_status}/destroy', [PositionStatusController::class, 'destroy'])->name('pages.management.position-statuses.destroy');
+
+// User Profile
+Route::get('profiles', [UserProfileController::class, 'index'])->name('profiles')->middleware('auth');
+Route::get('profiles', [UserProfileController::class, 'edit'])->name('profiles.edit')->middleware('auth');
+Route::patch('profiles', [UserProfileController::class, 'update'])->name('profiles.update')->middleware('auth');
+Route::post('profiles', [UserProfileController::class, 'upload'])->name('profiles.upload')->middleware('auth');
+
+// User Logs
+Route::get('users-log', [UserLogController::class, 'index'])->name('users-log');
