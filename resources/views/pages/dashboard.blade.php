@@ -148,6 +148,7 @@
                           <td>{{ $data_table->configurationStatus->name }}</td>
                           <td>{{ $data_table->location->name }}</td>
                           <td>{{ $data_table->description }}</td>
+                          <td>{{ $data_table->positionStatus->name }}</td>
                         </tr>
                       @endforeach
                     </tbody>
