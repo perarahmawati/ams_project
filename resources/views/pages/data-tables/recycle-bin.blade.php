@@ -22,8 +22,9 @@
         <div class="row">
             <div class="col-12 col-sm-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4 class="mb-0">Asset List</h4>
+                    <div class="card-header d-flex align-items-center">
+                        <a href="{{ route('pages.data-tables.index') }}" class="text-dark"><i class="fa-solid fa-chevron-left mr-2 mt-2"></i></a>
+                        <h4 class="m-0">Deleted Asset List</h4>
                     </div>
                     <div class="card-body">
                         <div>
@@ -44,53 +45,7 @@
                             </div>
                             @endif
                             <div id="successAlert"></div>
-                            <div class="row mb-4">
-                                <div class="col-sm-6">
-                                    <a href="{{ route('pages.data-tables.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Asset</a>
-
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary mr-1" data-toggle="modal" data-target="#modal">
-                                        <i class="fa-solid fa-file-import mr-2"></i>Import New Asset
-                                    </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title fs-5" id="modalLabel">Import New Asset Data</h1>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <form action="{{ route('import-excel') }}" method="POST" enctype="multipart/form-data">
-                                                    @csrf
-                                                    <div class="modal-body">
-                                                        <div>
-                                                            <p>Upload an <a href="{{ asset('/assets/files/import_new_data_template.xlsx') }}">Excel</a> file here to import new asset data!</p>
-                                                        </div>
-                                                        <div class="custom-file">
-                                                            <input type="file" name="file" class="custom-file-input" id="customFile" required accept=".xls,.xlsx" onchange="updateFileName()">
-                                                            <label class="custom-file-label" for="customFile" id="fileLabel">Choose file</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                        <button type="submit" class="btn btn-primary">Save</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="{{ route('pages.data-tables.recycle-bin') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-recycle mr-2"></i>Recycle Bin</a>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="float-sm-right">
-                                        <a href="{{ route('pages.management.index') }}" class="btn btn-warning text-white"><i class="fa-solid fa-list-check mr-2"></i>Option Management</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <table id="myTable1" class="table table-bordered table-hover">
+                            <table id="myTable2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -101,7 +56,7 @@
                                         <th>Location</th>
                                         <th>Description</th>
                                         <th>Position Status</th>
-                                        <th>Created Date</th>
+                                        <th>Deleted Date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -119,11 +74,10 @@
                                         <td onmouseover="showLocationPopup('{{ $data_table->location->latitude }}', '{{ $data_table->location->longitude }}', '{{ $data_table->location->name }}', '{{ $data_table->location->address }}')" onmouseout="hideLocationPopup()">{{ $data_table->location->name }}</td>
                                         <td>{{ $data_table->description }}</td>
                                         <td>{{ $data_table->positionStatus->name }}</td>
-                                        <td>{{ $data_table->created_at }}</td>
+                                        <td>{{ $data_table->deleted_at }}</td>
                                         <td>
-                                            <a href="{{ route('pages.data-tables.show', $data_table->id) }}" class="btn btn-primary btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-eye mr-2"></i>Show</a>
-                                            <a href="{{ route('pages.data-tables.edit', $data_table->id) }}" class="btn btn-warning btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
-                                            <a href="{{ route('pages.data-tables.soft-delete', $data_table->id) }}" class="btn btn-danger btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete</a>
+                                            <a href="{{ route('pages.data-tables.restore', $data_table->id) }}" class="btn btn-warning btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-recycle mr-2"></i>Restore</a>
+                                            <a href="{{ route('pages.data-tables.force-delete', $data_table->id) }}" class="btn btn-danger btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete Forever</a>
                                         </td>
                                     </tr>
                                     @endforeach

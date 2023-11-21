@@ -33,9 +33,11 @@
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
   <!-- SweetAlert2 -->
-  <link rel="stylesheet" href="../../plugins/sweetalert2/sweetalert2.min.css">
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.min.css') }}">
   <!-- Toastr -->
-  <link rel="stylesheet" href="../../plugins/toastr/toastr.min.css">
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/toastr/toastr.min.css') }}">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
   <!-- Leaflet -->
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/leaflet/leaflet.css') }}">
   <!-- Dropzone -->
@@ -114,7 +116,7 @@
 <!-- Page specific script -->
 <script>
   $(function () {
-    $("#myTable").DataTable({
+    $("#myTable1").DataTable({
       "responsive": true,
       "lengthChange": true,
       "autoWidth": false,
@@ -136,12 +138,25 @@
             }
         ]
     }).buttons().container().appendTo('#myTable1_wrapper .col-md-6:eq(0)');
+    $("#myTable2").DataTable({
+      "responsive": true,
+      "lengthChange": true,
+      "autoWidth": false
+    });
     $("#myDataTable1, #myDataTable2, #myDataTable3, #myDataTable4, #myDataTable5").DataTable({
       "responsive": true,
       "lengthChange": true,
       "autoWidth": false
     });
   });
+</script>
+<!-- Select2 -->
+<script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
+<!-- Page specific script -->
+<script>
+    $(function () {
+      $('.select2').select2()
+    });
 </script>
 <!-- Leaflet -->
 <script src="{{ asset('adminlte/plugins/leaflet/leaflet.js') }}"></script>

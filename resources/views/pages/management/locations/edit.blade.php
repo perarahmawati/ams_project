@@ -45,13 +45,20 @@
                             </div>
                             @endif
                             <div id="successAlert"></div>
-                            <div class="input-group">
-                                <input class="search-location form-control" type="text" placeholder="Search Location" oninput="onTyping(this)" />
+                            <div class="form-group">
+                                <div class="input-group input-group-md">
+                                    <input type="search" class="search-location form-control form-control-md" placeholder="Search Location" oninput="onTyping(this)" />
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-md btn-default">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
                                 <div class="input-group-append">
-                                    <ul id="search-result"></ul>
+                                    <ul id="search-result" class="dropdown-list text-md"></ul>
                                 </div>
                             </div>
-                            <div id="map" class="rounded shadow-sm" style="height: 400px;"></div>
+                            <div id="map" class="rounded shadow-sm mb-3" style="height: 45vh; width: 100%;"></div>
                             <form method="post" name="dataTableForm" id="dataTableForm" action="">
                                 @csrf
                                 @method('post')
