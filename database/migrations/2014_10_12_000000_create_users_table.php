@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('telp');
             $table->string('role');
             $table->string('image')->nullable();
-            $table->timestamp('last_seen')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

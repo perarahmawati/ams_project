@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Activitylog\LogOptions;
+use Wildside\Userstamps\Userstamps;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DataTable extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogsActivity, Userstamps;
 
     protected $guarded = [];
 
@@ -40,5 +43,29 @@ class DataTable extends Model
 
     public function positionStatus(){
         return $this->belongsTo(PositionStatus::class, 'position_status_name');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+                ->logOnly([
+                    'item_name', 
+                    'manufacturer_name', 
+                    'serial_number', 
+                    'configuration_status_name',
+                    'location_name',
+                    'description',
+                    'position_status_name',
+                    'created_at',
+                    'updated_at',
+                    'deleted_at'
+                ]) 
+                ->setDescriptionForEvent(fn(string $eventName) => "This item has been {$eventName}")
+                ->useLogName('Post');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

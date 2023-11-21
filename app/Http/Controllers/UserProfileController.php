@@ -64,8 +64,8 @@ class UserProfileController extends Controller
             $fileName = strtolower($request->file('image')->getClientOriginalName());
               $this->deleteOldImage();
             $request->image->storeAs('public/images', $fileName);
-            Auth()->user()->update(['image'=>$fileName]);
-
+            $user = Auth()->user();
+            $user->update(['image'=>$fileName]);
         }
         return redirect()->back()
                         ->with('success', 'Image updated successfully');

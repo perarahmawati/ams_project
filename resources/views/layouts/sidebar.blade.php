@@ -69,7 +69,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link {{ request()->is('user-manage') ? 'active' : '' }}">
+            <a href="{{ route('user-management.index') }}" class="nav-link {{ request()->is('user-manage') ? 'active' : '' }}">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 User Management
@@ -92,7 +92,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link {{ request()->is('activity-logs') ? 'active' : '' }}">
+                <a href="{{ route('activity-log.index') }}" class="nav-link {{ request()->is('activity-logs') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Activity Logs</p>
                 </a>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,7 @@ use App\Http\Controllers\PositionStatusController;
 use App\Http\Controllers\TempImageController;
 use App\Http\Controllers\CombinedController;
 use App\Http\Controllers\UserLogController;
+use App\Http\Controllers\UserManagementController;
 
 Auth::routes();
 
@@ -106,3 +108,10 @@ Route::post('profiles', [UserProfileController::class, 'upload'])->name('profile
 
 // User Logs
 Route::get('users-log', [UserLogController::class, 'index'])->name('users-log');
+
+// Activity Log
+Route::resource('activity-log', ActivityLogController::class);
+Route::get('/asset-management/log', [DataTableController::class, 'log'])->name('pages.data-tables.log');
+
+// User Management
+Route::get('/user-management', [UserManagementController::class, 'index'])->name('user-management.index');

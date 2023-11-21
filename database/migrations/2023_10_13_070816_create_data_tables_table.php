@@ -24,6 +24,9 @@ return new class extends Migration
             $table->unsignedBigInteger('position_status_name')->constrained('position_status_names');
             $table->timestamps();
             $table->softDeletes();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
         });
     }
 

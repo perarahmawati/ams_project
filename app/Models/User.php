@@ -48,4 +48,14 @@ class User extends Authenticatable
     ];
 
     protected static $logFillable = true;
+
+    public function item()
+    {
+        return $this->hasMany(Item::class);
+    }
+
+    public function logactivities()
+    {
+        return $this->hasMany(ActivityLog::class);
+    } 
 }

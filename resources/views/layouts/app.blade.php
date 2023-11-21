@@ -138,7 +138,7 @@
             }
         ]
     }).buttons().container().appendTo('#myTable1_wrapper .col-md-6:eq(0)');
-    $("#myTable2").DataTable({
+    $("#myTable2, #myTable3").DataTable({
       "responsive": true,
       "lengthChange": true,
       "autoWidth": false

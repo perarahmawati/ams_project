@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DataTable;
 use App\Models\Item;
-use App\Models\Manufacturer;
-use App\Models\ConfigurationStatus;
-use App\Models\DataTableImage;
 use App\Models\Location;
+use App\Models\DataTable;
 use App\Models\TempImage;
+use App\Models\Manufacturer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Session;
-use Intervention\Image\Facades\Image;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\DataTableImport;
+use App\Models\DataTableImage;
 use App\Models\PositionStatus;
+use App\Imports\DataTableImport;
+use App\Models\ConfigurationStatus;
+use Maatwebsite\Excel\Facades\Excel;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Session;
+use Spatie\Activitylog\Models\Activity;
+use Illuminate\Support\Facades\Validator;
 
 class DataTableController extends Controller
 {
@@ -309,5 +310,11 @@ class DataTableController extends Controller
         $position_status_names = PositionStatus::all();
 
         return view('pages.data-tables.show', compact('data_table', 'data_tableImages', 'item_names', 'manufacturer_names', 'configuration_status_names', 'location_names', 'position_status_names'));
+    }
+
+    public function log(DataTable $item) {
+        return view('pages.data-tables.log', [
+            'logs' => Activity::where('subject_type', Item::class)->where('subject_id', $item->id)->latest()->get()
+        ]);
     }
 }
