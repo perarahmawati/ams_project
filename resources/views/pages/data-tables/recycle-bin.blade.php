@@ -45,7 +45,7 @@
                             </div>
                             @endif
                             <div id="successAlert"></div>
-                            <table id="myTable2" class="table table-bordered table-hover">
+                            <table id="recycleBinTable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -71,13 +71,13 @@
                                         <td>{{ $data_table->manufacturer->name }}</td>
                                         <td>{{ $data_table->serial_number }}</td>
                                         <td>{{ $data_table->configurationStatus->name }}</td>
-                                        <td onmouseover="showLocationPopup('{{ $data_table->location->latitude }}', '{{ $data_table->location->longitude }}', '{{ $data_table->location->name }}', '{{ $data_table->location->address }}')" onmouseout="hideLocationPopup()">{{ $data_table->location->name }}</td>
+                                        <td>{{ $data_table->location->name }}</td>
                                         <td>{{ $data_table->description }}</td>
                                         <td>{{ $data_table->positionStatus->name }}</td>
                                         <td>{{ $data_table->deleted_at }}</td>
                                         <td>
-                                            <a href="{{ route('pages.data-tables.restore', $data_table->id) }}" class="btn btn-warning btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-recycle mr-2"></i>Restore</a>
-                                            <a href="{{ route('pages.data-tables.force-delete', $data_table->id) }}" class="btn btn-danger btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete Forever</a>
+                                            <a href="{{ route('pages.data-tables.restore', $data_table->id) }}" class="btn btn-warning btn-sm text-white mr-1"><i class="fa-solid fa-recycle mr-2"></i>Restore</a>
+                                            <a href="{{ route('pages.data-tables.force-delete', $data_table->id) }}" class="btn btn-danger btn-sm text-white mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete Permanently</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -91,48 +91,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- jQuery -->
-        <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
-
-        <!-- Leaflet -->
-        <script src="{{ asset('adminlte/plugins/leaflet/leaflet.js') }}"></script>
-
-        <script>
-            var map;
-            var marker;
-
-            function showLocationPopup(latitude, longitude, name, address) {
-                document.getElementById('locationPopup').style.display = 'block';
-                if (!map) {
-                    map = L.map('map').setView([latitude, longitude], 18);
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-                        maxZoom: 18,
-                    }).addTo(map);
-                    marker = L.marker([latitude, longitude]).addTo(map).bindPopup(`<b>${name}</b><br>${address}`, {
-                        closeButton: false
-                    }).openPopup();
-                } else {
-                    map.setView([latitude, longitude], 18);
-                    marker.setLatLng([latitude, longitude]);
-                    marker.getPopup().setContent(`<b>${name}</b><br>${address}`).openPopup();
-                }
-            }
-
-            function hideLocationPopup() {
-                document.getElementById('locationPopup').style.display = 'none';
-            }
-        </script>
-
-        <script>
-            function updateFileName() {
-                var fileInput = document.getElementById('customFile');
-                var fileName = fileInput.files[0].name;
-                var fileLabel = document.getElementById('fileLabel');
-                fileLabel.innerHTML = fileName;
-            }
-        </script>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->

@@ -182,6 +182,28 @@
                 }
             });
 
+            function deleteImage(id){
+                if (confirm("Are you sure you want to delete?")) {
+                    var URL = "{{ route('pages.data-tables.data-table-images.destroy','ID') }}";
+                    newURL = URL.replace('ID',id)
+
+                    $("#data-table-image-row-"+id).remove();
+
+                    $.ajax({
+                        url: newURL,
+                        data: {},
+                        method: 'delete',
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        },
+                        success: function(response){
+                            window.location.href='{{ route("pages.data-tables.edit",$data_table->id) }}';
+                        }
+                    });
+                }
+            }
+
             $("#dataTableForm").submit(function(event){
                 event.preventDefault();
                 $("input[type=submit]").prop('disabled',true);
@@ -286,28 +308,6 @@
                     }
                 });
             }) ;
-            
-            function deleteImage(id){
-                if (confirm("Are you sure you want to delete?")) {
-                    var URL = "{{ route('pages.data-tables.data-table-images.destroy','ID') }}";
-                    newURL = URL.replace('ID',id)
-
-                    $("#data-table-image-row-"+id).remove();
-
-                    $.ajax({
-                        url: newURL,
-                        data: {},
-                        method: 'delete',
-                        dataType: 'json',
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                        },
-                        success: function(response){
-                            window.location.href='{{ route("pages.data-tables.edit",$data_table->id) }}';
-                        }
-                    });
-                }
-            }
         </script>
       </div><!-- /.container-fluid -->
     </section>

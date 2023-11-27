@@ -47,21 +47,26 @@
           </li>
           <li class="nav-item">
             <a href="{{ route('pages.data-tables.index') }}" class="nav-link {{ request()->is('asset-management') || 
-                                                                                request()->is('asset-management/create') ||
+                                                                                request()->is('asset-management/add-new-asset') ||
                                                                                 request()->is('asset-management/*/show') ||
                                                                                 request()->is('asset-management/*/edit') ||
+                                                                                request()->is('asset-management/recycle-bin') ||
                                                                                 request()->is('asset-management/option-management') ||
-                                                                                request()->is('asset-management/option-management/configuration-statuses/create') ||
-                                                                                request()->is('asset-management/option-management/configuration-statuses/*/edit') ||
-                                                                                request()->is('asset-management/option-management/items/create') ||
-                                                                                request()->is('asset-management/option-management/items/*/edit') ||
-                                                                                request()->is('asset-management/option-management/locations/create') ||
-                                                                                request()->is('asset-management/option-management/locations/*/edit') ||
-                                                                                request()->is('asset-management/option-management/manufacturers/create') ||
-                                                                                request()->is('asset-management/option-management/manufacturers/*/edit') ||
-                                                                                request()->is('asset-management/option-management/position-statuses/create') ||
-                                                                                request()->is('asset-management/option-management/position-statuses/*/edit') ||
-                                                                                request()->is('asset-management/recycle-bin') ? 'active' : '' }}">
+                                                                                request()->is('asset-management/option-management/item/add-new-item') ||
+                                                                                request()->is('asset-management/option-management/item/*/edit') ||
+                                                                                request()->is('asset-management/option-management/manufacturer/add-new-manufacturer') ||
+                                                                                request()->is('asset-management/option-management/manufacturer/*/edit') ||
+                                                                                request()->is('asset-management/option-management/configuration-status/add-new-configuration-status') ||
+                                                                                request()->is('asset-management/option-management/configuration-status/*/edit') ||
+                                                                                request()->is('asset-management/option-management/location/add-new-location') ||
+                                                                                request()->is('asset-management/option-management/location/*/edit') ||
+                                                                                request()->is('asset-management/option-management/position-status/add-new-position-status') ||
+                                                                                request()->is('asset-management/option-management/position-status/*/edit') ||
+                                                                                request()->is('asset-management/filter-results/item/*') ||
+                                                                                request()->is('asset-management/filter-results/manufacturer/*') ||
+                                                                                request()->is('asset-management/filter-results/configuration-status/*') ||
+                                                                                request()->is('asset-management/filter-results/location/*') ||
+                                                                                request()->is('asset-management/filter-results/position-status/*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-server"></i>
               <p>
                 Asset Management

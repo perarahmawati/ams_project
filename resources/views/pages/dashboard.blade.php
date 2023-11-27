@@ -111,6 +111,23 @@
         </div>
         <!-- /.row -->
 
+        <!-- MAPS -->
+        <div class="row">
+          <div class="col-12 col-sm-12">
+            <div class="card">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">Location</h3>
+              </div>
+
+              <!-- /.card-header -->
+              <div class="card-body pt-0">
+                <div id="map" style="height: 50vh;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
+
         <!-- TABLE: LATEST ORDERS -->
         <div class="row">
           <div class="col-12 col-sm-12">
@@ -163,6 +180,40 @@
         </div>
         <!-- /.card -->
 
+        <!-- jQuery -->
+        <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
+
+        <!-- Leaflet -->
+        <script src="{{ asset('adminlte/plugins/leaflet/leaflet.js') }}"></script>
+
+        <script>
+            var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                osm = L.tileLayer(osmUrl, { maxZoom: 25, minZoom: 5, attribution: osmAttrib });
+            var map = L.map('map').setView([-5.159014545979567, 119.43970174230064], 5).addLayer(osm);
+            L.control.scale().addTo(map);
+
+            $(document).ready(function(){
+                $.getJSON('/asset-management/option-management/location/marker', function(data){
+                    $.each(data, function(value){
+                        var locationName = data[value].name;
+                        var latitude = data[value].latitude;
+                        var longitude = data[value].longitude;
+                        var marker = L.marker([parseFloat(data[value].latitude),parseFloat(data[value].longitude)]);
+                        marker.addTo(map);
+                        marker.bindPopup("<b><center>"+locationName+"</center></b><br><center>"+latitude+", "+longitude+"</center>", {
+                            closeButton: false
+                        });
+                        marker.on('mouseover', function (e) {
+                            this.openPopup();
+                        });
+                        marker.on('mouseout', function (e) {
+                            this.closePopup();
+                        });
+                    });
+                });
+            });
+        </script>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
