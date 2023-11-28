@@ -90,7 +90,7 @@ Route::post('/asset-management/option-management/configuration-status/{configura
 Route::get('/asset-management/option-management/configuration-status/{configuration_status}/delete', [ConfigurationStatusController::class, 'destroy'])->name('pages.management.configuration-statuses.destroy');
 
 // Location
-Route::get('/asset-management/option-management/location/marker-with-total-assets', [LocationController::class, 'getLocationsWithTotalAssets']);
+Route::get('/asset-management/option-management/location/marker', [LocationController::class, 'marker']);
 Route::get('/asset-management/option-management/location/add-new-location', [LocationController::class, 'create'])->name('pages.management.locations.create');
 Route::post('/asset-management/option-management/location', [LocationController::class, 'store'])->name('pages.management.locations.store');
 Route::get('/asset-management/option-management/location/{location}/edit', [LocationController::class, 'edit'])->name('pages.management.locations.edit');

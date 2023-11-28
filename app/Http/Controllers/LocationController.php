@@ -14,7 +14,7 @@ class LocationController extends Controller
         $this->middleware('auth');
     }
 
-    public function getLocationsWithTotalAssets()
+    public function marker()
     {
         $locations = Location::all();
     

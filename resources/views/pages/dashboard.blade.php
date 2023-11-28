@@ -146,7 +146,7 @@
             L.control.scale().addTo(map);
 
             $(document).ready(function(){
-                $.getJSON('/asset-management/option-management/location/marker-with-total-assets', function(data){
+                $.getJSON('/asset-management/option-management/location/marker', function(data){
                     $.each(data, function(index, location){
                         var id = location.id;
                         var name = location.name;
