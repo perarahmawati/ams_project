@@ -17,6 +17,6 @@ class Location extends Model
     ];
 
     public function dataTable(){
-        return $this->hasMany(DataTable::class);
+        return $this->hasMany(DataTable::class, 'location_name');
     }
 }

@@ -92,3 +92,19 @@
 #search-result li:hover {
     background-color: #f8f9fa;
 }
+
+.horizontal-scroll {
+    overflow-x: auto;
+    scrollbar-width: thin; /* Firefox */
+    -webkit-scrollbar-width: thin; /* WebKit (Chrome, Safari) */
+}
+
+/* Sembunyikan scrollbar pada browser berbasis Firefox */
+.horizontal-scroll {
+    scrollbar-color: transparent transparent;
+}
+
+/* Sembunyikan scrollbar pada browser berbasis WebKit (Chrome, Safari) */
+.horizontal-scroll::-webkit-scrollbar {
+    display: none;
+}

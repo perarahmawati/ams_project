@@ -23,7 +23,7 @@
             <div class="col-12 col-sm-12">
                 <div class="card">
                     <div class="card-header d-flex align-items-center">
-                        <a href="{{ route('pages.data-tables.index') }}" class="text-dark"><i class="fa-solid fa-chevron-left mr-2 mt-2"></i></a>
+                        <a href="{{ route('pages.dashboard') }}" class="text-dark"><i class="fa-solid fa-chevron-left mr-2 mt-2"></i></a>
                         <h4 class="m-0">Filtered Asset List</h4>
                     </div>
                     <div class="card-body">
@@ -101,13 +101,13 @@
                         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
                         maxZoom: 18,
                     }).addTo(map);
-                    marker = L.marker([latitude, longitude]).addTo(map).bindPopup(`<b>${name}</b><br>${address}`, {
+                    marker = L.marker([latitude, longitude]).addTo(map).bindPopup(`<center><b>${name}</b><br>${address}</center>`, {
                         closeButton: false
                     }).openPopup();
                 } else {
                     map.setView([latitude, longitude], 18);
                     marker.setLatLng([latitude, longitude]);
-                    marker.getPopup().setContent(`<b>${name}</b><br>${address}`).openPopup();
+                    marker.getPopup().setContent(`<center><b>${name}</b><br>${address}</center>`).openPopup();
                 }
 
                 // Tambahkan event listener untuk menutup popup saat mengklik di luar

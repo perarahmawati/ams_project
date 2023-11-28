@@ -14,6 +14,6 @@ class PositionStatus extends Model
     ];
 
     public function dataTable(){
-        return $this->hasMany(DataTable::class);
+        return $this->hasMany(DataTable::class, 'position_status_name');
     }
 }

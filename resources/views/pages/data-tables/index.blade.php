@@ -171,13 +171,13 @@
                         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
                         maxZoom: 18,
                     }).addTo(map);
-                    marker = L.marker([latitude, longitude]).addTo(map).bindPopup(`<b>${name}</b><br>${address}`, {
+                    marker = L.marker([latitude, longitude]).addTo(map).bindPopup(`<center><b>${name}</b><br>${address}</center>`, {
                         closeButton: false
                     }).openPopup();
                 } else {
                     map.setView([latitude, longitude], 18);
                     marker.setLatLng([latitude, longitude]);
-                    marker.getPopup().setContent(`<b>${name}</b><br>${address}`).openPopup();
+                    marker.getPopup().setContent(`<center><b>${name}</b><br>${address}</center>`).openPopup();
                 }
 
                 // Tambahkan event listener untuk menutup popup saat mengklik di luar

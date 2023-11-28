@@ -14,6 +14,6 @@ class ConfigurationStatus extends Model
     ];
 
     public function dataTable(){
-        return $this->hasMany(DataTable::class);
+        return $this->hasMany(DataTable::class, 'configuration_status_name');
     }
 }

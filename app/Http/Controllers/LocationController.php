@@ -14,10 +14,25 @@ class LocationController extends Controller
         $this->middleware('auth');
     }
 
-    public function marker()
+    public function getLocationsWithTotalAssets()
     {
         $locations = Location::all();
-        return response()->json($locations);
+    
+        $locationsData = [];
+        foreach ($locations as $location) {
+            $totalAssets = number_format($location->dataTable->count(), 0, '.', '.');
+            
+            $locationsData[] = [
+                'id' => $location->id,
+                'name' => $location->name,
+                'address' => $location->address,
+                'latitude' => $location->latitude,
+                'longitude' => $location->longitude,
+                'totalAssets' => $totalAssets,
+            ];
+        }
+    
+        return response()->json($locationsData);
     }
 
     public function create()
