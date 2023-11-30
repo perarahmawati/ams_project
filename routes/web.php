@@ -29,6 +29,7 @@ use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\PositionStatusController;
 use App\Http\Controllers\TempImageController;
 use App\Http\Controllers\CombinedController;
+use App\Http\Controllers\UserProfileController;
 
 Auth::routes();
 
@@ -103,3 +104,9 @@ Route::post('/asset-management/option-management/position-status', [PositionStat
 Route::get('/asset-management/option-management/position-status/{position_status}/edit', [PositionStatusController::class, 'edit'])->name('pages.management.position-statuses.edit');
 Route::post('/asset-management/option-management/position-status/{position_status}/update', [PositionStatusController::class, 'update'])->name('pages.management.position-statuses.update');
 Route::get('/asset-management/option-management/position-status/{position_status}/delete', [PositionStatusController::class, 'destroy'])->name('pages.management.position-statuses.destroy');
+
+// User Profile
+Route::get('/user-profile', [UserProfileController::class, 'index'])->name('pages.user-profile');
+Route::post('/user-profile/update-personal-information', [UserProfileController::class, 'updatePersonalInformation'])->name('pages.user-profile.update-personal-information');
+Route::post('/user-profile/change-profile-picture', [UserProfileController::class, 'changeProfilePicture'])->name('pages.user-profile.change-profile-picture');
+Route::post('/user-profile/change-password', [UserProfileController::class, 'changePassword'])->name('pages.user-profile.change-password');

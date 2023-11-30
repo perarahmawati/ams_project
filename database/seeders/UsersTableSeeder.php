@@ -14,10 +14,19 @@ class UsersTableSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name'=>'Pera Rahmawati', 
-            'email'=>'superadmin@gmail.com',
-            'password'=>Hash::make('superadminpw'),
             'role' =>'Super Admin',
+            'name' => 'Pera Rahmawati', 
+            'email' => 'superadmin@gmail.com',
+            'phone' => '089671318045',
+            'password'=>Hash::make('superadminpw'),
+        ]);
+
+        User::create([
+            'role' =>'Admin',
+            'name' => 'Fuji Anggraeni', 
+            'email' => 'admin@gmail.com',
+            'phone' => '0881023182562',
+            'password'=>Hash::make('adminpw'),
         ]);
     }
 }

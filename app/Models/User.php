@@ -18,9 +18,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'role',
         'name',
         'email',
-        'role',
+        'phone',
+        'picture',
         'password',
     ];
 
@@ -43,4 +45,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getPictureAttribute($value){
+        if($value){
+            return asset('users/pictures/'.$value);
+        }else{
+            return asset('users/pictures/no-image.jpg');
+        }
+    }
 }

@@ -52,7 +52,7 @@
                 <div class="card-columns">
                   @foreach($data_tableImages as $image)
                       <div class="card mt-3">
-                          <img src="{{ asset('uploads/data_tables/small/'.$image->name) }}" class="card-img-top" alt="Image">
+                          <img src="{{ asset('uploads/data_tables/small/'.$image->name) }}" class="card-img-top" alt="Image Asset">
                           <div class="card-body">
                               <label for="caption">Image Description :</label>
                               <p class="card-text" id="caption">{{ $image->caption ?: 'No description' }}</p>
