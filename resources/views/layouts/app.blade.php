@@ -6,6 +6,9 @@
     <meta name="_token" content="{{ csrf_token() }}">
     <title>EL-SMART | @yield('title')</title>
 
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('/assets/images/EL-SmartLogo_White.png') }}" type="image/png">
+
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Version 5 -->
@@ -32,7 +35,6 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-select/css/select.bootstrap4.min.css') }}">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.min.css') }}">
     <!-- Toastr -->
@@ -114,64 +116,46 @@
     <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-    <script src="{{ asset('adminlte/plugins/datatables-select/js/dataTables.select.min.js') }}"></script>
     <!-- Page specific script -->
     <script>
       // Inisialisasi DataTable
       $(document).ready(function() {
         // Asset List
-        var assetTable = $("#assetTable").DataTable({
+        $("#assetTable").DataTable({
             "responsive": true,
             "lengthChange": true,
             "autoWidth": false,
-            "select": {
-                style: 'multi',
-                className: 'bg-light',
-                selector: 'td:first-child input[type="checkbox"]'
-            },
             "buttons": [
                 {
                     extend: 'excel',
                     text: '<i class="fa fa-file-excel mr-2"></i> Export to Excel',
                     className: 'btn btn-secondary',
                     exportOptions: {
-                        columns: ':not(.no-export)',
-                        modifier: {
-                            selected: true
-                        }
-                    }
+                        columns: ':not(.no-export)'
+                    },
+                    title: 'ASSET MANAGEMENT REPORT'
                 },
                 {
                     extend: 'pdf',
                     text: '<i class="fa fa-file-pdf mr-2"></i> Export to PDF',
                     className: 'btn btn-secondary',
+                    orientation: 'landscape',
                     exportOptions: {
-                        columns: ':not(.no-export)',
-                        modifier: {
-                            selected: true
-                        }
-                    }
+                        columns: ':not(.no-export)'
+                    },
+                    title: 'ASSET MANAGEMENT REPORT'
                 },
                 {
                     extend: 'print',
                     text: '<i class="fa fa-print mr-2"></i> Print',
                     className: 'btn btn-secondary',
                     exportOptions: {
-                        columns: ':not(.no-export)',
-                        modifier: {
-                            selected: true
-                        }
-                    }
+                        columns: ':not(.no-export)'
+                    },
+                    title: 'ASSET MANAGEMENT REPORT'
                 }
             ]
         }).buttons().container().appendTo('#assetTable_wrapper .col-md-6:eq(0)');
-
-        // Fungsi untuk mengaktifkan checkbox pada setiap baris untuk Asset List
-        $("#assetTable tbody").on("change", ".row-checkbox", function () {
-            var isChecked = $(this).prop("checked");
-            assetTable.row($(this).closest("tr")).select(isChecked);
-            updateExportButtons();
-        });
         
         // Simpan dan Pulihkan Status Pagination untuk Asset List
         setupPaginationPersistence('#assetTable');

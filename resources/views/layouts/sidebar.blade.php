@@ -81,29 +81,6 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link {{ request()->is('history-logs') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-clock"></i>
-              <p>
-                History Logs
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link {{ request()->is('user-logs') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>User Logs</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link {{ request()->is('activity-logs') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Activity Logs</p>
-                </a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

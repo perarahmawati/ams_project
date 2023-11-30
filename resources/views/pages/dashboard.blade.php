@@ -24,7 +24,7 @@
           <!-- Dropdown Filter -->
           <div class="col-lg-12 pb-3 d-flex align-items-center justify-content-end">
             <label for="filterCategory" class="font-weight-normal mb-0 mr-2">Filter by:</label>
-            <select id="filterCategory" class="col-lg-2 form-control">
+            <select id="filterCategory" class="col-lg-2 col-4 form-control">
               <option value="items">Items</option>
               <option value="manufacturers">Manufacturers</option>
               <option value="configuration_statuses">Configuration Statuses</option>
@@ -142,7 +142,7 @@
             var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 osmAttrib = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                 osm = L.tileLayer(osmUrl, { maxZoom: 25, minZoom: 5, attribution: osmAttrib });
-            var map = L.map('map').setView([-5.159014545979567, 119.43970174230064], 5).addLayer(osm);
+            var map = L.map('map').setView([-1.677197492985551, 117.91976992148997], 5).addLayer(osm);
             L.control.scale().addTo(map);
 
             $(document).ready(function(){
@@ -181,7 +181,6 @@
                     });
                 });
             });
-
         </script>
 
         <script>

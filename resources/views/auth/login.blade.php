@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>EL-SMART | LOGIN</title>
 
+  <!-- Favicon -->
+  <link rel="icon" href="{{ asset('/assets/images/EL-SmartLogo_White.png') }}" type="image/png">
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Version 5 -->

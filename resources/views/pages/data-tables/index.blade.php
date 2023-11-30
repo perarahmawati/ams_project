@@ -93,7 +93,6 @@
                             <table id="assetTable" class="table table-bordered table-hover display">
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox" class="row-checkbox" id="selectAll"></th>
                                         <th>No</th>
                                         <th>Item</th>
                                         <th>Manufacturer</th>
@@ -112,7 +111,6 @@
                                     @endphp
                                     @foreach($data_tables as $data_table)
                                     <tr>
-                                        <td><input type="checkbox" class="row-checkbox"></td>
                                         <td>{{ $no++ }}</td>
                                         <td>{{ $data_table->item->name }}</td>
                                         <td>{{ $data_table->manufacturer->name }}</td>
