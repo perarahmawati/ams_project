@@ -115,3 +115,8 @@ Route::get('/asset-management/log', [DataTableController::class, 'log'])->name('
 
 // User Management
 Route::get('/user-management', [UserManagementController::class, 'index'])->name('user-management.index');
+Route::get('/user-management/create', [UserManagementController::class, 'create'])->name('user-management.create');
+Route::post('/user-management', [UserManagementController::class, 'store'])->name('user-management.store');
+Route::get('/user-management/edit', [UserManagementController::class, 'edit'])->name('user-management.edit');
+Route::post('/user-management/update', [UserManagementController::class, 'update'])->name('user-management.update');
+Route::delete('/user-management/destroy', [UserManagementController::class, 'destroy'])->name('user-management.destroy');

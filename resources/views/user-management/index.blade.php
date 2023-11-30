@@ -60,12 +60,16 @@
                         <td>{{ $user->telp }}</td>
                         <td>{{ $user->role }}</td>
                         <td>
-                          <a href="#" class="btn btn-warning btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
-                              @csrf
+                          <div>
+                            <a href="#" class="btn btn-warning btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
+                          </div>
+                          <form action="#" method="POST">    
+                            @csrf
                               @method('delete')
                               <button type="submit" class="btn btn-danger btn-sm text-white mb-2 mr-1">
                                   <i class="fa-solid fa-trash mr-2"></i> Delete
                               </button>
+                          </form>
                         </td>
                     </tr>
                     @endforeach

@@ -13,12 +13,17 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name'=>'Pera Rahmawati', 
-            'email'=>'superadmin@gmail.com',
-            'password'=>Hash::make('superadminpw'),
-            'telp'=>'0812345678910',
-            'role' =>'Super Admin',
-        ]);
+        if (User::count() === 0) {
+            User::create([
+                'name'=>'Pera Rahmawati', 
+                'email'=>'superadmin@gmail.com',
+                'password'=>Hash::make('superadminpw'),
+                'telp'=>'0812345678910',
+                'role' =>'Super Admin',
+            ]);
+            $this->command->info('Users table is empty. Successfully seeding.');
+        } else {
+            $this->command->info('Users table is not empty. Skipping seeding');
+        }
     }
 }
