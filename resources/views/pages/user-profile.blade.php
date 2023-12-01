@@ -31,7 +31,7 @@
 
                 <h3 class="profile-username text-center mb-2 name">{{ Auth::user()->name }}</h3>
 
-                <p class="text-muted text-center mb-4">{{ Auth::user()->role }}</p>
+                <p class="text-muted text-center mb-4">{{ Auth::user()->role->name }}</p>
 
                 <input type="file" name="picture" id="picture" style="opacity: 0; display:none;">
                 <a href="javascript:void(0)" class="btn btn-primary btn-block" id="change-profile-picture"><b>Change Profile Picture</b></a>

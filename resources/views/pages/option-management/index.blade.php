@@ -68,7 +68,7 @@
                                         @endif
                                         <div class="row mb-4">
                                             <div class="col-sm-12">
-                                                <a href="{{ route('pages.management.items.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Item</a>
+                                                <a href="{{ route('pages.option-management.items.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Item</a>
                                             </div>
                                         </div>
                                         <table id="itemTable" class="table table-bordered table-hover">
@@ -90,8 +90,8 @@
                                                     <td>{{ $item->name }}</td>
                                                     <td>{{ $item->created_at }}</td>
                                                     <td>
-                                                        <a href="{{ route('pages.management.items.edit', $item->id) }}" class="btn btn-warning btn-sm text-white mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
-                                                        <a href="{{ route('pages.management.items.destroy', $item->id) }}" class="btn btn-danger btn-sm text-white mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete</a>
+                                                        <a href="{{ route('pages.option-management.items.edit', $item->id) }}" class="btn btn-warning btn-sm text-white mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
+                                                        <a href="{{ route('pages.option-management.items.destroy', $item->id) }}" class="btn btn-danger btn-sm text-white mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -119,7 +119,7 @@
                                         @endif
                                         <div class="row mb-4">
                                             <div class="col-sm-12">
-                                                <a href="{{ route('pages.management.manufacturers.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Manufacturer</a>
+                                                <a href="{{ route('pages.option-management.manufacturers.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Manufacturer</a>
                                             </div>
                                         </div>
                                         <table id="manufacturerTable" class="table table-bordered table-hover responsive-table">
@@ -141,8 +141,8 @@
                                                     <td>{{ $manufacturer->name }}</td>
                                                     <td>{{ $manufacturer->created_at }}</td>
                                                     <td>
-                                                        <a href="{{ route('pages.management.manufacturers.edit', $manufacturer->id) }}" class="btn btn-warning btn-sm text-white mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
-                                                        <a href="{{ route('pages.management.manufacturers.destroy', $manufacturer->id) }}" class="btn btn-danger btn-sm text-white mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete</a>
+                                                        <a href="{{ route('pages.option-management.manufacturers.edit', $manufacturer->id) }}" class="btn btn-warning btn-sm text-white mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
+                                                        <a href="{{ route('pages.option-management.manufacturers.destroy', $manufacturer->id) }}" class="btn btn-danger btn-sm text-white mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -170,7 +170,7 @@
                                         @endif
                                         <div class="row mb-4">
                                             <div class="col-sm-12">
-                                                <a href="{{ route('pages.management.configuration-statuses.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Configuration Status</a>
+                                                <a href="{{ route('pages.option-management.configuration-statuses.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Configuration Status</a>
                                             </div>
                                         </div>
                                         <table id="configurationStatusTable" class="table table-bordered table-hover responsive-table">
@@ -192,8 +192,8 @@
                                                     <td>{{ $configuration_status->name }}</td>
                                                     <td>{{ $configuration_status->created_at }}</td>
                                                     <td>
-                                                        <a href="{{ route('pages.management.configuration-statuses.edit', $configuration_status->id) }}" class="btn btn-warning btn-sm text-white mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
-                                                        <a href="{{ route('pages.management.configuration-statuses.destroy', $configuration_status->id) }}" class="btn btn-danger btn-sm text-white mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete</a>
+                                                        <a href="{{ route('pages.option-management.configuration-statuses.edit', $configuration_status->id) }}" class="btn btn-warning btn-sm text-white mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
+                                                        <a href="{{ route('pages.option-management.configuration-statuses.destroy', $configuration_status->id) }}" class="btn btn-danger btn-sm text-white mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -221,7 +221,7 @@
                                             @endif
                                             <div class="row mb-4">
                                                 <div class="col-sm-12">
-                                                    <a href="{{ route('pages.management.locations.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Location</a>
+                                                    <a href="{{ route('pages.option-management.locations.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Location</a>
                                                 </div>
                                             </div>
                                             <table id="locationTable" class="table table-bordered table-hover responsive-table">
@@ -249,8 +249,8 @@
                                                         <td>{{ $location->longitude }}</td>
                                                         <td>{{ $location->created_at }}</td>
                                                         <td>
-                                                            <a href="{{ route('pages.management.locations.edit', $location->id) }}" class="btn btn-warning btn-sm text-white mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
-                                                            <a href="{{ route('pages.management.locations.destroy', $location->id) }}" class="btn btn-danger btn-sm text-white mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete</a>
+                                                            <a href="{{ route('pages.option-management.locations.edit', $location->id) }}" class="btn btn-warning btn-sm text-white mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
+                                                            <a href="{{ route('pages.option-management.locations.destroy', $location->id) }}" class="btn btn-danger btn-sm text-white mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete</a>
                                                         </td>
                                                     </tr>
                                                     @endforeach
@@ -279,7 +279,7 @@
                                         <div id="successAlert"></div>
                                         <div class="row mb-4">
                                             <div class="col-sm-12">
-                                                <a href="{{ route('pages.management.position-statuses.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Position Status</a>
+                                                <a href="{{ route('pages.option-management.position-statuses.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Position Status</a>
                                             </div>
                                         </div>
                                         <table id="positionStatusTable" class="table table-bordered table-hover responsive-table">
@@ -301,8 +301,8 @@
                                                     <td>{{ $position_status->name }}</td>
                                                     <td>{{ $position_status->created_at }}</td>
                                                     <td>
-                                                        <a href="{{ route('pages.management.position-statuses.edit', $position_status->id) }}" class="btn btn-warning btn-sm text-white mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
-                                                        <a href="{{ route('pages.management.position-statuses.destroy', $position_status->id) }}" class="btn btn-danger btn-sm text-white mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete</a>
+                                                        <a href="{{ route('pages.option-management.position-statuses.edit', $position_status->id) }}" class="btn btn-warning btn-sm text-white mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
+                                                        <a href="{{ route('pages.option-management.position-statuses.destroy', $position_status->id) }}" class="btn btn-danger btn-sm text-white mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach

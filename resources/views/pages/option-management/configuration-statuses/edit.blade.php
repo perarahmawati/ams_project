@@ -23,8 +23,8 @@
             <div class="col-12 col-sm-12">
                 <div class="card">
                     <div class="card-header d-flex align-items-center">
-                        <a href="{{ route('pages.management.index') }}" class="text-dark"><i class="fa-solid fa-chevron-left mr-2 mt-2"></i></a>
-                        <h4 class="m-0">Edit Item Data</h4>
+                        <a href="{{ route('pages.option-management.index') }}" class="text-dark"><i class="fa-solid fa-chevron-left mr-2 mt-2"></i></a>
+                        <h4 class="m-0">Edit Configuration Status Data</h4>
                     </div>
                     <div class="card-body">
                         <div>
@@ -50,11 +50,11 @@
                                 @method('post')
                                 <div>
                                     <label for="name">Name</label>
-                                    <input type="text" name="name" id="name" placeholder="Name" class="form-control" value="{{$item->name}}"></input>
+                                    <input type="text" name="name" id="name" placeholder="Name" class="form-control" value="{{$configuration_status->name}}"></input>
                                     <p></p>
                                 </div>
                                 <div class="mt-4 float-right">
-                                    <a href="{{ route('pages.management.index') }}" class="btn btn-secondary mr-1">Cancel</a>
+                                    <a href="{{ route('pages.option-management.index') }}" class="btn btn-secondary mr-1">Cancel</a>
                                     <input type="submit" value="Save" class="btn btn-primary" />
                                 </div>
                             </form>
@@ -72,7 +72,7 @@
                 event.preventDefault();
                 $("input[type=submit]").prop('disabled',true);
                 $.ajax({
-                    url: "{{ route('pages.management.items.update', $item->id) }}",
+                    url: "{{ route('pages.option-management.configuration-statuses.update', $configuration_status->id) }}",
                     data: $(this).serializeArray(),
                     method: 'post',
                     dataType: 'json',
@@ -82,7 +82,7 @@
                     success: function(response){
                         $("input[type=submit]").prop('disabled',false);
                         if(response.status == true) {
-                            window.location.href="{{ route('pages.management.index') }}"; 
+                            window.location.href="{{ route('pages.option-management.index') }}"; 
                         } else {
                             var errors = response.errors;
                             if (errors.name) {

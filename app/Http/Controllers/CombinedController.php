@@ -23,6 +23,6 @@ class CombinedController extends Controller
         $manufacturers = Manufacturer::all();
         $position_statuses = PositionStatus::all();
 
-        return view('pages.management.index', compact('configuration_statuses', 'items', 'locations', 'manufacturers', 'position_statuses'));
+        return view('pages.option-management.index', compact('configuration_statuses', 'items', 'locations', 'manufacturers', 'position_statuses'));
     }
 }

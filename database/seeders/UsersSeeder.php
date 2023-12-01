@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class UsersTableSeeder extends Seeder
+class UsersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,19 +14,11 @@ class UsersTableSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'role' =>'Super Admin',
+            'role_name' => 1,
             'name' => 'Pera Rahmawati', 
             'email' => 'superadmin@gmail.com',
             'phone' => '089671318045',
             'password'=>Hash::make('superadminpw'),
-        ]);
-
-        User::create([
-            'role' =>'Admin',
-            'name' => 'Fuji Anggraeni', 
-            'email' => 'admin@gmail.com',
-            'phone' => '0881023182562',
-            'password'=>Hash::make('adminpw'),
         ]);
     }
 }

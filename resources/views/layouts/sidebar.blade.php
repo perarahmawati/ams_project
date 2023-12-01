@@ -15,7 +15,7 @@
         </div>
         <div class="info">
           <a href="{{ route('pages.user-profile') }}" class="d-block name">{{ Auth::user()->name }}</a>
-          <span class="text-sm text-muted">{{ Auth::user()->role }}</span>
+          <span class="text-sm text-muted">{{ Auth::user()->role->name }}</span>
         </div>
       </div>
 
@@ -74,7 +74,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link {{ request()->is('user-manage') ? 'active' : '' }}">
+            <a href="{{ route('pages.user-management.index') }}" class="nav-link {{ request()->is('user-management') ||
+                                                                                    request()->is('user-management/add-new-user') ||
+                                                                                    request()->is('user-management/*/edit') ? 'active' : '' }}">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 User Management

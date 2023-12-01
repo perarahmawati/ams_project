@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserProfileController extends Controller
@@ -90,7 +90,7 @@ class UserProfileController extends Controller
                 'min:8',
                 'max:30'
             ],
-            'new_password'=>'required|min:8|max:30',
+            'new_password'=>'required|min:8|max:30|different:old_password',
             'confirm_password'=>'required|same:new_password',
         ]);
 

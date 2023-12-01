@@ -211,6 +211,16 @@
       // Simpan dan Pulihkan Status Pagination untuk Filter Results List
       setupPaginationPersistence('#filteredAssetTable');
 
+      // User List
+      $("#userTable").dataTable({
+          "responsive": true,
+          "lengthChange": true,
+          "autoWidth": false
+      });
+
+      // Simpan dan Pulihkan Status Pagination untuk User List
+      setupPaginationPersistence('#userTable');
+
       // Setup Pagination
       function setupPaginationPersistence(tableId) {
         // Simpan Status Pagination saat Ini
