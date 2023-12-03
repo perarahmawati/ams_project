@@ -9,12 +9,7 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
 
 class DataTableImageController extends Controller
-{
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
+{   
     public function store(Request $request){
         if(!empty($request->image)) {
             $image = $request->image;

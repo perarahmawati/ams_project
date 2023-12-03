@@ -10,11 +10,6 @@ use App\Models\PositionStatus;
 
 class CombinedController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         $configuration_statuses = ConfigurationStatus::all();

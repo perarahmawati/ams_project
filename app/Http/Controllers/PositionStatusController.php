@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Session;
 
 class PositionStatusController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function create()
     {
         return view('pages.option-management.position-statuses.create');

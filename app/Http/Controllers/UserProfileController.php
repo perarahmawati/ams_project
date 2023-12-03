@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserProfileController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         return view('pages.user-profile');

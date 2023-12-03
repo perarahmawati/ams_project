@@ -8,11 +8,6 @@ use Intervention\Image\Facades\Image;
 
 class TempImageController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     public function store(Request $request){
         if(!empty($request->image)) {
             $image = $request->image;

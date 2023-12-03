@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Session;
 
 class ConfigurationStatusController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function create()
     {
         return view('pages.option-management.configuration-statuses.create');
