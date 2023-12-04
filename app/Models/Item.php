@@ -14,6 +14,6 @@ class Item extends Model
     ];
 
     public function dataTable(){
-        return $this->hasMany(DataTable::class);
+        return $this->hasMany(DataTable::class, 'item_name');
     }
 }

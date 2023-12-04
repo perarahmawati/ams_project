@@ -14,6 +14,6 @@ class Manufacturer extends Model
     ];
 
     public function dataTable(){
-        return $this->hasMany(DataTable::class);
+        return $this->hasMany(DataTable::class, 'manufacturer_name');
     }
 }

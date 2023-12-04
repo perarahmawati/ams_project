@@ -213,7 +213,7 @@ class DataTableController extends Controller
         return redirect()->route('pages.data-tables.index');
     }
 
-    public function trashed()
+    public function recycleBin()
     {
         $data_tables = DataTable::onlyTrashed()->get();
       

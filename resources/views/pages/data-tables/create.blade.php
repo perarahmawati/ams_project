@@ -166,6 +166,14 @@
                 }
             });
 
+            function deleteImage(id){
+                if (confirm("Are you sure you want to delete?")) {
+                    $("#data-table-image-row-"+id).remove();
+                    var successAlert = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Success! </strong>Image deleted successfully.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button</div>';
+                    $("#successAlert").html(successAlert);
+                }
+            }
+
             $("#dataTableForm").submit(function(event){
                 event.preventDefault();
                 $("input[type=submit]").prop('disabled',true);
@@ -270,14 +278,6 @@
                     }
                 });
             })
-
-            function deleteImage(id){
-                if (confirm("Are you sure you want to delete?")) {
-                    $("#data-table-image-row-"+id).remove();
-                    var successAlert = '<div class="alert alert-success">Image deleted successfully.</div>';
-                    $("#successAlert").html(successAlert);
-                }
-            }
         </script>
       </div><!-- /.container-fluid -->
     </section>

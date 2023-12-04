@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\DataTable;
+use App\Models\Item;
+use App\Models\Manufacturer;
+use App\Models\ConfigurationStatus;
+use App\Models\Location;
+use App\Models\PositionStatus;
 
 class DashboardController extends Controller
 {
@@ -24,14 +28,43 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $all = DataTable::count();
-        $unconfigured = DataTable::where('configuration_status_name', '1')->count();
-        $preconfigured = DataTable::where('configuration_status_name', '2')->count();
-        $configured = DataTable::where('configuration_status_name', '3')->count();
-        $tested = DataTable::where('configuration_status_name', '4')->count();
-        $installed = DataTable::where('configuration_status_name', '5')->count();
-        $data_tables = DataTable::latest()->paginate(10);
+        $all_assets = number_format(DataTable::count(), 0, '.', '.');
+        $items = Item::with('dataTable')->get();
+        $manufacturers = Manufacturer::with('dataTable')->get();
+        $configuration_statuses = ConfigurationStatus::with('dataTable')->get();
+        $locations = Location::with('dataTable')->get();
+        $position_statuses = PositionStatus::with('dataTable')->get();
 
-        return view('pages.dashboard', compact('all', 'unconfigured', 'preconfigured', 'configured', 'tested', 'installed', 'data_tables'));
+        return view('pages.dashboard', compact('all_assets', 'items', 'manufacturers', 'configuration_statuses', 'locations', 'position_statuses'));
+    }
+    
+    public function getItem($item_id)
+    {
+        $item_tables = DataTable::where('item_name', $item_id)->get();
+        return view('pages.data-tables.filter-results.item', compact('item_tables'));
+    }
+
+    public function getManufacturer($manufacturer_id)
+    {
+        $manufacturer_tables = DataTable::where('manufacturer_name', $manufacturer_id)->get();
+        return view('pages.data-tables.filter-results.manufacturer', compact('manufacturer_tables'));
+    }
+
+    public function getConfigurationStatus($configuration_status_id)
+    {
+        $configuration_tables = DataTable::where('configuration_status_name', $configuration_status_id)->get();
+        return view('pages.data-tables.filter-results.configuration-status', compact('configuration_tables'));
+    }
+
+    public function getLocation($location_id)
+    {
+        $location_tables = DataTable::where('location_name', $location_id)->get();
+        return view('pages.data-tables.filter-results.location', compact('location_tables'));
+    }
+
+    public function getPositionStatus($position_status_id)
+    {
+        $position_status_tables = DataTable::where('position_status_name', $position_status_id)->get();
+        return view('pages.data-tables.filter-results.position-status', compact('position_status_tables'));
     }
 }

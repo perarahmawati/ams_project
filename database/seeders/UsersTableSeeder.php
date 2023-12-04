@@ -18,7 +18,6 @@ class UsersTableSeeder extends Seeder
                 'name'=>'Pera Rahmawati', 
                 'email'=>'superadmin@gmail.com',
                 'password'=>Hash::make('superadminpw'),
-                'telp'=>'0812345678910',
                 'role' =>'Super Admin',
             ]);
             $this->command->info('Users table is empty. Successfully seeding.');

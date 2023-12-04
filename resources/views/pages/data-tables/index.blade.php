@@ -90,7 +90,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <table id="myTable1" class="table table-bordered table-hover">
+                            <table id="assetTable" class="table table-bordered table-hover display">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -102,7 +102,7 @@
                                         <th>Description</th>
                                         <th>Position Status</th>
                                         <th>Created Date</th>
-                                        <th>Action</th>
+                                        <th class="no-export">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -116,22 +116,24 @@
                                         <td>{{ $data_table->manufacturer->name }}</td>
                                         <td>{{ $data_table->serial_number }}</td>
                                         <td>{{ $data_table->configurationStatus->name }}</td>
-                                        <td onmouseover="showLocationPopup('{{ $data_table->location->latitude }}', '{{ $data_table->location->longitude }}', '{{ $data_table->location->name }}', '{{ $data_table->location->address }}')" onmouseout="hideLocationPopup()">{{ $data_table->location->name }}</td>
+                                        <td onclick="toggleLocationPopup('{{ $data_table->location->latitude }}', '{{ $data_table->location->longitude }}', '{{ $data_table->location->name }}', '{{ $data_table->location->address }}')">
+                                            <div id="locationPopup">
+                                                <div id="map" style="height: 25vh; width: 50vh;"></div>
+                                            </div>
+                                            {{ $data_table->location->name }}
+                                        </td>
                                         <td>{{ $data_table->description }}</td>
                                         <td>{{ $data_table->positionStatus->name }}</td>
                                         <td>{{ $data_table->created_at }}</td>
                                         <td>
-                                            <a href="{{ route('pages.data-tables.show', $data_table->id) }}" class="btn btn-primary btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-eye mr-2"></i>Show</a>
-                                            <a href="{{ route('pages.data-tables.edit', $data_table->id) }}" class="btn btn-warning btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
-                                            <a href="{{ route('pages.data-tables.soft-delete', $data_table->id) }}" class="btn btn-danger btn-sm text-white mb-2 mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete</a>
+                                            <a href="{{ route('pages.data-tables.show', $data_table->id) }}" class="btn btn-primary btn-sm text-white mr-1"><i class="fa-solid fa-eye mr-2"></i>Show</a>
+                                            <a href="{{ route('pages.data-tables.edit', $data_table->id) }}" class="btn btn-warning btn-sm text-white mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
+                                            <a href="{{ route('pages.data-tables.soft-delete', $data_table->id) }}" class="btn btn-danger btn-sm text-white mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete</a>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                            <div id="locationPopup">
-                                <div id="map" style="height: 50vh; width: 50vh;"></div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -148,6 +150,17 @@
             var map;
             var marker;
 
+            // Fungsi toggle untuk menampilkan atau menyembunyikan popup
+            function toggleLocationPopup(latitude, longitude, name, address) {
+                var locationPopup = document.getElementById('locationPopup');
+                if (locationPopup.style.display === 'block') {
+                    hideLocationPopup();
+                } else {
+                    showLocationPopup(latitude, longitude, name, address);
+                }
+            }
+
+            // Fungsi untuk menampilkan popup
             function showLocationPopup(latitude, longitude, name, address) {
                 document.getElementById('locationPopup').style.display = 'block';
                 if (!map) {
@@ -156,22 +169,41 @@
                         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
                         maxZoom: 18,
                     }).addTo(map);
-                    marker = L.marker([latitude, longitude]).addTo(map).bindPopup(`<b>${name}</b><br>${address}`, {
+                    marker = L.marker([latitude, longitude]).addTo(map).bindPopup(`<center><b>${name}</b><br>${address}</center>`, {
                         closeButton: false
                     }).openPopup();
                 } else {
                     map.setView([latitude, longitude], 18);
                     marker.setLatLng([latitude, longitude]);
-                    marker.getPopup().setContent(`<b>${name}</b><br>${address}`).openPopup();
+                    marker.getPopup().setContent(`<center><b>${name}</b><br>${address}</center>`).openPopup();
                 }
+
+                // Tambahkan event listener untuk menutup popup saat mengklik di luar
+                document.addEventListener('mousedown', closePopupOutside);
             }
 
+            // Fungsi untuk menyembunyikan popup
             function hideLocationPopup() {
                 document.getElementById('locationPopup').style.display = 'none';
+
+                // Hapus event listener setelah menyembunyikan popup
+                document.removeEventListener('mousedown', closePopupOutside);
+            }
+
+            // Fungsi untuk menutup popup saat mengklik di luar
+            function closePopupOutside(event) {
+                var locationPopup = document.getElementById('locationPopup');
+                var targetElement = event.target; // Element yang diklik
+
+                // Periksa apakah yang diklik bukan bagian dari locationPopup
+                if (!locationPopup.contains(targetElement)) {
+                    hideLocationPopup();
+                }
             }
         </script>
 
         <script>
+            // Fungsi untuk mengubah nama file pada form input Import New Data sesuai dengan nama file yang diupload
             function updateFileName() {
                 var fileInput = document.getElementById('customFile');
                 var fileName = fileInput.files[0].name;
