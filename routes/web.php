@@ -1,19 +1,6 @@
 <?php
 
-use App\Http\Controllers\ActivityLogController;
-use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,20 +8,22 @@ Route::get('/', function () {
 
 use Illuminate\Support\Facades\Auth;
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ConfigurationStatusController;
-use App\Http\Controllers\DataTableController;
-use App\Http\Controllers\DataTableImageController;
 use App\Http\Controllers\ItemController;
-use App\Http\Controllers\LocationController;
-use App\Http\Controllers\ManufacturerController;
-use App\Http\Controllers\PositionStatusController;
-use App\Http\Controllers\TempImageController;
-use App\Http\Controllers\CombinedController;
-use App\Http\Controllers\UserManagementController;
-use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserLogController;
+use App\Http\Controllers\CombinedController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DataTableController;
+use App\Http\Controllers\TempImageController;
+use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\ManufacturerController;
+use App\Http\Controllers\DataTableImageController;
+use App\Http\Controllers\PositionStatusController;
+use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\ConfigurationStatusController;
 Auth::routes();
+
 
 Route::group(['middleware' => ['auth']], function() {
 

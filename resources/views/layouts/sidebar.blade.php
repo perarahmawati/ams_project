@@ -74,7 +74,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('pages.user-management.index') }}" class="nav-link {{ request()->is('user-management') ||
+            <a href="#" class="nav-link {{ request()->is('user-management') ? 'active' : '' }}">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 User Management
