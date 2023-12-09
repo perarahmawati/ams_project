@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Maatwebsite\Excel\Row;
 
 class User extends Authenticatable
 {
@@ -18,15 +19,21 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'role_name',
         'name',
         'email',
-        'role',
+        'phone',
+        'picture',
         'password',
         'telp',
         'role',
         'image',
         'last_seen',
     ];
+
+    public function role(){
+        return $this->belongsTo(Role::class, 'role_name');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -47,7 +54,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function getPictureAttribute($value){
+        if($value){
+            return asset('users/pictures/'.$value);
+        }else{
+            return asset('users/pictures/no-image.jpg');
+        }
+    }
 
+    
     protected static $logFillable = true;
 
     public function item()

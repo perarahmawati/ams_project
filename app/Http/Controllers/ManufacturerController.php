@@ -9,14 +9,9 @@ use Illuminate\Support\Facades\Session;
 
 class ManufacturerController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function create()
     {
-        return view('pages.management.manufacturers.create');
+        return view('pages.option-management.manufacturers.create');
     }
 
     public function store(Request $request)
@@ -51,10 +46,10 @@ class ManufacturerController extends Controller
         $manufacturer = Manufacturer::find($manufacturer_id);
         
         if ($manufacturer == null) {
-            return redirect()->route('pages.management.index');
+            return redirect()->route('pages.option-management.index');
         }
 
-        return view('pages.management.manufacturers.edit', compact('manufacturer'));
+        return view('pages.option-management.manufacturers.edit', compact('manufacturer'));
     }
 
     public function update($manufacturer_id, Request $request)
@@ -107,6 +102,6 @@ class ManufacturerController extends Controller
 
         session::flash('success-manufacturer', 'Manufacturer deleted successfully.');
 
-        return redirect()->route('pages.management.index');
+        return redirect()->route('pages.option-management.index');
     }
 }

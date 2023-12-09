@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="float-sm-right">
-                                        <a href="{{ route('pages.management.index') }}" class="btn btn-warning text-white"><i class="fa-solid fa-list-check mr-2"></i>Option Management</a>
+                                        <a href="{{ route('pages.option-management.index') }}" class="btn btn-warning text-white"><i class="fa-solid fa-list-check mr-2"></i>Option Management</a>
                                     </div>
                                 </div>
                             </div>

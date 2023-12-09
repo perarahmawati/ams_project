@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Session;
 
 class LocationController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function marker()
     {
         $locations = Location::all();
@@ -37,7 +32,7 @@ class LocationController extends Controller
 
     public function create()
     {
-        return view('pages.management.locations.create');
+        return view('pages.option-management.locations.create');
     }
 
     public function store(Request $request)
@@ -78,10 +73,10 @@ class LocationController extends Controller
         $location = Location::find($location_id);
         
         if ($location == null) {
-            return redirect()->route('pages.management.index');
+            return redirect()->route('pages.option-management.index');
         }
 
-        return view('pages.management.locations.edit',compact('location'));
+        return view('pages.option-management.locations.edit',compact('location'));
     }
 
     public function update($location_id, Request $request)
@@ -140,6 +135,6 @@ class LocationController extends Controller
 
         session::flash('success-location', 'Location deleted successfully.');
 
-        return redirect()->route('pages.management.index');
+        return redirect()->route('pages.option-management.index');
     }
 }

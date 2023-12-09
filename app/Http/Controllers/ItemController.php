@@ -9,14 +9,9 @@ use Illuminate\Support\Facades\Session;
 
 class ItemController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function create()
     {
-        return view('pages.management.items.create');
+        return view('pages.option-management.items.create');
     }
 
     public function store(Request $request)
@@ -51,10 +46,10 @@ class ItemController extends Controller
         $item = Item::find($item_id);
         
         if ($item == null) {
-            return redirect()->route('pages.management.index');
+            return redirect()->route('pages.option-management.index');
         }
 
-        return view('pages.management.items.edit', compact('item'));
+        return view('pages.option-management.items.edit', compact('item'));
     }
 
     public function update($item_id, Request $request)
@@ -107,6 +102,6 @@ class ItemController extends Controller
 
         session::flash('success-item', 'Item deleted successfully.');
 
-        return redirect()->route('pages.management.index');
+        return redirect()->route('pages.option-management.index');
     }
 }

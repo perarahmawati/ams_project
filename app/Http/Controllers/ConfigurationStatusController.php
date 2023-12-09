@@ -9,14 +9,9 @@ use Illuminate\Support\Facades\Session;
 
 class ConfigurationStatusController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function create()
     {
-        return view('pages.management.configuration-statuses.create');
+        return view('pages.option-management.configuration-statuses.create');
     }
 
     public function store(Request $request)
@@ -51,10 +46,10 @@ class ConfigurationStatusController extends Controller
         $configuration_status = ConfigurationStatus::find($configuration_status_id);
 
         if ($configuration_status == null) {
-            return redirect()->route('pages.management.index');
+            return redirect()->route('pages.option-management.index');
         }
 
-        return view('pages.management.configuration-statuses.edit', compact('configuration_status'));
+        return view('pages.option-management.configuration-statuses.edit', compact('configuration_status'));
     }
 
     public function update($configuration_status_id, Request $request)
@@ -107,6 +102,6 @@ class ConfigurationStatusController extends Controller
 
         session::flash('success-configuration-status', 'Configuration Status deleted successfully.');
 
-        return redirect()->route('pages.management.index');
+        return redirect()->route('pages.option-management.index');
     }
 }

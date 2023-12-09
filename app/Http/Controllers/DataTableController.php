@@ -19,12 +19,7 @@ use Spatie\Activitylog\Models\Activity;
 use Illuminate\Support\Facades\Validator;
 
 class DataTableController extends Controller
-{
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
+{    
     public function index()
     {
         $data_tables = DataTable::all();

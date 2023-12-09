@@ -45,6 +45,8 @@
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/leaflet/leaflet.css') }}">
     <!-- Dropzone -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/dropzone/dropzone.min.css') }}">
+    <!-- ijaboCropTool -->
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/ijabo-crop-tool/ijaboCropTool.min.css') }}">
     <!-- EL-Smart Theme-->
     <link rel="stylesheet" href="{{ asset('assets/css/el-smart-dashboard.css') }}">
   </head>
@@ -53,7 +55,7 @@
 
       <!-- Preloader -->
       <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="{{ asset('/assets/images/EL-SmartLogo_Black.png') }}" alt="AdminLTELogo" height="60" width="60">
+        <img class="animation__shake" src="{{ asset('/assets/images/EL-SmartLogo_Black.png') }}" alt="EL-Smart Logo" height="60" width="60">
       </div>
 
       <!-- Navbar -->
@@ -209,6 +211,16 @@
       // Simpan dan Pulihkan Status Pagination untuk Filter Results List
       setupPaginationPersistence('#filteredAssetTable');
 
+      // User List
+      $("#userTable").dataTable({
+          "responsive": true,
+          "lengthChange": true,
+          "autoWidth": false
+      });
+
+      // Simpan dan Pulihkan Status Pagination untuk User List
+      setupPaginationPersistence('#userTable');
+
       // Setup Pagination
       function setupPaginationPersistence(tableId) {
         // Simpan Status Pagination saat Ini
@@ -238,6 +250,8 @@
     <script src="{{ asset('adminlte/plugins/leaflet/leaflet.js') }}"></script>
     <!-- Dropzone -->
     <script src="{{ asset('adminlte/plugins/dropzone/dropzone.min.js') }}"></script>
+    <!-- ijaboCropTool -->
+    <script src="{{ asset('adminlte/plugins/ijabo-crop-tool/ijaboCropTool.min.js') }}"></script>
     <!-- EL-Smart Theme -->
     <script src="{{ asset('assets/js/el-smart-dashboard.js') }}"></script>
   </body>

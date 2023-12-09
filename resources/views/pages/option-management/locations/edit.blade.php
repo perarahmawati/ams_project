@@ -23,8 +23,8 @@
             <div class="col-12 col-sm-12">
                 <div class="card">
                     <div class="card-header d-flex align-items-center">
-                        <a href="{{ route('pages.management.index') }}" class="text-dark"><i class="fa-solid fa-chevron-left mr-2 mt-2"></i></a>
-                        <h4 class="m-0">Create New Location Data</h4>
+                        <a href="{{ route('pages.option-management.index') }}" class="text-dark"><i class="fa-solid fa-chevron-left mr-2 mt-2"></i></a>
+                        <h4 class="m-0">Edit Location Data</h4>
                     </div>
                     <div class="card-body">
                         <div>
@@ -64,26 +64,26 @@
                                 @method('post')
                                 <div>
                                     <label for="name">Name</label>
-                                    <input type="text" name="name" id="name" placeholder="Name" class="form-control"></input>
+                                    <input type="text" name="name" id="name" placeholder="Name" class="form-control" value="{{$location->name}}"></input>
                                     <p></p>
                                 </div>
                                 <div>
                                     <label for="address">Address</label>
-                                    <textarea type="text" name="address" id="address" placeholder="Address" class="form-control"></textarea>
+                                    <textarea type="text" name="address" id="address" placeholder="Address" class="form-control">{{ $location->address }}</textarea>
                                     <p></p>
                                 </div>
                                 <div>
                                     <label for="latitude">Latitude</label>
-                                    <input type="text" name="latitude" id="latitude" placeholder="Latitude" class="form-control"></input>
+                                    <input type="text" name="latitude" id="latitude" placeholder="Latitude" class="form-control" value="{{$location->latitude}}"></input>
                                     <p></p>
                                 </div>
                                 <div>
                                     <label for="longitude">Longitude</label>
-                                    <input type="text" name="longitude" id="longitude" placeholder="Longitude" class="form-control"></input>
+                                    <input type="text" name="longitude" id="longitude" placeholder="Longitude" class="form-control" value="{{$location->longitude}}"></input>
                                     <p></p>
                                 </div>
                                 <div class="mt-4 float-right">
-                                    <a href="{{ route('pages.management.index') }}" class="btn btn-secondary mr-1">Cancel</a>
+                                    <a href="{{ route('pages.option-management.index') }}" class="btn btn-secondary mr-1">Cancel</a>
                                     <input type="submit" value="Save" class="btn btn-primary" />
                                 </div>
                             </form>
@@ -100,7 +100,8 @@
         <script src="{{ asset('adminlte/plugins/leaflet/leaflet.js') }}"></script>
 
         <script>
-            const DEFAULT_COORD = [-6.1754067410036955, 106.82716950774196];
+            const initialLatitude = parseFloat(document.getElementById('latitude').value);
+            const initialLongitude = parseFloat(document.getElementById('longitude').value);
             const latitudeInput = document.getElementById('latitude');
             const longitudeInput = document.getElementById('longitude');
             const resultsWrapperHTML = document.getElementById("search-result");
@@ -115,11 +116,11 @@
             const osmTile = new L.tileLayer(osmTileUrl, { minZoom: 2, maxZoom: 20, attribution: attrib });
 
             // Add Layer
-            Map.setView(new L.LatLng(DEFAULT_COORD[0], DEFAULT_COORD[1]), 15);
+            Map.setView(new L.LatLng(initialLatitude, initialLongitude), 18);
             Map.addLayer(osmTile);
 
             // Add Marker
-            marker = L.marker(DEFAULT_COORD).addTo(Map);
+            marker = L.marker([initialLatitude, initialLongitude]).addTo(Map);
 
             // Input Value
             function inputValue() {
@@ -176,7 +177,7 @@
                     // Request To Nominatim API
                     fetch(`https://nominatim.openstreetmap.org/search?q=${keyword}&format=json`)
                     .then((response) => {
-                        return response.json();
+                        return response.json()
                     }).then(json => {
                         // Get Response Data From Nominatim
                         if(json.length > 0) return renderResults(json);
@@ -215,7 +216,7 @@
             function setLocation(name, address, lat, lon) {
                 // Set Map Focus
                 Map.setView(new L.LatLng(lat, lon), 18);
-
+                
                 // Regenerate Marker Position
                 if (marker) {
                     Map.removeLayer(marker);
@@ -238,7 +239,7 @@
                 event.preventDefault();
                 $("input[type=submit]").prop('disabled',true);
                 $.ajax({
-                    url: "{{ route('pages.management.locations.store') }}",
+                    url: "{{ route('pages.option-management.locations.update', $location->id) }}",
                     data: $(this).serializeArray(),
                     method: 'post',
                     dataType: 'json',
@@ -248,7 +249,7 @@
                     success: function(response){
                         $("input[type=submit]").prop('disabled',false);
                         if(response.status == true) {
-                            window.location.href="{{ route('pages.management.index') }}"; 
+                            window.location.href="{{ route('pages.option-management.index') }}"; 
                         } else {
                             var errors = response.errors;
                             if (errors.name) {
@@ -301,7 +302,7 @@
                         }
                     }
                 });
-            })
+            }) ;
         </script>
       </div><!-- /.container-fluid -->
     </section>

@@ -153,7 +153,7 @@
                         var html = `<div class="col-md-3 mt-4" id="data-table-image-row-${response.image_id}">
                                         <div class="card image-card">
                                             <a href="#" onclick="deleteImage(${response.image_id});" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
-                                            <img src="${response.imagePath}" alt="" class="w-100 card-img-top">
+                                            <img src="${response.imagePath}" alt="Image Asset" class="w-100 card-img-top">
                                             <div class="card-body">
                                                 <input type="text" name="caption[]" id="caption" value="" class="form-control" />
                                                 <input type="hidden" name="image_id[]" id="image_id" value="${response.image_id}" />
