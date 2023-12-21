@@ -6,12 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\ConfigurationStatus;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class ConfigurationStatusController extends Controller
 {
     public function create()
     {
-        return view('pages.option-management.configuration-statuses.create');
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
+
+            return view('pages.option-management.configuration-statuses.create');
+        } else {
+            return redirect()->back();
+        } 
     }
 
     public function store(Request $request)
@@ -43,13 +50,19 @@ class ConfigurationStatusController extends Controller
 
     public function edit($configuration_status_id, Request $request)
     {
-        $configuration_status = ConfigurationStatus::find($configuration_status_id);
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
 
-        if ($configuration_status == null) {
-            return redirect()->route('pages.option-management.index');
-        }
+            $configuration_status = ConfigurationStatus::find($configuration_status_id);
 
-        return view('pages.option-management.configuration-statuses.edit', compact('configuration_status'));
+            if ($configuration_status == null) {
+                return redirect()->route('pages.option-management.index');
+            }
+    
+            return view('pages.option-management.configuration-statuses.edit', compact('configuration_status'));
+        } else {
+            return redirect()->back();
+        } 
     }
 
     public function update($configuration_status_id, Request $request)
@@ -89,19 +102,25 @@ class ConfigurationStatusController extends Controller
 
     public function destroy($configuration_status_id, Request $request)
     {
-        $configuration_status = ConfigurationStatus::find($configuration_status_id);
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
 
-        if ($configuration_status == null) {
-            return response()->json([
-                'status' => false,
-                'notFound' => true
-            ]);
-        }
+            $configuration_status = ConfigurationStatus::find($configuration_status_id);
 
-        $configuration_status->delete();
-
-        session::flash('success-configuration-status', 'Configuration Status deleted successfully.');
-
-        return redirect()->route('pages.option-management.index');
+            if ($configuration_status == null) {
+                return response()->json([
+                    'status' => false,
+                    'notFound' => true
+                ]);
+            }
+    
+            $configuration_status->delete();
+    
+            session::flash('success-configuration-status', 'Configuration Status deleted successfully.');
+    
+            return redirect()->route('pages.option-management.index');
+        } else {
+            return redirect()->back();
+        } 
     }
 }

@@ -6,12 +6,19 @@ use App\Models\PositionStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class PositionStatusController extends Controller
 {
     public function create()
     {
-        return view('pages.option-management.position-statuses.create');
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
+
+            return view('pages.option-management.position-statuses.create');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function store(Request $request)
@@ -43,13 +50,19 @@ class PositionStatusController extends Controller
 
     public function edit($position_status_id, Request $request)
     {
-        $position_status = PositionStatus::find($position_status_id);
-        
-        if ($position_status == null) {
-            return redirect()->route('pages.option-management.index');
-        }
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
 
-        return view('pages.option-management.position-statuses.edit', compact('position_status'));
+            $position_status = PositionStatus::find($position_status_id);
+        
+            if ($position_status == null) {
+                return redirect()->route('pages.option-management.index');
+            }
+    
+            return view('pages.option-management.position-statuses.edit', compact('position_status'));
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function update($position_status_id, Request $request)
@@ -89,19 +102,25 @@ class PositionStatusController extends Controller
 
     public function destroy($position_status_id, Request $request)
     {
-        $position_status = PositionStatus::find($position_status_id);
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
 
-        if ($position_status == null) {
-            return response()->json([
-                'status' => false,
-                'notFound' => true
-            ]);
+            $position_status = PositionStatus::find($position_status_id);
+
+            if ($position_status == null) {
+                return response()->json([
+                    'status' => false,
+                    'notFound' => true
+                ]);
+            }
+    
+            $position_status->delete();
+    
+            session::flash('success-position-status', 'Position Status deleted successfully.');
+    
+            return redirect()->route('pages.option-management.index');
+        } else {
+            return redirect()->back();
         }
-
-        $position_status->delete();
-
-        session::flash('success-position-status', 'Position Status deleted successfully.');
-
-        return redirect()->route('pages.option-management.index');
     }
 }

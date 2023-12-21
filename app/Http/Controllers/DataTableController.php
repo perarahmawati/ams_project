@@ -12,11 +12,13 @@ use App\Models\DataTableImage;
 use App\Models\PositionStatus;
 use App\Imports\DataTableImport;
 use App\Models\ConfigurationStatus;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Support\Facades\Validator;
+
 
 class DataTableController extends Controller
 {    
@@ -29,12 +31,18 @@ class DataTableController extends Controller
 
     public function create()
     {
-        $item_names = Item::all();
-        $manufacturer_names = Manufacturer::all();
-        $configuration_status_names = ConfigurationStatus::all();
-        $location_names = Location::all();
-        $position_status_names = PositionStatus::all();
-        return view('pages.data-tables.create', compact('item_names', 'manufacturer_names', 'configuration_status_names', 'location_names', 'position_status_names'));
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1, 2])) {
+
+            $item_names = Item::all();
+            $manufacturer_names = Manufacturer::all();
+            $configuration_status_names = ConfigurationStatus::all();
+            $location_names = Location::all();
+            $position_status_names = PositionStatus::all();
+            return view('pages.data-tables.create', compact('item_names', 'manufacturer_names', 'configuration_status_names', 'location_names', 'position_status_names'));
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function store(Request $request)
@@ -114,21 +122,27 @@ class DataTableController extends Controller
 
     public function edit($data_table_id, Request $request)
     {
-        $data_table = DataTable::find($data_table_id);
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1, 2])) {
 
-        if ($data_table == null) {
-            return redirect()->route('pages.data-tables.index');
+            $data_table = DataTable::find($data_table_id);
+
+            if ($data_table == null) {
+                return redirect()->route('pages.data-tables.index');
+            }
+            
+            $data_tableImages = DataTableImage::where('data_table_id',$data_table->id)->get();
+    
+            $item_names = Item::all();
+            $manufacturer_names = Manufacturer::all();
+            $configuration_status_names = ConfigurationStatus::all();
+            $location_names = Location::all();
+            $position_status_names = PositionStatus::all();
+            
+            return view('pages.data-tables.edit', compact('data_table', 'data_tableImages', 'item_names', 'manufacturer_names', 'configuration_status_names', 'location_names', 'position_status_names'));
+        } else {
+            return redirect()->back();
         }
-        
-        $data_tableImages = DataTableImage::where('data_table_id',$data_table->id)->get();
-
-        $item_names = Item::all();
-        $manufacturer_names = Manufacturer::all();
-        $configuration_status_names = ConfigurationStatus::all();
-        $location_names = Location::all();
-        $position_status_names = PositionStatus::all();
-        
-        return view('pages.data-tables.edit', compact('data_table', 'data_tableImages', 'item_names', 'manufacturer_names', 'configuration_status_names', 'location_names', 'position_status_names'));
     }
 
     public function update($data_table_id, Request $request)
@@ -192,100 +206,130 @@ class DataTableController extends Controller
 
     public function softDelete($data_table_id, Request $request)
     {
-        $data_table = DataTable::find($data_table_id);
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1, 2])) {
 
-        if ($data_table == null) {
-            return response()->json([
-                'status' => false,
-                'notFound' => true
-            ]);
+            $data_table = DataTable::find($data_table_id);
+
+            if ($data_table == null) {
+                return response()->json([
+                    'status' => false,
+                    'notFound' => true
+                ]);
+            }
+    
+            $data_table->delete();
+    
+            session::flash('success', 'Data deleted successfully.');
+    
+            return redirect()->route('pages.data-tables.index');
+        } else {
+            return redirect()->back();
         }
-
-        $data_table->delete();
-
-        session::flash('success', 'Data deleted successfully.');
-
-        return redirect()->route('pages.data-tables.index');
     }
 
     public function recycleBin()
     {
-        $data_tables = DataTable::onlyTrashed()->get();
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1, 2])) {
+
+            $data_tables = DataTable::onlyTrashed()->get();
       
-        return view('pages.data-tables.recycle-bin', compact('data_tables'));
+            return view('pages.data-tables.recycle-bin', compact('data_tables'));
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function restore($data_table_id, Request $request)
     {
-        $data_table = DataTable::whereId($data_table_id);
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1, 2])) {
 
-        if ($data_table == null) {
-            return response()->json([
-                'status' => false,
-                'notFound' => true
-            ]);
+            $data_table = DataTable::whereId($data_table_id);
+
+            if ($data_table == null) {
+                return response()->json([
+                    'status' => false,
+                    'notFound' => true
+                ]);
+            }
+    
+            $data_table->restore();
+    
+            session::flash('success', 'Data restored successfully.');
+    
+            return redirect()->route('pages.data-tables.recycle-bin');
+        } else {
+            return redirect()->back();
         }
-
-        $data_table->restore();
-
-        session::flash('success', 'Data restored successfully.');
-
-        return redirect()->route('pages.data-tables.recycle-bin');
     }
 
     public function forceDelete($data_table_id, Request $request)
     {
-        $data_table = DataTable::withTrashed()->find($data_table_id);
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1, 2])) {
 
-        if ($data_table == null) {
-            return response()->json([
-                'status' => false,
-                'notFound' => true
-            ]);
+            $data_table = DataTable::withTrashed()->find($data_table_id);
+
+            if ($data_table == null) {
+                return response()->json([
+                    'status' => false,
+                    'notFound' => true
+                ]);
+            }
+    
+            $data_table->forceDelete();
+    
+            session::flash('success', 'Data deleted permanently successfully.');
+    
+            return redirect()->route('pages.data-tables.recycle-bin');
+        } else {
+            return redirect()->back();
         }
-
-        $data_table->forceDelete();
-
-        session::flash('success', 'Data deleted permanently successfully.');
-
-        return redirect()->route('pages.data-tables.recycle-bin');
     }
 
     public function importexcel(Request $request)
     {
-        try {
-            $this->validate($request, [
-                'file' => 'required|mimes:csv,xls,xlsx',
-            ]);
-    
-            $data = $request->file('file');
-    
-            $dataname = time() . '.' . $data->getClientOriginalExtension();
-            $data->move('imports', $dataname);
-    
-            Excel::import(new DataTableImport, public_path('/imports/' . $dataname));
-    
-            $successMessage = 'Data imported successfully.';
-            if ($request->expectsJson()) {
-                return response()->json([
-                    'status' => true,
-                    'message' => $successMessage,
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1, 2])) {
+
+            try {
+                $this->validate($request, [
+                    'file' => 'required|mimes:csv,xls,xlsx',
                 ]);
-            } else {
-                session::flash('success', $successMessage);
-                return redirect()->back();
+        
+                $data = $request->file('file');
+        
+                $dataname = time() . '.' . $data->getClientOriginalExtension();
+                $data->move('imports', $dataname);
+        
+                Excel::import(new DataTableImport, public_path('/imports/' . $dataname));
+        
+                $successMessage = 'Data imported successfully.';
+                if ($request->expectsJson()) {
+                    return response()->json([
+                        'status' => true,
+                        'message' => $successMessage,
+                    ]);
+                } else {
+                    session::flash('success', $successMessage);
+                    return redirect()->back();
+                }
+            } catch (\Exception $e) {
+                $errorMessage = 'Failed to import data.';
+                if ($request->expectsJson()) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => $errorMessage,
+                    ]);
+                } else {
+                    session::flash('error', $errorMessage);
+                    return redirect()->back();
+                }
             }
-        } catch (\Exception $e) {
-            $errorMessage = 'Failed to import data.';
-            if ($request->expectsJson()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => $errorMessage,
-                ]);
-            } else {
-                session::flash('error', $errorMessage);
-                return redirect()->back();
-            }
+        } else {
+            return redirect()->back();
         }
     }
     

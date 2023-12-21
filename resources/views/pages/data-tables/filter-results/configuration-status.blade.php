@@ -23,7 +23,7 @@
             <div class="col-12 col-sm-12">
                 <div class="card">
                     <div class="card-header d-flex align-items-center">
-                        <a href="{{ route('pages.dashboard') }}" class="text-dark"><i class="fa-solid fa-chevron-left mr-2 mt-2"></i></a>
+                        <a href="#" onclick="history.back();" class="text-dark"><i class="fa-solid fa-chevron-left mr-2 mt-2"></i></a>
                         <h4 class="m-0">Filtered Asset List</h4>
                     </div>
                     <div class="card-body">
@@ -40,28 +40,32 @@
                                         <th>Description</th>
                                         <th>Position Status</th>
                                         <th>Created Date</th>
+                                        <th class="no-export">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @php
                                         $no = 1;
                                     @endphp
-                                    @foreach($configuration_tables as $configuration_table)
+                                    @foreach($configuration_status_tables as $configuration_status_table)
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $configuration_table->item->name }}</td>
-                                        <td>{{ $configuration_table->manufacturer->name }}</td>
-                                        <td>{{ $configuration_table->serial_number }}</td>
-                                        <td>{{ $configuration_table->configurationStatus->name }}</td>
-                                        <td onclick="toggleLocationPopup('{{ $configuration_table->location->latitude }}', '{{ $configuration_table->location->longitude }}', '{{ $configuration_table->location->name }}', '{{ $configuration_table->location->address }}')">
+                                        <td>{{ $configuration_status_table->item->name }}</td>
+                                        <td>{{ $configuration_status_table->manufacturer->name }}</td>
+                                        <td>{{ $configuration_status_table->serial_number }}</td>
+                                        <td>{{ $configuration_status_table->configurationStatus->name }}</td>
+                                        <td onclick="toggleLocationPopup('{{ $configuration_status_table->location->latitude }}', '{{ $configuration_status_table->location->longitude }}', '{{ $configuration_status_table->location->name }}', '{{ $configuration_status_table->location->address }}')">
                                             <div id="locationPopup">
                                                 <div id="map" style="height: 25vh; width: 50vh;"></div>
                                             </div>
-                                            {{ $configuration_table->location->name }}
+                                            {{ $configuration_status_table->location->name }}
                                         </td>
-                                        <td>{{ $configuration_table->description }}</td>
-                                        <td>{{ $configuration_table->positionStatus->name }}</td>
-                                        <td>{{ $configuration_table->created_at }}</td>
+                                        <td>{{ $configuration_status_table->description }}</td>
+                                        <td>{{ $configuration_status_table->positionStatus->name }}</td>
+                                        <td>{{ $configuration_status_table->created_at }}</td>
+                                        <td>
+                                            <a href="{{ route('pages.data-tables.filter-results.configuration-status.show', $configuration_status_table->id) }}" class="btn btn-primary btn-sm text-white mr-1"><i class="fa-solid fa-eye mr-2"></i>Show</a>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

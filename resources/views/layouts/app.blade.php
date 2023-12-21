@@ -141,7 +141,6 @@
                     extend: 'pdf',
                     text: '<i class="fa fa-file-pdf mr-2"></i> Export to PDF',
                     className: 'btn btn-secondary',
-                    orientation: 'landscape',
                     exportOptions: {
                         columns: ':not(.no-export)'
                     },
@@ -201,12 +200,40 @@
         });
       });
 
-      // Filter Results List
-      $("#filteredAssetTable").dataTable({
+      $("#filteredAssetTable").DataTable({
           "responsive": true,
           "lengthChange": true,
-          "autoWidth": false
-      });
+          "autoWidth": false,
+          "buttons": [
+              {
+                  extend: 'excel',
+                  text: '<i class="fa fa-file-excel mr-2"></i> Export to Excel',
+                  className: 'btn btn-secondary',
+                  exportOptions: {
+                      columns: ':not(.no-export)'
+                  },
+                  title: 'ASSET MANAGEMENT REPORT'
+              },
+              {
+                  extend: 'pdf',
+                  text: '<i class="fa fa-file-pdf mr-2"></i> Export to PDF',
+                  className: 'btn btn-secondary',
+                  exportOptions: {
+                      columns: ':not(.no-export)'
+                  },
+                  title: 'ASSET MANAGEMENT REPORT'
+              },
+              {
+                  extend: 'print',
+                  text: '<i class="fa fa-print mr-2"></i> Print',
+                  className: 'btn btn-secondary',
+                  exportOptions: {
+                      columns: ':not(.no-export)'
+                  },
+                  title: 'ASSET MANAGEMENT REPORT'
+              }
+          ]
+      }).buttons().container().appendTo('#filteredAssetTable_wrapper .col-md-6:eq(0)');
 
       // Simpan dan Pulihkan Status Pagination untuk Filter Results List
       setupPaginationPersistence('#filteredAssetTable');

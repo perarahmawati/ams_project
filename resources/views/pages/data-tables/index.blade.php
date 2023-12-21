@@ -44,6 +44,7 @@
                             </div>
                             @endif
                             <div id="successAlert"></div>
+                            @if(Auth::user()->role->id != '3')
                             <div class="row mb-4">
                                 <div class="col-sm-6">
                                     <a href="{{ route('pages.data-tables.create') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Asset</a>
@@ -84,12 +85,16 @@
                                     </div>
                                     <a href="{{ route('pages.data-tables.recycle-bin') }}" class="btn btn-primary mr-1"><i class="fa-solid fa-recycle mr-2"></i>Recycle Bin</a>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="float-sm-right">
-                                        <a href="{{ route('pages.option-management.index') }}" class="btn btn-warning text-white"><i class="fa-solid fa-list-check mr-2"></i>Option Management</a>
+                                
+                                @if(Auth::user()->role->id == '1')
+                                    <div class="col-sm-6">
+                                        <div class="float-sm-right">
+                                            <a href="{{ route('pages.option-management.index') }}" class="btn btn-warning text-white"><i class="fa-solid fa-list-check mr-2"></i>Option Management</a>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
+                            @endif
                             <table id="assetTable" class="table table-bordered table-hover display">
                                 <thead>
                                     <tr>
@@ -127,8 +132,10 @@
                                         <td>{{ $data_table->created_at }}</td>
                                         <td>
                                             <a href="{{ route('pages.data-tables.show', $data_table->id) }}" class="btn btn-primary btn-sm text-white mr-1"><i class="fa-solid fa-eye mr-2"></i>Show</a>
-                                            <a href="{{ route('pages.data-tables.edit', $data_table->id) }}" class="btn btn-warning btn-sm text-white mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
-                                            <a href="{{ route('pages.data-tables.soft-delete', $data_table->id) }}" class="btn btn-danger btn-sm text-white mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete</a>
+                                            @if(Auth::user()->role->id != '3')
+                                                <a href="{{ route('pages.data-tables.edit', $data_table->id) }}" class="btn btn-warning btn-sm text-white mr-1"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</a>
+                                                <a href="{{ route('pages.data-tables.soft-delete', $data_table->id) }}" class="btn btn-danger btn-sm text-white mr-1"><i class="fa-solid fa-trash mr-2"></i>Delete</a>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach

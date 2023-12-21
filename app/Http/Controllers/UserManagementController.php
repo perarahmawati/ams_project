@@ -14,15 +14,26 @@ class UserManagementController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-      
-        return view('pages.user-management.index', compact('users'));
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
+
+            $users = User::all();
+            return view('pages.user-management.index', compact('users'));
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function create()
     {
-        $role_names = Role::all();
-        return view('pages.user-management.create', compact('role_names'));
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
+            
+            $role_names = Role::all();
+            return view('pages.user-management.create', compact('role_names'));
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function store(Request $request)
@@ -62,15 +73,21 @@ class UserManagementController extends Controller
 
     public function edit($user_id, Request $request)
     {
-        $user = User::find($user_id);
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
 
-        if ($user == null) {
-            return redirect()->route('pages.user-management.index');
+            $user = User::find($user_id);
+
+            if ($user == null) {
+                return redirect()->route('pages.user-management.index');
+            }
+    
+            $role_names = Role::all();
+            
+            return view('pages.user-management.edit', compact('user', 'role_names'));
+        } else {
+            return redirect()->back();
         }
-
-        $role_names = Role::all();
-        
-        return view('pages.user-management.edit', compact('user', 'role_names'));
     }
 
     public function update($user_id, Request $request)
@@ -138,19 +155,25 @@ class UserManagementController extends Controller
 
     public function destroy($user_id, Request $request)
     {
-        $user = User::find($user_id);
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
 
-        if ($user== null) {
-            return response()->json([
-                'status' => false,
-                'notFound' => true
-            ]);
+            $user = User::find($user_id);
+
+            if ($user== null) {
+                return response()->json([
+                    'status' => false,
+                    'notFound' => true
+                ]);
+            }
+    
+            $user->delete();
+    
+            session::flash('success', 'User deleted successfully.');
+    
+            return redirect()->route('pages.user-management.index');
+        } else {
+            return redirect()->back();
         }
-
-        $user->delete();
-
-        session::flash('success', 'User deleted successfully.');
-
-        return redirect()->route('pages.user-management.index');
     }
 }

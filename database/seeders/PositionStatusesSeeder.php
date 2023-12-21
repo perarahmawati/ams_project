@@ -17,7 +17,7 @@ class PositionStatusesSeeder extends Seeder
         ]);
 
         PositionStatus::create([
-            'name' => 'On Delivery', 
+            'name' => 'Ondelivery', 
         ]);
 
         PositionStatus::create([
