@@ -60,6 +60,7 @@
 #configurationStatusTable td:last-child,
 #locationTable td:last-child,
 #positionStatusTable td:last-child,
+#filteredAssetTable td:last-child,
 #userTable td:last-child {
     white-space: nowrap;
 }

@@ -23,7 +23,7 @@
             <div class="col-12 col-sm-12">
                 <div class="card">
                     <div class="card-header d-flex align-items-center">
-                        <a href="{{ route('pages.dashboard') }}" class="text-dark"><i class="fa-solid fa-chevron-left mr-2 mt-2"></i></a>
+                        <a href="#" onclick="history.back();" class="text-dark"><i class="fa-solid fa-chevron-left mr-2 mt-2"></i></a>
                         <h4 class="m-0">Filtered Asset List</h4>
                     </div>
                     <div class="card-body">
@@ -40,6 +40,7 @@
                                         <th>Description</th>
                                         <th>Position Status</th>
                                         <th>Created Date</th>
+                                        <th class="no-export">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -62,6 +63,9 @@
                                         <td>{{ $location_table->description }}</td>
                                         <td>{{ $location_table->positionStatus->name }}</td>
                                         <td>{{ $location_table->created_at }}</td>
+                                        <td>
+                                            <a href="{{ route('pages.data-tables.filter-results.location.show', $location_table->id) }}" class="btn btn-primary btn-sm text-white mr-1"><i class="fa-solid fa-eye mr-2"></i>Show</a>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

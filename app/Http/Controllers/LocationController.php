@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Location;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class LocationController extends Controller
 {
@@ -32,7 +33,13 @@ class LocationController extends Controller
 
     public function create()
     {
-        return view('pages.option-management.locations.create');
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
+
+            return view('pages.option-management.locations.create');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function store(Request $request)
@@ -70,13 +77,19 @@ class LocationController extends Controller
 
     public function edit($location_id, Request $request)
     {
-        $location = Location::find($location_id);
-        
-        if ($location == null) {
-            return redirect()->route('pages.option-management.index');
-        }
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
 
-        return view('pages.option-management.locations.edit',compact('location'));
+            $location = Location::find($location_id);
+        
+            if ($location == null) {
+                return redirect()->route('pages.option-management.index');
+            }
+    
+            return view('pages.option-management.locations.edit',compact('location'));
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function update($location_id, Request $request)
@@ -122,19 +135,25 @@ class LocationController extends Controller
 
     public function destroy($location_id, Request $request)
     {
-        $location = Location::find($location_id);
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
 
-        if ($location == null) {
-            return response()->json([
-                'status' => false,
-                'notFound' => true
-            ]);
+            $location = Location::find($location_id);
+
+            if ($location == null) {
+                return response()->json([
+                    'status' => false,
+                    'notFound' => true
+                ]);
+            }
+    
+            $location->delete();
+    
+            session::flash('success-location', 'Location deleted successfully.');
+    
+            return redirect()->route('pages.option-management.index');
+        } else {
+            return redirect()->back();
         }
-
-        $location->delete();
-
-        session::flash('success-location', 'Location deleted successfully.');
-
-        return redirect()->route('pages.option-management.index');
     }
 }

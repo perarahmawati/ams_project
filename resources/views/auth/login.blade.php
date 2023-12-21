@@ -47,7 +47,7 @@
       <form method="POST" action="{{ route('login') }}">
         @csrf
         <div class="input-group mb-1">
-          <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
+          <input type="text" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -65,7 +65,7 @@
         </div>
         <p class="text-danger mb-3">@error('password'){{ $message }}@enderror</p>
         <div class="row">
-          <div class="col-8">
+          <div class="col-12">
             <div class="icheck-primary">
               <input type="checkbox" id="remember">
               <label for="remember">
@@ -74,16 +74,12 @@
             </div>
           </div>
           <!-- /.col -->
-          <div class="col-4">
+          <div class="col-12 mt-3">
             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
           </div>
           <!-- /.col -->
         </div>
       </form>
-
-      <p class="mb-1">
-        <a href="{{ route('password.request') }}">I forgot my password</a>
-      </p>
     </div>
     <!-- /.card-body -->
   </div>

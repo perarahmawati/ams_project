@@ -49,8 +49,8 @@ class DashboardController extends Controller
 
     public function getConfigurationStatus($configuration_status_id)
     {
-        $configuration_tables = DataTable::where('configuration_status_name', $configuration_status_id)->get();
-        return view('pages.data-tables.filter-results.configuration-status', compact('configuration_tables'));
+        $configuration_status_tables = DataTable::where('configuration_status_name', $configuration_status_id)->get();
+        return view('pages.data-tables.filter-results.configuration-status', compact('configuration_status_tables'));
     }
 
     public function getLocation($location_id)

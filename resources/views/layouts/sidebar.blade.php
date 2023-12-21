@@ -63,26 +63,33 @@
                                                                                 request()->is('asset-management/option-management/position-status/add-new-position-status') ||
                                                                                 request()->is('asset-management/option-management/position-status/*/edit') ||
                                                                                 request()->is('asset-management/filter-results/item/*') ||
+                                                                                request()->is('asset-management/filter-results/item/*/show') ||
                                                                                 request()->is('asset-management/filter-results/manufacturer/*') ||
+                                                                                request()->is('asset-management/filter-results/manufacturer/*/show') ||
                                                                                 request()->is('asset-management/filter-results/configuration-status/*') ||
+                                                                                request()->is('asset-management/filter-results/configuration-status/*/show') ||
                                                                                 request()->is('asset-management/filter-results/location/*') ||
-                                                                                request()->is('asset-management/filter-results/position-status/*') ? 'active' : '' }}">
+                                                                                request()->is('asset-management/filter-results/location/*/show') ||
+                                                                                request()->is('asset-management/filter-results/position-status/*') ||
+                                                                                request()->is('asset-management/filter-results/position-status/*/show') ? 'active' : '' }}">
               <i class="nav-icon fas fa-server"></i>
               <p>
                 Asset Management
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="{{ route('pages.user-management.index') }}" class="nav-link {{ request()->is('user-management') ||
-                                                                                    request()->is('user-management/add-new-user') ||
-                                                                                    request()->is('user-management/*/edit') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                User Management
-              </p>
-            </a>
-          </li>
+          @if(Auth::user()->role->id == '1')
+            <li class="nav-item">
+              <a href="{{ route('pages.user-management.index') }}" class="nav-link {{ request()->is('user-management') ||
+                                                                                      request()->is('user-management/add-new-user') ||
+                                                                                      request()->is('user-management/*/edit') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                  User Management
+                </p>
+              </a>
+            </li>
+          @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

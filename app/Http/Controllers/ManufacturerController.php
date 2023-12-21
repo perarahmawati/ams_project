@@ -6,12 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\Manufacturer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class ManufacturerController extends Controller
 {
     public function create()
     {
-        return view('pages.option-management.manufacturers.create');
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
+
+            return view('pages.option-management.manufacturers.create');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function store(Request $request)
@@ -43,13 +50,19 @@ class ManufacturerController extends Controller
 
     public function edit($manufacturer_id, Request $request)
     {
-        $manufacturer = Manufacturer::find($manufacturer_id);
-        
-        if ($manufacturer == null) {
-            return redirect()->route('pages.option-management.index');
-        }
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
 
-        return view('pages.option-management.manufacturers.edit', compact('manufacturer'));
+            $manufacturer = Manufacturer::find($manufacturer_id);
+        
+            if ($manufacturer == null) {
+                return redirect()->route('pages.option-management.index');
+            }
+    
+            return view('pages.option-management.manufacturers.edit', compact('manufacturer'));
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function update($manufacturer_id, Request $request)
@@ -89,19 +102,25 @@ class ManufacturerController extends Controller
 
     public function destroy($manufacturer_id, Request $request)
     {
-        $manufacturer = Manufacturer::find($manufacturer_id);
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
 
-        if ($manufacturer == null) {
-            return response()->json([
-                'status' => false,
-                'notFound' => true
-            ]);
+            $manufacturer = Manufacturer::find($manufacturer_id);
+
+            if ($manufacturer == null) {
+                return response()->json([
+                    'status' => false,
+                    'notFound' => true
+                ]);
+            }
+    
+            $manufacturer->delete();
+    
+            session::flash('success-manufacturer', 'Manufacturer deleted successfully.');
+    
+            return redirect()->route('pages.option-management.index');
+        } else {
+            return redirect()->back();
         }
-
-        $manufacturer->delete();
-
-        session::flash('success-manufacturer', 'Manufacturer deleted successfully.');
-
-        return redirect()->route('pages.option-management.index');
     }
 }

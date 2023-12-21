@@ -6,12 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
     public function create()
     {
-        return view('pages.option-management.items.create');
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
+
+            return view('pages.option-management.items.create');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function store(Request $request)
@@ -43,13 +50,19 @@ class ItemController extends Controller
 
     public function edit($item_id, Request $request)
     {
-        $item = Item::find($item_id);
-        
-        if ($item == null) {
-            return redirect()->route('pages.option-management.index');
-        }
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
 
-        return view('pages.option-management.items.edit', compact('item'));
+            $item = Item::find($item_id);
+        
+            if ($item == null) {
+                return redirect()->route('pages.option-management.index');
+            }
+    
+            return view('pages.option-management.items.edit', compact('item'));
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function update($item_id, Request $request)
@@ -89,19 +102,25 @@ class ItemController extends Controller
 
     public function destroy($item_id, Request $request)
     {
-        $item = Item::find($item_id);
+        $loggedInUser = Auth::user();
+        if ($loggedInUser && in_array($loggedInUser->role_name, [1])) {
 
-        if ($item == null) {
-            return response()->json([
-                'status' => false,
-                'notFound' => true
-            ]);
+            $item = Item::find($item_id);
+
+            if ($item == null) {
+                return response()->json([
+                    'status' => false,
+                    'notFound' => true
+                ]);
+            }
+    
+            $item->delete();
+    
+            session::flash('success-item', 'Item deleted successfully.');
+    
+            return redirect()->route('pages.option-management.index');
+        } else {
+            return redirect()->back();
         }
-
-        $item->delete();
-
-        session::flash('success-item', 'Item deleted successfully.');
-
-        return redirect()->route('pages.option-management.index');
     }
 }
